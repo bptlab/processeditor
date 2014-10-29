@@ -25,7 +25,9 @@ public class PCMScenario extends ProcessModel {
 
     public PCMScenario() {
         super();
+        processUtils = new PCMUtils();
         ProcessNode node = new PCMFragmentCollection();
+        pcmFragments = new LinkedList<ProcessModel>();
         addNode(node);
     }
 
@@ -129,8 +131,9 @@ public class PCMScenario extends ProcessModel {
         for (ProcessModel model : pcmFragments) {
             ProcessNode node = new PCMFragmentNode();
             node.setText(model.getProcessName());
-            node.setSize(100, 200);
+            node.setSize(getSize().width - 2, 20);
             node.setPos(fragColl.getPos().x, fragColl.getPos().y - fragColl.getSize().height / 2 + (20 * i));
+            addNode(node);
             i--;
         }
     }

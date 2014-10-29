@@ -232,6 +232,9 @@ public class TaskCopier {
                     Map<ProcessModel, ProcessNode> references = ((PCMFragment)chooseProcessBox.getSelectedItem())
                             .getReferences()
                             .get(chooseTaskBox.getSelectedItem());
+                    if (null == references) {
+                        references = new HashMap<ProcessModel, ProcessNode>();
+                    }
                     references.put((ProcessModel)chooseProcessBox.getSelectedItem(), (ProcessNode)chooseTaskBox.getSelectedItem());
                     ((PCMFragment)processEditor.getSelectedModel())
                             .addReference((ProcessNode)chooseTaskBox.getSelectedItem(), references);
