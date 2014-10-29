@@ -4,7 +4,7 @@ import net.frapu.code.converter.ConverterHelper;
 import net.frapu.code.visualization.ProcessEdge;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessNode;
-import net.frapu.code.visualization.processmap.*;
+import net.frapu.code.visualization.bpmn.DataObject;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -22,12 +22,17 @@ public class PCMScenario extends ProcessModel {
 
     private File workspace;
     private List<ProcessModel> pcmFragments;
+    private List<ProcessNode> dataObjects;
 
     public PCMScenario() {
         super();
         processUtils = new PCMUtils();
+        dataObjects = new LinkedList<ProcessNode>();
         ProcessNode node = new PCMFragmentCollection();
         pcmFragments = new LinkedList<ProcessModel>();
+        addNode(node);
+        node = new PCMDataObjectCollection();
+        node.setPos(500,500);
         addNode(node);
     }
 
@@ -54,6 +59,17 @@ public class PCMScenario extends ProcessModel {
                 return;
             }
         }
+        else if (node instanceof PCMDataObjectCollection) {
+            List<ProcessNode> dataCollections = new LinkedList<ProcessNode>();
+            for (ProcessNode n : getNodes()) {
+                if (n instanceof PCMDataObjectCollection) {
+                    dataCollections.add(n);
+                }
+            }
+            if (!dataCollections.isEmpty()) {
+                return;
+            }
+        }
         super.addNode(node);
     }
 
@@ -65,7 +81,7 @@ public class PCMScenario extends ProcessModel {
      */
     @Override
     public synchronized void removeNode(ProcessNode node) {
-        if (!(node instanceof  PCMFragmentCollection)) {
+        if (!(node instanceof  PCMFragmentCollection || node instanceof PCMDataObjectCollection)) {
             super.removeNode(node);
         }
     }
@@ -90,6 +106,41 @@ public class PCMScenario extends ProcessModel {
     public void setWorkspace(File workspace) {
         this.workspace = workspace;
         createModelList();
+        createDataList();
+    }
+
+    private void createDataList() {
+        for (ProcessModel pm : pcmFragments) {
+            for (ProcessNode pn : pm.getNodes()) {
+                if (pn instanceof DataObject) {
+                    if (!dataObjects.contains(pn)) {
+                        dataObjects.add(pn);
+                    }
+                }
+            }
+        }
+        createNotesForDataObjects();
+    }
+
+    private void createNotesForDataObjects() {
+        PCMDataObjectCollection dataColl = null;
+        for (ProcessNode node : getNodes()) {
+            if (node instanceof PCMDataObjectCollection) {
+                dataColl = (PCMDataObjectCollection)node;
+            } else if (node instanceof PCMDataObjectNode) {
+                removeNode(node);
+            }
+        }
+        int i = dataObjects.size();
+        for (ProcessNode dataObject : dataObjects) {
+            ProcessNode node = new PCMFragmentNode();
+            node.setText(dataObject.getText());
+            node.setSize(getSize().width - 2, 20);
+            node.setPos(dataColl.getPos().x, dataColl.getPos().y - dataColl.getSize().height / 2 + (20 * i));
+            addNode(node);
+            i--;
+        }
+
     }
 
     /**
