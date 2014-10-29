@@ -76,7 +76,7 @@ public class Workbench extends javax.swing.JFrame implements ProcessEditorInterf
 
     private static final long serialVersionUID = 3488875420298876738L;
     public static String TITLE = "Workbench";
-    public static String VERSION = "0.2014.10.16-frapu-fork";
+    public static String VERSION = "0.2014.06.10-frapu-fork";
     //global custom menu items, which will be added to all ProcessEditor instances
     protected LinkedList<WorkbenchEditorListener> editorListeners = new LinkedList<>();
     // The ProcessEditorTrackers
@@ -1728,8 +1728,7 @@ private void ShowVersionsMenuItemActionPerformed(java.awt.event.ActionEvent evt)
             }
             //call dialog
             boolean canceled = false;
-            boolean publishResult = repository.commitIfPossible(publishModelDialog.getAnswer());
-            if (!publishResult) {
+            if (!repository.commitIfPossible(publishModelDialog.getAnswer())) {
                 VersionExplorer versionExplorer = new VersionExplorer(repository);
                 versionExplorer.setVisible(true);
                 canceled = versionExplorer.canceled;
@@ -1745,6 +1744,7 @@ private void ShowVersionsMenuItemActionPerformed(java.awt.event.ActionEvent evt)
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
     @Override

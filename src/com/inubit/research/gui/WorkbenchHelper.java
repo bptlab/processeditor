@@ -28,6 +28,10 @@ import net.frapu.code.visualization.gantt.GanttModel;
 import net.frapu.code.visualization.lifecycle.LifecycleModel;
 import net.frapu.code.visualization.ontology.OntologyModel;
 import net.frapu.code.visualization.orgChart.OrgChartModel;
+import net.frapu.code.visualization.pcm.PCMFragment;
+import net.frapu.code.visualization.pcm.PCMFragmentEditor;
+import net.frapu.code.visualization.pcm.PCMScenario;
+import net.frapu.code.visualization.pcm.PCMScenarioEditor;
 import net.frapu.code.visualization.petrinets.PetriNetModel;
 import net.frapu.code.visualization.processmap.ProcessMapModel;
 import net.frapu.code.visualization.reporting.ReportingModel;
@@ -63,6 +67,8 @@ public class WorkbenchHelper {
         modelList.add(LifecycleModel.class);
         modelList.add(OntologyModel.class);
         modelList.add(OrgChartModel.class);
+        modelList.add(PCMFragment.class);
+        modelList.add(PCMScenario.class);
         modelList.add(PetriNetModel.class);
         modelList.add(ProcessMapModel.class);
         modelList.add(ReportingModel.class);
@@ -71,6 +77,8 @@ public class WorkbenchHelper {
         modelList.add(XFormsModel.class);
 
         editorMap.put(BPMNModel.class, BPMNEditor.class);
+        editorMap.put(PCMFragment.class, PCMFragmentEditor.class);
+        editorMap.put(PCMScenario.class, PCMScenarioEditor.class);
         editorMap.put(PetriNetModel.class, PetriNetSimulationEditor.class);
         editorMap.put(OntologyModel.class, OntologyEditor.class);
         editorMap.put(StoryboardModel.class, StoryboardEditor.class);
