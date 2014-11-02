@@ -23,6 +23,7 @@ public class PCMScenario extends ProcessModel {
     private File workspace;
     private List<ProcessModel> pcmFragments;
     private List<ProcessNode> dataObjects;
+    private ProcessModel[] modelList;
 
     public PCMScenario() {
         super();
@@ -217,5 +218,9 @@ public class PCMScenario extends ProcessModel {
             System.out.println("Could not open process model: " + modelFile.getAbsolutePath());
         }
         return null;
+    }
+
+    public List<ProcessModel> getModelList() {
+        return pcmFragments;
     }
 }

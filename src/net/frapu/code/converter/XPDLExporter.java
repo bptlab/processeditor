@@ -216,7 +216,7 @@ public class XPDLExporter implements Exporter {
      * @return A Document containing the process model serialized as XPDL.
      * @throws java.lang.Exception
      */
-    public Document getXPDLSerialization() throws Exception {
+    public Document  getXPDLSerialization() throws Exception {
         DocumentBuilderFactory xmlFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = xmlFactory.newDocumentBuilder();
         xmlDoc = builder.newDocument();

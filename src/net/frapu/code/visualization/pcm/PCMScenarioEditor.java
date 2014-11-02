@@ -3,6 +3,7 @@ package net.frapu.code.visualization.pcm;
 import net.frapu.code.visualization.ProcessEditor;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessObject;
+import net.frapu.code.visualization.bpmn.StartEvent;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -43,6 +44,24 @@ public class PCMScenarioEditor extends ProcessEditor {
 
     private void init() {
         addCopyTaskFromOtherFragmentMenu();
+        addExportMenu();
+    }
+
+    private void addExportMenu() {
+        JMenuItem menuItem = new JMenuItem("Export");
+        final PCMExporter exporter = new PCMExporter(getSelectedModel());
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO: Let user choose the file
+                try {
+                    exporter.serialize(new File("./export.xpdl"), getSelectedModel());
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        addCustomContextMenuItem(ProcessObject.class, menuItem);
     }
 
     private class ChooseWorkspaceActionListener implements ActionListener {
