@@ -37,12 +37,20 @@ import java.util.Map;
  */
 public class PCMFragment extends ProcessModel {
 
+    public final static String PROP_REFERENCES = "References";
+
     private Map<ProcessNode, Map<ProcessModel, ProcessNode>> references;
 
     public PCMFragment() {
         super();
         references = new LinkedHashMap<ProcessNode, Map<ProcessModel, ProcessNode>>();
         processUtils = new PCMUtils();
+        initializeProperties();
+    }
+
+    protected void initializeProperties() {
+
+        setProperty(PROP_REFERENCES, "");
     }
 
     @Override
@@ -72,7 +80,43 @@ public class PCMFragment extends ProcessModel {
     }
 
     public void addReference(ProcessNode node, Map<ProcessModel, ProcessNode> reference) {
+        //cleanReferences();
         references.put(node, reference);
+        setPropertyOutOfReferences();
+
+        /*String newReference = node.getId() + "(" + this.getId() + ")";
+        for(Map.Entry<ProcessModel, ProcessNode> entry : reference.entrySet()){
+            newReference += ":" + entry.getValue().getId() + "(" + entry.getKey().getId() + ")";
+        }
+        newReference += ";";
+        setProperty(PROP_REFERENCES, (getProperty(PROP_REFERENCES)+ newReference));
+*/
+    }
+
+    private void setPropertyOutOfReferences() {
+        // nodeID(FragmentID):nodeID(FragmentID);
+        String property = "";
+
+        for (Map.Entry entry : (references.entrySet())) {
+            property += ((ProcessNode)entry.getKey()).getId() + "(" + this.getId() + ")" + ":";
+
+            for (Map.Entry<ProcessModel, ProcessNode> to : ((Map<ProcessModel, ProcessNode>)entry.getValue()).entrySet()) {
+                property += ((ProcessNode)to.getValue()).getId() + "(" + ((ProcessModel)to.getKey()).getId() + ")";
+            }
+            property += ";";
+        }
+
+        setProperty(PROP_REFERENCES, property);
+    }
+
+    private void cleanReferences() {
+
+        List<ProcessNode> nodes = this.getNodesByClass(Task.class);
+        for(Map.Entry<ProcessNode, Map<ProcessModel, ProcessNode>> entry : references.entrySet()) {
+            if (!nodes.contains(entry.getKey())) {
+                references.remove(entry.getKey());
+            }
+        }
     }
 
     public Map<ProcessNode, Map<ProcessModel, ProcessNode>> getReferences() {

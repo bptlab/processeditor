@@ -57,7 +57,7 @@ public class PCMExporter implements Exporter {
     }
 
     private void writeReferences(OutputStreamWriter osw) throws IOException {
-        osw.write("<references>\n");
+       /* osw.write("<references>\n");
         for (ProcessModel m : model.getModelList()) {
             for (Map.Entry entry : ((PCMFragment)m).getReferences().entrySet()) {
                 osw.write("<reference>\n");
@@ -76,7 +76,33 @@ public class PCMExporter implements Exporter {
                 osw.write("</reference>\n");
             }
         }
+        osw.write("</references>\n");*/
+
+        String references;
+        osw.write("<references>\n");
+        for (ProcessModel m : model.getModelList()) {
+            references = m.getProperty("References");
+            if (references == "") continue;
+            String[] pairs = references.split(";");
+            for (int i = 0; i<pairs.length; i++) {
+
+                String[] nodes = pairs[i].split(":");
+                osw.write("<reference>\n");
+                osw.write("<from>");
+                osw.write("<processNode id=\"");
+                osw.write(nodes[0]);
+                osw.write("\"></processNode>\n");
+                osw.write("</from>\n");
+                osw.write("<to>\n");
+                osw.write("<processNode id=\"");
+                osw.write(nodes[1]);
+                osw.write("\"></processNode>\n");
+                osw.write("</to>\n");
+                osw.write("</reference>\n");
+            }
+        }
         osw.write("</references>\n");
+
     }
 
     private void writeRules(OutputStreamWriter osw) throws IOException {
