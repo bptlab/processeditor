@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -57,52 +58,19 @@ public class PCMExporter implements Exporter {
     }
 
     private void writeReferences(OutputStreamWriter osw) throws IOException {
-       /* osw.write("<references>\n");
-        for (ProcessModel m : model.getModelList()) {
-            for (Map.Entry entry : ((PCMFragment)m).getReferences().entrySet()) {
-                osw.write("<reference>\n");
-                osw.write("<from>");
-                osw.write("<processNode id=\"");
-                ((ProcessNode)entry.getKey()).getId();
-                osw.write("\"></processNode>\n");
-                osw.write("</from>\n");
-                osw.write("<to>\n");
-                for (Map.Entry<ProcessModel, ProcessNode> to : ((Map<ProcessModel, ProcessNode>)entry.getValue()).entrySet()) {
-                    osw.write("<processNode id=\"");
-                    ((ProcessNode)to.getValue()).getId();
-                    osw.write("\"></processNode>\n");
-                }
-                osw.write("</to>\n");
-                osw.write("</reference>\n");
-            }
-        }
-        osw.write("</references>\n");*/
-
-        String references;
         osw.write("<references>\n");
-        for (ProcessModel m : model.getModelList()) {
-            references = m.getProperty("References");
-            if (references == "") continue;
-            String[] pairs = references.split(";");
-            for (int i = 0; i<pairs.length; i++) {
-
-                String[] nodes = pairs[i].split(":");
-                osw.write("<reference>\n");
-                osw.write("<from>");
-                osw.write("<processNode id=\"");
-                osw.write(nodes[0]);
-                osw.write("\"></processNode>\n");
-                osw.write("</from>\n");
-                osw.write("<to>\n");
-                osw.write("<processNode id=\"");
-                osw.write(nodes[1]);
-                osw.write("\"></processNode>\n");
-                osw.write("</to>\n");
-                osw.write("</reference>\n");
+        for(Map.Entry<String, List<String>> entry : model.getReferences().entrySet()) {
+            if(entry.getValue().size()>1) {
+                osw.write("<activity id=\"" + entry.getKey() + "\">\n");
+                for (String fragmentID : entry.getValue()) {
+                    osw.write("<fragment id=\"" + fragmentID + "\"/>\n");
+                }
+                osw.write("</activity>\n");
             }
-        }
-        osw.write("</references>\n");
 
+        }
+
+        osw.write("</references>\n");
     }
 
     private void writeRules(OutputStreamWriter osw) throws IOException {

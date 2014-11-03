@@ -5,11 +5,14 @@ import net.frapu.code.visualization.ProcessEdge;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessNode;
 import net.frapu.code.visualization.bpmn.DataObject;
+import net.frapu.code.visualization.bpmn.Task;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class describes a PCM Scenario Model. It inherits from Process Model.
@@ -24,6 +27,7 @@ public class PCMScenario extends ProcessModel {
     private List<ProcessModel> pcmFragments;
     private List<ProcessNode> dataObjects;
     private ProcessModel[] modelList;
+    private Map<String, List<String>> references;
 
     public PCMScenario() {
         super();
@@ -108,6 +112,27 @@ public class PCMScenario extends ProcessModel {
         this.workspace = workspace;
         createModelList();
         createDataList();
+        createReferences();
+    }
+
+    private void createReferences() {
+
+        Map<String, List<String>> references = new LinkedHashMap<String, List<String>>();
+        for(ProcessModel m : pcmFragments){
+            for(ProcessNode n: m.getNodes()){
+                if(n instanceof Task) {
+                    if(references.containsKey(n.getId())) {
+                        references.get(n.getId()).add(m.getId());
+                    }
+                    else {
+                        List<String> referenceModels = new LinkedList<String>();
+                        referenceModels.add(m.getId());
+                        references.put(n.getId(), referenceModels);
+                    }
+                }
+            }
+        }
+        this.references = references;
     }
 
     private void createDataList() {
@@ -222,5 +247,9 @@ public class PCMScenario extends ProcessModel {
 
     public List<ProcessModel> getModelList() {
         return pcmFragments;
+    }
+
+    public Map<String, List<String>> getReferences() {
+        return references;
     }
 }
