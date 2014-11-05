@@ -26,7 +26,8 @@ public class PCMScenario extends ProcessModel {
     private File workspace;
     private List<ProcessModel> pcmFragments;
     private List<ProcessNode> dataObjects;
-    private ProcessModel[] modelList;
+    public static final String PROP_TERMINATION_STATE = "Termination State";
+    public static final String PROP_TERMINATION_DO = "Termination Data Object";
     private Map<String, List<String>> references;
 
     public PCMScenario() {
@@ -35,6 +36,8 @@ public class PCMScenario extends ProcessModel {
         dataObjects = new LinkedList<ProcessNode>();
         ProcessNode node = new PCMFragmentCollection();
         pcmFragments = new LinkedList<ProcessModel>();
+        setProperty(PROP_TERMINATION_DO, "");
+        setProperty(PROP_TERMINATION_STATE, "[]");
         addNode(node);
         node = new PCMDataObjectCollection();
         node.setPos(500,500);
@@ -161,7 +164,7 @@ public class PCMScenario extends ProcessModel {
         for (ProcessNode dataObject : dataObjects) {
             ProcessNode node = new PCMFragmentNode();
             node.setText(dataObject.getText());
-            node.setSize(getSize().width - 2, 20);
+            node.setSize(200 - 2, 20);
             node.setPos(dataColl.getPos().x, dataColl.getPos().y - dataColl.getSize().height / 2 + (20 * i));
             addNode(node);
             i--;

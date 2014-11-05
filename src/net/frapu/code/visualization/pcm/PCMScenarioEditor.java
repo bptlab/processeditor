@@ -2,13 +2,17 @@ package net.frapu.code.visualization.pcm;
 
 import net.frapu.code.visualization.ProcessEditor;
 import net.frapu.code.visualization.ProcessModel;
+import net.frapu.code.visualization.ProcessNode;
 import net.frapu.code.visualization.ProcessObject;
 import net.frapu.code.visualization.bpmn.StartEvent;
+import net.frapu.code.visualization.bpmn.Task;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.*;
 
 /**
  * An {@link net.frapu.code.visualization.ProcessEditor} for the PCM Scenario Model. It has the option to define
@@ -44,9 +48,10 @@ public class PCMScenarioEditor extends ProcessEditor {
 
     private void init() {
         addCopyTaskFromOtherFragmentMenu();
-        addExportMenu();
+    //    addExportMenu();
     }
 
+    @Deprecated
     private void addExportMenu() {
         JMenuItem menuItem = new JMenuItem("Export");
         final PCMExporter exporter = new PCMExporter(getSelectedModel());
@@ -63,6 +68,7 @@ public class PCMScenarioEditor extends ProcessEditor {
         });
         addCustomContextMenuItem(ProcessObject.class, menuItem);
     }
+
 
     private class ChooseWorkspaceActionListener implements ActionListener {
         ProcessEditor processEditor;

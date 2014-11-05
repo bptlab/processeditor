@@ -33,10 +33,20 @@ public class PCMExporter implements Exporter {
     public PCMExporter(ProcessModel selectedModel) {
         model = (PCMScenario)selectedModel;
     }
+    public PCMExporter() {};
 
     @Override
     public void serialize(File f, ProcessModel m) throws Exception {
-        FileOutputStream fos = new FileOutputStream(f.getName());
+        model = (PCMScenario)m;
+        System.out.println("JLASDFLÖKSDFKLÖHSDFOÖKLSHDfi");
+        String name = "";
+        f.createNewFile();
+        if (f.getName().endsWith(".pcm.xml")) {
+            name = f.toString();
+        } else {
+            name = f.toString() + ".pcm.xml";
+        }
+        FileOutputStream fos = new FileOutputStream(name);
         OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF8");
         osw.write("<PCM>\n");
         osw.write("<fragments>");
@@ -52,9 +62,17 @@ public class PCMExporter implements Exporter {
         osw.write("</fragments>\n");
         writeRules(osw);
         writeReferences(osw);
+        writeTermination(osw);
         osw.write("</PCM>");
         osw.flush();
         fos.close();
+    }
+
+    private void writeTermination(OutputStreamWriter osw) throws IOException {
+        osw.write("<Termination>\n");
+        osw.write("<dataObject name=\"" + model.getProperty(PCMScenario.PROP_TERMINATION_DO) + "\" state=\""
+                + model.getProperty(PCMScenario.PROP_TERMINATION_STATE) + "\"/>\n");
+        osw.write("<Termination/>\n");
     }
 
     private void writeReferences(OutputStreamWriter osw) throws IOException {
@@ -104,7 +122,7 @@ public class PCMExporter implements Exporter {
 
     @Override
     public String[] getFileTypes() {
-       String[] types = {"xml"};
+       String[] types = {"pcm.xml"};
        return types;
     }
 }

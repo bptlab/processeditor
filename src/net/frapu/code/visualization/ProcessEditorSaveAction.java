@@ -18,6 +18,7 @@ import net.frapu.code.converter.Exporter;
 import net.frapu.code.converter.ProcessEditorExporter;
 import net.frapu.code.converter.XPDLExportDialog;
 import net.frapu.code.converter.XPDLExporter;
+import net.frapu.code.visualization.pcm.PCMExporter;
 
 /**
  *
@@ -116,6 +117,8 @@ public class ProcessEditorSaveAction implements ActionListener {
                         XPDLExporter ex= (XPDLExporter)exporter;
                         ex.setDto(dialog.con);
                     }
+                    System.out.println("XXXXXXX Exporter: " + exporter.getDisplayName());
+
                     exporter.serialize(selFile, pei.getSelectedModel());
 
                     if (exporter instanceof ProcessEditorExporter) {
