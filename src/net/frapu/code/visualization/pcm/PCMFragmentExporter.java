@@ -107,7 +107,7 @@ public class PCMFragmentExporter implements Exporter {
         } else if (n instanceof DataObject) {
             org.camunda.bpm.model.bpmn.instance.DataObject dataObject = createElement(process, "n" + n.getId(), org.camunda.bpm.model.bpmn.instance.DataObject.class);
             dataObject.setName(nodeName);
-            DataState state = createElement(dataObject, "n" + n.getProperty("state"), DataState.class);
+            DataState state = createElement(dataObject, "n" + n.getProperty("state").replace(' ', '_'), DataState.class);
             state.setName(n.getProperty("state"));
             dataObject.setDataState(state);
             dataObject.setCollection("1".equals(n.getProperty("collection")));

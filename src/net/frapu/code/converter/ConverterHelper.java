@@ -38,7 +38,6 @@ public class ConverterHelper {
 		List<Exporter> result = new LinkedList<Exporter>();
         // Add all default Exporters (for all model types)
         result.add(new PCMExporter());
-        result.add(new PCMFragmentExporter());
         result.add(new ProcessEditorExporter());
         result.add(new PNGExporter());
         result.add(new XPDLExporter());
@@ -46,6 +45,7 @@ public class ConverterHelper {
         result.add(new LoLAExporter());
         result.add(new XSDExporter());
         result.add(new XSDCreator());
+        result.add(new PCMFragmentExporter());
         return result;
 	}
 	

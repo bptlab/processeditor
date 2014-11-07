@@ -38,7 +38,6 @@ public class PCMExporter implements Exporter {
     @Override
     public void serialize(File f, ProcessModel m) throws Exception {
         model = (PCMScenario)m;
-        System.out.println("JLASDFLÖKSDFKLÖHSDFOÖKLSHDfi");
         String name = "";
         f.createNewFile();
         if (f.getName().endsWith(".pcm.xml")) {
@@ -49,13 +48,13 @@ public class PCMExporter implements Exporter {
         FileOutputStream fos = new FileOutputStream(name);
         OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF8");
         osw.write("<PCM>\n");
-        osw.write("<fragments>");
+        osw.write("<fragments>\n");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        XPDLExporter xpdlExporter = new XPDLExporter();
+        PCMFragmentExporter fragmentExporter = new PCMFragmentExporter();
         for (ProcessModel fragment : model.getModelList()) {
-            File tmp = File.createTempFile("tmp", ".xpdl");
-            xpdlExporter.serialize(tmp, convertToBPMN(fragment));
+            File tmp = File.createTempFile("tmp", ".bpmn");
+            fragmentExporter.serialize(tmp, fragment);
             Document doc = builder.parse(tmp);
             ProcessEditorServerUtils.writeXMLtoStream(osw, doc);
         }
@@ -97,6 +96,7 @@ public class PCMExporter implements Exporter {
         //osw.write("</rules>\n");
     }
 
+    @Deprecated
     private ProcessModel convertToBPMN(ProcessModel fragment) {
         ProcessModel bpmn = new BPMNModel();
         for (ProcessNode node : fragment.getNodes()) {
