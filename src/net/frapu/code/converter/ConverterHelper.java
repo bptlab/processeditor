@@ -24,6 +24,7 @@ import java.util.List;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessModelPreview;
 import net.frapu.code.visualization.pcm.PCMExporter;
+import net.frapu.code.visualization.pcm.PCMFragmentExporter;
 import org.w3c.dom.Document;
 
 /**
@@ -37,6 +38,7 @@ public class ConverterHelper {
 		List<Exporter> result = new LinkedList<Exporter>();
         // Add all default Exporters (for all model types)
         result.add(new PCMExporter());
+        result.add(new PCMFragmentExporter());
         result.add(new ProcessEditorExporter());
         result.add(new PNGExporter());
         result.add(new XPDLExporter());
