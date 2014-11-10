@@ -184,7 +184,8 @@
     <target name="deps" depends="maillib,collectionslib,camundaxml,camundabpmn,junit"/>
 
     <target name="test" depends="compile">
-        <junit printsummary="yes"  classpathref="classpath">
+        <junit printsummary="yes">
+       	    <classpath refid="classpath"/>
              <batchtest>
                   <fileset dir="${test.dir}">
 		      <include name="**/*Test*.java" />
