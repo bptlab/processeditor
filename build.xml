@@ -105,7 +105,8 @@
         <junit printsummary="yes">
              <batchtest>
                   <fileset dir="${src.tests}">
-		  <include name="**/*Test*.java" />
+		      <include name="**/*Test*.java" />
+                  </fileset>
              </batchtest>
         </junit>
     </target>
