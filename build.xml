@@ -18,6 +18,8 @@
 
     <property name="lib.dir" value="lib"/>
 
+    <property name="test.dir" value="test"/>
+
     <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
     </path>
@@ -98,5 +100,14 @@
     <target name="clean-build-server" depends="clean,jar-server"/>
 
     <target name="clean-build-run-server" depends="clean,run-server.jar"/>
+
+    <target name="test" depends="clean-build-workbench">
+        <junit printsummary="yes">
+             <batchtest>
+                  <fileset dir="${src.tests}">
+		  <include name="**/*Test*.java" />
+             </batchtest>
+        </junit>
+    </target>
 
 </project>
