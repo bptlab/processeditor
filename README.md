@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/BP2014W1/processeditor.svg)](https://travis-ci.org/BP2014W1/processeditor/)
+
 Homepage
 ========
 The homepage of the Process Editor Project is hosted here: http://frapu.de/code/processeditor/index.html

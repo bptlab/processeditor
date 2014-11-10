@@ -183,7 +183,7 @@
 
     <target name="deps" depends="maillib,collectionslib,camundaxml,camundabpmn,junit"/>
 
-    <target name="test" depends="deps,compile">
+    <target name="test" depends="deps,compile" classpathref="classpath">
         <junit printsummary="yes">
              <batchtest>
                   <fileset dir="${test.dir}">
