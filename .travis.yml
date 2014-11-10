@@ -1,0 +1,4 @@
+language: c
+jdk:
+	- oraclejdk8
+	- oraclejdk7
