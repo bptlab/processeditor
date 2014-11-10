@@ -47,7 +47,7 @@
         </delete>
     </target>
 
-    <target name="compile">
+    <target name="compile" depends="deps">
         <mkdir dir="${classes.dir}"/>
         <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
     </target>
@@ -183,8 +183,8 @@
 
     <target name="deps" depends="maillib,collectionslib,camundaxml,camundabpmn,junit"/>
 
-    <target name="test" depends="deps,compile" classpathref="classpath">
-        <junit printsummary="yes">
+    <target name="test" depends="compile">
+        <junit printsummary="yes"  classpathref="classpath">
              <batchtest>
                   <fileset dir="${test.dir}">
 		      <include name="**/*Test*.java" />
