@@ -42,7 +42,11 @@
 
     <target name="clean">
         <delete dir="${build.dir}"/>
-	<delete>
+    </target>
+	
+	<target name="clean-w-deps">
+        <delete dir="${build.dir}"/>
+	    <delete>
              <fileset dir="${lib.dir}" includes="*.jar"/>
         </delete>
     </target>
@@ -51,10 +55,20 @@
         <mkdir dir="${classes.dir}"/>
         <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
     </target>
+	
+	<target name="compile-wo-deps">
+        <mkdir dir="${classes.dir}"/>
+        <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+    </target>
 
-    <target name="jar-workbench" depends="compile">
+    <target name="jar-workbench" depends="compile-wo-deps">
         <mkdir dir="${jar.dir}"/>
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<archives>
+				<zips>
+					<fileset dir="${lib.dir}" includes="**/*.jar"/>
+				</zips>
+			</archives>
             <fileset refid="pics"/>
             <fileset refid="resources"/>
             <manifest>
