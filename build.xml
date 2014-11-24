@@ -77,7 +77,7 @@
         </jar>
     </target>
 
-    <target name="jar-server" depends="compile">
+    <target name="jar-server" depends="compile-wo-deps">
         <mkdir dir="${jar.dir}"/>
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
             <fileset refid="pics"/>
