@@ -37,7 +37,8 @@ public class PCMFragmentEditor extends ProcessEditor {
     }
 
     private void init() {
-        addCopyTaskFromOtherFragmentMenu();
+        //addCopyTaskFromOtherFragmentMenu();
+        addCopyTaskFromOtherFragmentOnServerMenu();
         addFreeSpaceLayouterContextMenu();
     }
 
@@ -46,10 +47,22 @@ public class PCMFragmentEditor extends ProcessEditor {
      * This component contains options for choosing tasks from existing Fragments.
      * If you want to link tasks you have to use this ContextMenu
      */
+    @Deprecated
     private void addCopyTaskFromOtherFragmentMenu() {
         TaskCopier copier = new TaskCopier(this);
         JMenuItem menuItem = new JMenuItem("Copy and refer task");
         menuItem.addActionListener(new TaskCopierActionListener(this, copier));
+        addCustomContextMenuItem(ProcessObject.class, menuItem);
+    }
+
+    /**
+     * This method adds a new component to the menu.
+     * This component contains options for choosing tasks from existing Fragments.
+     * The existing Fragments are fetched from the server.
+     */
+    private void addCopyTaskFromOtherFragmentOnServerMenu() {
+        JMenuItem menuItem = new JMenuItem("Copy and refer task");
+        menuItem.addActionListener(new GetTasksFromServerActionListener(this));
         addCustomContextMenuItem(ProcessObject.class, menuItem);
     }
 

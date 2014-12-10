@@ -4,9 +4,8 @@ import net.frapu.code.converter.ConverterHelper;
 import net.frapu.code.visualization.ProcessEditor;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessNode;
+import net.frapu.code.visualization.ProcessObject;
 import net.frapu.code.visualization.bpmn.Task;
-import net.frapu.code.visualization.epk.*;
-import net.frapu.code.visualization.processmap.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,7 +67,7 @@ public class TaskCopier {
         // open the models
         for (File modelFile : arrayOfModelFiles) {
             List<ProcessModel> models = getPCMModelsFromFile(modelFile);
-            addTasksOfModels(models);
+            addGlobalTasksOfModels(models);
         }
         openCopyTaskDialog();
 
@@ -95,12 +94,12 @@ public class TaskCopier {
      *
      * @param models a List of PCMModels
      */
-    private void addTasksOfModels(List<ProcessModel> models) {
+    private void addGlobalTasksOfModels(List<ProcessModel> models) {
         for (ProcessModel model : models) {
             List<Task> tasks = new LinkedList<Task>();
             List<ProcessNode> nodes = model.getNodes();
             for (ProcessNode node : nodes) {
-                if (node instanceof Task) {
+                if (node instanceof Task && node.getProperty("global").equals(ProcessObject.TRUE)) {
                     tasks.add((Task)node);
                 }
             }

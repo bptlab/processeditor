@@ -104,7 +104,7 @@ public class PCMScenario extends ProcessModel {
 
     @Override
     public List<Class<? extends ProcessEdge>> getSupportedEdgeClasses() {
-        return null;
+        return new LinkedList<Class<? extends ProcessEdge>>();
     }
 
     /**
@@ -213,6 +213,7 @@ public class PCMScenario extends ProcessModel {
             node.setText(model.getProcessName());
             node.setSize(getSize().width - 2, 20);
             node.setPos(fragColl.getPos().x, fragColl.getPos().y - fragColl.getSize().height / 2 + (20 * i));
+            node.setProperty(PCMFragmentNode.PROP_FRAGMENT_MID, model.getId());
             addNode(node);
             i--;
         }

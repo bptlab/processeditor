@@ -118,6 +118,7 @@ public abstract class ProcessModel implements ProcessObjectListener, Cloneable {
     public ProcessModel(String name) {
         init();
         setProperty(PROP_PROCESS_NAME, name);
+        setProperty(PROP_PROCESS_URI, "/home/");
     }
 
     protected void init() {

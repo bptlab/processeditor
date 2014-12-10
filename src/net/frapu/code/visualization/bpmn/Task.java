@@ -9,11 +9,7 @@
  */
 package net.frapu.code.visualization.bpmn;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,6 +27,7 @@ public class Task extends Activity {
     //** The property for compensation (0=FALSE;1=TRUE) */
     public final static String PROP_COMPENSATION = "compensation";
     public final static String PROP_IMPLEMENTATION = "implementation";
+    public final static String PROP_GLOBAL = "global";
 
     public Task() {
         super();
@@ -64,6 +61,9 @@ public class Task extends Activity {
         setPropertyEditor(PROP_BACKGROUND, new ColorPropertyEditor());
         
         setProperty(PROP_IMPLEMENTATION, "");
+
+        setProperty(PROP_GLOBAL, FALSE);
+        setPropertyEditor(PROP_GLOBAL, new BooleanPropertyEditor());
     }
 
     @Override
@@ -119,11 +119,16 @@ public class Task extends Activity {
 
     private void drawTask(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-
-        g2.setStroke(BPMNUtils.defaultStroke);
+        
         Shape outline = getOutlineShape();
-
+        g2.setStroke(BPMNUtils.defaultStroke);
         g2.setPaint(getBackground());
+        if (!getProperty(PROP_GLOBAL).equals(FALSE)) {
+            g2.setStroke(new BasicStroke(3.0f,
+                    BasicStroke.CAP_ROUND,
+                    BasicStroke.JOIN_ROUND,
+                    10.0f, null, 0.0f));
+        }
         g2.fill(outline);
 
         g2.setPaint(Color.BLACK);

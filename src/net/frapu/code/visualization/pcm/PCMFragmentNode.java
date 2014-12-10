@@ -14,6 +14,12 @@ import java.awt.geom.Rectangle2D;
  */
 public class PCMFragmentNode extends ProcessNode {
 
+    public static final String PROP_FRAGMENT_MID = "fragment mid";
+
+    public PCMFragmentNode(){
+        super();
+    }
+
     @Override
     protected void paintInternal(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
