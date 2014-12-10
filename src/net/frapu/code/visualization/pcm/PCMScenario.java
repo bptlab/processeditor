@@ -38,6 +38,7 @@ public class PCMScenario extends ProcessModel {
         pcmFragments = new LinkedList<ProcessModel>();
         setProperty(PROP_TERMINATION_DO, "");
         setProperty(PROP_TERMINATION_STATE, "[]");
+        node.setPos(700, 500);
         addNode(node);
         node = new PCMDataObjectCollection();
         node.setPos(500,500);
@@ -138,7 +139,7 @@ public class PCMScenario extends ProcessModel {
         this.references = references;
     }
 
-    private void createDataList() {
+    public void createDataList() {
         for (ProcessModel pm : pcmFragments) {
             for (ProcessNode pn : pm.getNodes()) {
                 if (pn instanceof DataObject) {
@@ -164,7 +165,7 @@ public class PCMScenario extends ProcessModel {
         for (ProcessNode dataObject : dataObjects) {
             ProcessNode node = new PCMFragmentNode();
             node.setText(dataObject.getText());
-            node.setSize(200 - 2, 20);
+            node.setSize(100, 20);
             node.setPos(dataColl.getPos().x, dataColl.getPos().y - dataColl.getSize().height / 2 + (20 * i));
             addNode(node);
             i--;
@@ -196,9 +197,20 @@ public class PCMScenario extends ProcessModel {
     }
 
     /**
+     * Adds a Fragment to the List of all Fragments
+     *
+     * @param fragment the new Model to be added
+     */
+    public void addPCMFragment(PCMFragment fragment) {
+        pcmFragments.add(fragment);
+    }
+
+
+
+    /**
      * Creates a PCMFragmentNode for each Fragment of the Scenario.
      */
-    private void createNodesForFragments() {
+    public void createNodesForFragments() {
         PCMFragmentCollection fragColl = null;
         for (ProcessNode node : getNodes()) {
             if (node instanceof PCMFragmentCollection) {
@@ -211,7 +223,7 @@ public class PCMScenario extends ProcessModel {
         for (ProcessModel model : pcmFragments) {
             ProcessNode node = new PCMFragmentNode();
             node.setText(model.getProcessName());
-            node.setSize(getSize().width - 2, 20);
+            node.setSize(100, 20);
             node.setPos(fragColl.getPos().x, fragColl.getPos().y - fragColl.getSize().height / 2 + (20 * i));
             node.setProperty(PCMFragmentNode.PROP_FRAGMENT_MID, model.getId());
             addNode(node);

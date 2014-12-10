@@ -36,6 +36,12 @@ public class GetTasksFromServerActionListener implements ActionListener {
         userInput = new JTextField("root");
         passwordInput = new JPasswordField("inubit");
         connectButton = new JButton("Connect");
+        connectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                connectToServerAction();
+            }
+        });
     }
 
     @Override
@@ -79,7 +85,7 @@ public class GetTasksFromServerActionListener implements ActionListener {
         selectModelChooser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ProcessModel model = (ProcessModel)((JComboBox)e.getSource()).getSelectedItem();
+                ProcessModel model = (ProcessModel) ((JComboBox) e.getSource()).getSelectedItem();
                 for (ProcessNode node : model.getNodesByClass(Task.class)) {
                     if (node.getProperty("global").equals(ProcessObject.TRUE)) {
                         selectTaskChooser.addItem(node);
