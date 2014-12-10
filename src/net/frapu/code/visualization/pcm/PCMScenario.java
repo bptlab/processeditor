@@ -167,6 +167,7 @@ public class PCMScenario extends ProcessModel {
             node.setText(dataObject.getText());
             node.setSize(100, 20);
             node.setPos(dataColl.getPos().x, dataColl.getPos().y - dataColl.getSize().height / 2 + (20 * i));
+            dataColl.addProcessNode(node);
             addNode(node);
             i--;
         }
@@ -226,6 +227,7 @@ public class PCMScenario extends ProcessModel {
             node.setSize(100, 20);
             node.setPos(fragColl.getPos().x, fragColl.getPos().y - fragColl.getSize().height / 2 + (20 * i));
             node.setProperty(PCMFragmentNode.PROP_FRAGMENT_MID, model.getId());
+            fragColl.addProcessNode(node);
             addNode(node);
             i--;
         }
