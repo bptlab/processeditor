@@ -82,6 +82,7 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
     private void connectToServerAction() {
         modelRepositoryModel = new DefaultListModel<>();
         selectedModelModel = new DefaultListModel<>();
+        addExistingFragments(selectedModelModel);
         selectedModelList.setModel(selectedModelModel);
         modelList.setModel(modelRepositoryModel);
         try {
@@ -104,6 +105,16 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
             }
             modelList.removeAll();
             selectedModelList.removeAll();
+        }
+    }
+
+    private void addExistingFragments(DefaultListModel<ProcessModel> selectedModelModel) {
+        ProcessModel model = editor.getModel();
+        if (!(model instanceof PCMScenario)) {
+            return;
+        }
+        for (ProcessModel m : ((PCMScenario)model).getModelList()) {
+            selectedModelModel.addElement(m);
         }
     }
 
@@ -156,16 +167,20 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (ProcessModel model : (java.util.List<ProcessModel>) modelList.getSelectedValuesList()) {
-                    selectedModelModel.addElement(model);
+                    if (!selectedModelModel.contains(model)) {
+                        selectedModelModel.addElement(model);
+                    }
                 }
             }
         });
         JButton remove = new JButton("Remove");
-        add.addActionListener(new ActionListener() {
+        remove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (ProcessModel model : (java.util.List<ProcessModel>)selectedModelList.getSelectedValuesList()) {
-                    selectedModelModel.removeElement(model);
+                    if (!selectedModelModel.removeElement(model)) {
+                        System.err.println("Could not remove Fragment");
+                    }
                 }
             }
         });
@@ -192,6 +207,7 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PCMScenario scenario = (PCMScenario)editor.getModel();
+                scenario.reset();
                 for (int i = 0; i < selectedModelModel.getSize(); i++) {
                     scenario.addPCMFragment((PCMFragment)selectedModelModel.get(i));
                 }
