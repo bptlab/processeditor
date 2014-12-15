@@ -70,9 +70,12 @@ public class PCMScenario extends ProcessModel {
         }
         else if (node instanceof PCMDataObjectCollection) {
             List<ProcessNode> dataCollections = new LinkedList<ProcessNode>();
+            List<String> dataObjectNames = new LinkedList<String>();
             for (ProcessNode n : getNodes()) {
-                if (n instanceof PCMDataObjectCollection) {
+                if (n instanceof PCMDataObjectCollection
+                        && dataObjectNames.contains(n.getName())) {
                     dataCollections.add(n);
+                    dataObjectNames.add(n.getName());
                 }
             }
             if (!dataCollections.isEmpty()) {
