@@ -2,6 +2,7 @@ package net.frapu.code.visualization.pcm;
 
 import net.frapu.code.visualization.ProcessNode;
 import net.frapu.code.visualization.bpmn.DataObject;
+import net.frapu.code.visualization.bpmn.Task;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -86,7 +87,55 @@ public class PCMScenarioTest {
         assert(model.getNodesByClass(PCMFragmentNode.class).isEmpty());
         assert(model.getNodesByClass(PCMDataObjectNode.class).isEmpty());
         assert(model.getModelList().isEmpty());
+        assert(model.getReferences().isEmpty());
 
+    }
+
+    /**
+     * This Test asserts, that the List of supported Nodes and Edges is empty
+     * So that elements can be added manually from within a Process Editor
+     */
+    @Test
+    public void testNoSuggestionsForNodesAndEdges() {
+        assert(model.getSupportedNodeClasses().isEmpty());
+        assert(model.getSupportedEdgeClasses().isEmpty());
+    }
+
+    /**
+     * Description is useful
+     */
+    @Test
+    public void testUsefulDescription() {
+        assert(model.getDescription().contains("PCM"));
+        assert(model.getDescription().contains("Scenario"));
+    }
+
+    /**
+     * Test if References are correct
+     * For every Task a reference entry is created
+     * The value is a List containing all PCMFragmentIds which include a Task with the given ID
+     */
+    @Test
+    public void testReferences() {
+        assert(model.getReferences().isEmpty());
+        PCMFragment fragment1 = new PCMFragment();
+        PCMFragment fragment2 = new PCMFragment();
+        PCMFragment fragment3 = new PCMFragment();
+        Task task1 = new Task();
+        Task task2 = new Task();
+        fragment1.addNode(task1);
+        fragment2.addNode(task1);
+        fragment3.addNode(task2);
+        model.addPCMFragment(fragment1);
+        model.addPCMFragment(fragment2);
+        model.addPCMFragment(fragment3);
+        model.createNodesForFragments();
+        assert(2 == model.getReferences().size());
+        assert(2 == model.getReferences().get(task1.getId()).size());
+        assert(model.getReferences().get(task1.getId()).contains(fragment1.getId()));
+        assert(model.getReferences().get(task1.getId()).contains(fragment2.getId()));
+        assert(1 == model.getReferences().get(task2.getId()).size());
+        assert(model.getReferences().get(task2.getId()).contains(fragment3.getId()));
     }
 
     // Support Functions

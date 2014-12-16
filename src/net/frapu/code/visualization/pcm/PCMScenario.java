@@ -36,6 +36,7 @@ public class PCMScenario extends ProcessModel {
         dataObjects = new LinkedList<ProcessNode>();
         ProcessNode node = new PCMFragmentCollection();
         pcmFragments = new LinkedList<ProcessModel>();
+        references = new LinkedHashMap<String, List<String>>();
         setProperty(PROP_TERMINATION_DO, "");
         setProperty(PROP_TERMINATION_STATE, "[]");
         node.setPos(700, 500);
@@ -93,8 +94,6 @@ public class PCMScenario extends ProcessModel {
     @Override
     public List<Class<? extends ProcessNode>> getSupportedNodeClasses() {
         List<Class<? extends ProcessNode>> nodes = new LinkedList<Class<? extends ProcessNode>>();
-        nodes.add(PCMFragmentCollection.class);
-        nodes.add(PCMFragmentNode.class);
         return nodes;
     }
 
@@ -112,12 +111,10 @@ public class PCMScenario extends ProcessModel {
         this.workspace = workspace;
         createModelList();
         createDataList();
-        createReferences();
     }
 
     private void createReferences() {
-
-        Map<String, List<String>> references = new LinkedHashMap<String, List<String>>();
+        references.clear();
         for(ProcessModel m : pcmFragments){
             for(ProcessNode n: m.getNodesByClass(Task.class)){
                 if(references.containsKey(n.getId())) {
@@ -129,7 +126,6 @@ public class PCMScenario extends ProcessModel {
                 }
             }
         }
-        this.references = references;
     }
 
     public void createDataList() {
@@ -218,6 +214,7 @@ public class PCMScenario extends ProcessModel {
             addNode(node);
             i--;
         }
+        createReferences();
     }
 
     /**
@@ -264,6 +261,7 @@ public class PCMScenario extends ProcessModel {
     public synchronized void reset() {
         pcmFragments.clear();
         dataObjects.clear();
+        references.clear();
         createNodesForFragments();
         createNodesForDataObjects();
     }
