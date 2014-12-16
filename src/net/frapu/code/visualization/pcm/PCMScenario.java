@@ -58,27 +58,19 @@ public class PCMScenario extends ProcessModel {
     @Override
     public synchronized void addNode(ProcessNode node) {
         if (node instanceof PCMFragmentCollection) {
-            List<ProcessNode> fragmentCollections = new LinkedList<ProcessNode>();
-            for (ProcessNode n : getNodes()) {
-                if (n instanceof PCMFragmentCollection) {
-                    fragmentCollections.add(n);
-                }
-            }
-            if (!fragmentCollections.isEmpty()) {
+            if (!getNodesByClass(PCMFragmentCollection.class).isEmpty()) {
                 return;
             }
-        }
-        else if (node instanceof PCMDataObjectCollection) {
-            List<ProcessNode> dataCollections = new LinkedList<ProcessNode>();
-            List<String> dataObjectNames = new LinkedList<String>();
-            for (ProcessNode n : getNodes()) {
-                if (n instanceof PCMDataObjectCollection
-                        && dataObjectNames.contains(n.getName())) {
-                    dataCollections.add(n);
-                    dataObjectNames.add(n.getName());
-                }
+        } else if (node instanceof PCMDataObjectCollection) {
+            if (!getNodesByClass(PCMDataObjectCollection.class).isEmpty()) {
+                return;
             }
-            if (!dataCollections.isEmpty()) {
+        } else if (node instanceof PCMDataObjectNode) {
+            List<String> dataObjectNames = new LinkedList<String>();
+            for (ProcessNode n : getNodesByClass(PCMDataObjectNode.class)) {
+                dataObjectNames.add(n.getName());
+            }
+            if (dataObjectNames.contains(node.getName())) {
                 return;
             }
         }
@@ -115,6 +107,7 @@ public class PCMScenario extends ProcessModel {
      * Set a new Workspace. Update all PCMFragments and Dataobjects of the scenario.
      * @param workspace
      */
+    @Deprecated
     public void setWorkspace(File workspace) {
         this.workspace = workspace;
         createModelList();
@@ -126,16 +119,13 @@ public class PCMScenario extends ProcessModel {
 
         Map<String, List<String>> references = new LinkedHashMap<String, List<String>>();
         for(ProcessModel m : pcmFragments){
-            for(ProcessNode n: m.getNodes()){
-                if(n instanceof Task) {
-                    if(references.containsKey(n.getId())) {
-                        references.get(n.getId()).add(m.getId());
-                    }
-                    else {
-                        List<String> referenceModels = new LinkedList<String>();
-                        referenceModels.add(m.getId());
-                        references.put(n.getId(), referenceModels);
-                    }
+            for(ProcessNode n: m.getNodesByClass(Task.class)){
+                if(references.containsKey(n.getId())) {
+                    references.get(n.getId()).add(m.getId());
+                } else {
+                    List<String> referenceModels = new LinkedList<String>();
+                    referenceModels.add(m.getId());
+                    references.put(n.getId(), referenceModels);
                 }
             }
         }
@@ -144,11 +134,9 @@ public class PCMScenario extends ProcessModel {
 
     public void createDataList() {
         for (ProcessModel pm : pcmFragments) {
-            for (ProcessNode pn : pm.getNodes()) {
-                if (pn instanceof DataObject) {
-                    if (!dataObjects.contains(pn)) {
-                        dataObjects.add(pn);
-                    }
+            for (ProcessNode pn : pm.getNodesByClass(DataObject.class)) {
+                if (!dataObjects.contains(pn)) {
+                    dataObjects.add(pn);
                 }
             }
         }
@@ -157,14 +145,14 @@ public class PCMScenario extends ProcessModel {
 
     private void createNodesForDataObjects() {
         PCMDataObjectCollection dataColl = (PCMDataObjectCollection)getNodesByClass(PCMDataObjectCollection.class).get(0);
-        List<ProcessNode> fragmentNodes = getNodesByClass(PCMDataObjectNode.class);
-        for (ProcessNode node : fragmentNodes) {
+        List<ProcessNode> dataNodes = getNodesByClass(PCMDataObjectNode.class);
+        for (ProcessNode node : dataNodes) {
             removeNode(node);
         }
 
         int i = dataObjects.size();
         for (ProcessNode dataObject : dataObjects) {
-            ProcessNode node = new PCMFragmentNode();
+            ProcessNode node = new PCMDataObjectNode();
             node.setText(dataObject.getText());
             node.setSize(100, 20);
             node.setPos(dataColl.getPos().x, dataColl.getPos().y - dataColl.getSize().height / 2 + (20 * i));
@@ -275,6 +263,7 @@ public class PCMScenario extends ProcessModel {
      */
     public synchronized void reset() {
         pcmFragments.clear();
+        dataObjects.clear();
         createNodesForFragments();
         createNodesForDataObjects();
     }
