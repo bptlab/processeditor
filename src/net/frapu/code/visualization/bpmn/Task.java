@@ -9,15 +9,14 @@
  */
 package net.frapu.code.visualization.bpmn;
 
+import net.frapu.code.visualization.editors.BooleanPropertyEditor;
+import net.frapu.code.visualization.editors.ColorPropertyEditor;
+import net.frapu.code.visualization.editors.ListSelectionPropertyEditor;
+
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.util.HashSet;
 import java.util.Set;
-import net.frapu.code.visualization.editors.BooleanPropertyEditor;
-import net.frapu.code.visualization.editors.ColorPropertyEditor;
-import net.frapu.code.visualization.editors.DefaultPropertyEditor;
-import net.frapu.code.visualization.editors.ListSelectionPropertyEditor;
-import net.frapu.code.visualization.pcm.DataSetPropertyEditor;
 
 /**
  *
