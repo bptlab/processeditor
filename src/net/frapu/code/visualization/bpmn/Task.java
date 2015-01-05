@@ -17,6 +17,7 @@ import net.frapu.code.visualization.editors.BooleanPropertyEditor;
 import net.frapu.code.visualization.editors.ColorPropertyEditor;
 import net.frapu.code.visualization.editors.DefaultPropertyEditor;
 import net.frapu.code.visualization.editors.ListSelectionPropertyEditor;
+import net.frapu.code.visualization.pcm.DataSetPropertyEditor;
 
 /**
  *
@@ -28,6 +29,7 @@ public class Task extends Activity {
     public final static String PROP_COMPENSATION = "compensation";
     public final static String PROP_IMPLEMENTATION = "implementation";
     public final static String PROP_GLOBAL = "global";
+    //public final static String PROP_INPUT_SET = "input sets";
 
     public Task() {
         super();
@@ -64,6 +66,9 @@ public class Task extends Activity {
 
         setProperty(PROP_GLOBAL, FALSE);
         setPropertyEditor(PROP_GLOBAL, new BooleanPropertyEditor());
+
+        /*setProperty(PROP_INPUT_SET, "");
+        setPropertyEditor(PROP_INPUT_SET, new DataSetPropertyEditor());*/
     }
 
     @Override
