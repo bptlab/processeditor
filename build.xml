@@ -54,7 +54,7 @@
 
     <target name="compile" depends="deps">
         <mkdir dir="${classes.dir}"/>
-        <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+        <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" includeruntime="false"/>
     </target>
 	
 	<target name="compile-wo-deps">
@@ -200,7 +200,7 @@
 
     <target name="compileTests" depends="compile">
 	<mkdir dir="${test.build.dir}"/>
-        <javac source="1.7" target="1.7" srcdir="${test.dir}" destdir="${test.build.dir}">
+        <javac source="1.7" target="1.7" srcdir="${test.dir}" destdir="${classes.dir}" includeruntime="false">
 		<classpath>
 			<path refid="classpath"/>
 			<pathelement location="${classes.dir}"/>
@@ -212,15 +212,18 @@
         <junit showoutput="true" printsummary="yes" haltonfailure="yes">
        	    <classpath>
 		<path refid="classpath"/>
-		<pathelement location="$classes.dir}"/>
-		<pathelement location="${test.build.dir}"/>
+		<path location="${test.build.dir}">
+		    <fileset includes="*.class">
+		</path>
+		<pathelement location="${classes.dir}"/>
 	    </classpath>
 	    <formatter type="plain" usefile="false"/>
-            <batchtest>
+	    <batchtest>
                   <fileset dir="${test.dir}">
 		      <include name="**/*Test*.java" />
                   </fileset>
-             </batchtest>
+            </batchtest>
+	    <!-- <test name="net.frapu.code.visualization.pcm.PCMScenarioTest"/> -->
         </junit>
     </target>
 
