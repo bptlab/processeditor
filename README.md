@@ -4,6 +4,12 @@
 Homepage
 ========
 The homepage of the Process Editor Project is hosted here: http://frapu.de/code/processeditor/index.html
+This fork extends the Process Editor Project with the capability to model and save PCM(Productive Case Management) models.
+
+PCM Modelling
+=============
+
+If you want to learn more about modelling PCM Processes with the Process Editor see the [PCM document](doc/PCM.md).
 
 ProcessEditor Core Packages
 ===========================
@@ -16,6 +22,8 @@ Please download separately and copy to lib folder
 * log4j (https://logging.apache.org/log4j/1.2/download.html)
 * javax.mail (http://www.oracle.com/technetwork/java/javamail/index.html)
 * org.apache.commons.collections (http://commons.apache.org/proper/commons-collections/download_collections.cgi)
+* camunda xml model (https://github.com/camunda/camunda-xml-model)
+* camunda bpmn model (https://github.com/camunda/camunda-bpmn-model)
 
 WebModeler requires ExtJS: Please download separately and copy ExtJs to www/js/ext (unzipped)
 * ExtJS 4 (for Web Modeler, http://www.sencha.com/products/extjs/download/ext-js-4.2.1/2281)
