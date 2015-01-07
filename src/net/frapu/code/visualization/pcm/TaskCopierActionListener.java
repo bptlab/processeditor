@@ -13,7 +13,7 @@ import java.io.File;
  * @see net.frapu.code.visualization.pcm.PCMFragment
  * @see net.frapu.code.visualization.pcm.PCMFragmentEditor
  * @version 28.10.2014.
- * @author Stephan Haarmann
+ * @author Stephan Haarmann & Juliane Imme
  */
 public class TaskCopierActionListener implements ActionListener {
     private final PCMFragmentEditor processEditor;

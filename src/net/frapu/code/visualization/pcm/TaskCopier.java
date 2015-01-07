@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * This class is responsible to create copies and references to other tasks.
  *
- * @author Stephan Haarmann
+ * @author Stephan Haarmann & Juliane Imme
  * @version 28.10.2014.
  */
 public class TaskCopier {
@@ -31,6 +31,11 @@ public class TaskCopier {
     private Map<ProcessModel, List<Task>> tasksOfModels;
     private ProcessEditor processEditor;
 
+    /**
+     * Constructs the TaskCopier for a specific ProcessEditor.
+     * Without the processEditor object no Task can be added.
+     * @param processEditor
+     */
     public TaskCopier(ProcessEditor processEditor) {
         this.processEditor = processEditor;
     }
@@ -141,12 +146,16 @@ public class TaskCopier {
     }
 
     /**
-     * ChooseMenu is a Dialog for Choosing a Task to copy and refer
+     * ChooseMenu is a Dialog for Choosing a Task to copy and refer.
+     * There fore you choose a Model and a global task
      */
     private class ChooseMenu extends JDialog {
         private JComboBox<ProcessModel> chooseProcessBox;
         private JComboBox<Task> chooseTaskBox;
 
+        /**
+         * Constructs and shows the Choose Menu.
+         */
         public ChooseMenu() {
             super();
             setTitle("Choose Task");

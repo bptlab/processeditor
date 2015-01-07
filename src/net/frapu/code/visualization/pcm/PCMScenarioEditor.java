@@ -18,18 +18,25 @@ import java.util.*;
  * An {@link net.frapu.code.visualization.ProcessEditor} for the PCM Scenario Model. It has the option to define
  * a Workspace.
  *
- * @author Stephan Haarmann
+ * @author Stephan Haarmann, Juliane Imme
  * @version 28.10.2014.
  */
 public class PCMScenarioEditor extends ProcessEditor {
 
     private static final long serialVersionUID = -6660643360607804595L;
 
+    /**
+     * Creates a new empty PCMScenarioEditor
+     */
     public PCMScenarioEditor() {
         super();
         init();
     }
 
+    /**
+     * Creates a new editor and loads a specific Model
+     * @param model the model to be loaded.
+     */
     public PCMScenarioEditor(ProcessModel model) {
         super(model);
         init();
@@ -70,10 +77,17 @@ public class PCMScenarioEditor extends ProcessEditor {
         addCustomContextMenuItem(ProcessObject.class, menuItem);
     }
 
+    /**
+     * The Action istener for the Choose Workspace Action (Menu Item)
+     */
     @Deprecated
     private class ChooseWorkspaceActionListener implements ActionListener {
         ProcessEditor processEditor;
 
+        /**
+         * Creates a new Action Listener for the Choose Workspace Action.
+         * @param pcmScenarioEditor the ProcessEditor of the current PCMScenario
+         */
         public ChooseWorkspaceActionListener(PCMScenarioEditor pcmScenarioEditor) {
             processEditor = pcmScenarioEditor;
         }
