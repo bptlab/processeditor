@@ -47,6 +47,7 @@ public class PCMScenarioEditor extends ProcessEditor {
      * This component contains options for choosing tasks from existing Fragments.
      * If you want to link tasks you have to use this ContextMenu
      */
+    @Deprecated
     private void addCopyTaskFromOtherFragmentMenu() {
         JMenuItem menuItem = new JMenuItem("Add Fragments");
         //menuItem.addActionListener(new ChooseWorkspaceActionListener(this));
@@ -55,7 +56,7 @@ public class PCMScenarioEditor extends ProcessEditor {
     }
 
     private void init() {
-        addCopyTaskFromOtherFragmentMenu();
+    //    addCopyTaskFromOtherFragmentMenu();
     //    addExportMenu();
     }
 
@@ -78,7 +79,7 @@ public class PCMScenarioEditor extends ProcessEditor {
     }
 
     /**
-     * The Action istener for the Choose Workspace Action (Menu Item)
+     * The Action listener for the Choose Workspace Action (Menu Item)
      */
     @Deprecated
     private class ChooseWorkspaceActionListener implements ActionListener {
