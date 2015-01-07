@@ -9,7 +9,7 @@ This fork extends the Process Editor Project with the capability to model and sa
 PCM Modelling
 =============
 
-If you want to learn more about modelling PCM Processes with the Process Editor see the [PCM document](doc/PCM.md).
+If you want to learn more about modelling PCM Processes with the Process Editor see the [PCM document](docs/PCM.md).
 
 ProcessEditor Core Packages
 ===========================
