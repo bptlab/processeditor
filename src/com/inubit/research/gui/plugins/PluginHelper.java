@@ -26,7 +26,7 @@ public class PluginHelper {
         result.add(NodeViewPlugin.class);
         result.add(PropertiesPlugin.class);
         result.add(ModelOperationsPlugin.class);
-        result.add(CreateVariantOfModel.class);
+        //result.add(CreateVariantOfModel.class);
         //result.add(NaturalLanguageInputPlugin.class);
         //result.add(ProcessModelMergerPlugin.class);
         result.add(BehavioralInterfaceGeneratingPlugin.class);

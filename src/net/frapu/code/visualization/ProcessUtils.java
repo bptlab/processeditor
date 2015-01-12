@@ -699,7 +699,7 @@ public abstract class ProcessUtils {
         // Try to create corresponding process model instance
         Object o = Class.forName(processType).newInstance();
         if (!(o instanceof ProcessModel)) {
-            throw new Exception("Unkown process model type!");
+            throw new Exception("Unknown process model type!");
         }
         // Cast to process model
         model = (ProcessModel) o;
