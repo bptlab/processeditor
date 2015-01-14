@@ -1,4 +1,4 @@
-# PCM modelling using the Processeditor
+# PCM modeling using the Processeditor
 
 This document explains how to use the Processeditor to create PCM models.
 A PCM-Process can be described by many PCM fragments and one PCM scenario.
@@ -6,11 +6,11 @@ A PCM-Process can be described by many PCM fragments and one PCM scenario.
 ## Preparations
 
 Currently you need both, the Processeditor Workbench and the Processeditor Server to model and Save PCM.
-You will use the Workbench for modelling and the Server as a global repository.
+You will use the Workbench for modeling and the Server as a global repository.
 
 ## PCM Fragments
 
-PCM Fragments are small Business Process models. They can be modelled using a subset of the BPMN-Notation:
+PCM Fragments are small Business Process models. They can be modeled using a subset of the BPMN-Notation:
 
 * Tasks
 * Events
@@ -23,11 +23,11 @@ PCM Fragments are small Business Process models. They can be modelled using a su
 * Sequence Flow
 * Data Flow
 
-All this elements are offered by the model type PCM Fragment.
+All these elements are offered by the model type PCM Fragment.
 
 ### Marking a Task as Global
 
-PCM allows to use the same task in more than one fragment. To do so
+PCM allows using the same task in more than one fragment. To do so
 
 1. model the Task (in one scenario)
 2. Save the model to the repository
@@ -73,11 +73,3 @@ Currently only one termination condition consisting of one Data Object in one sp
 2. Right Click on the canvas (not the Nodes)
 3. Choose *Properties*
 4. Fill out the *Termination Data Object* and *Termination State* fields
-
-### Copy and Alter a Complete Fragment
-
-You can create a variation of an existing PCM Fragment using the Plug-in *Create Variant*.
-
-1. First click on *Plug-Ins*
-2. Choose *Create Variant*
-3. Choose your Fragment and click on *Ok*

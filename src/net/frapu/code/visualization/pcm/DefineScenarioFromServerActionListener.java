@@ -5,6 +5,7 @@ import com.inubit.research.gui.WorkbenchConnectToServerDialog;
 import net.frapu.code.visualization.Configuration;
 import net.frapu.code.visualization.ProcessEditor;
 import net.frapu.code.visualization.ProcessModel;
+import net.frapu.code.visualization.ProcessNode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,7 +83,6 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
     private void connectToServerAction() {
         modelRepositoryModel = new DefaultListModel<>();
         selectedModelModel = new DefaultListModel<>();
-        addExistingFragments(selectedModelModel);
         selectedModelList.setModel(selectedModelModel);
         modelList.setModel(modelRepositoryModel);
         try {
@@ -92,6 +92,7 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
 
             ModelDirectory directory = server.getDirectory();
             updateModelList(directory);
+            addExistingFragments(selectedModelModel);
             Configuration conf = Configuration.getInstance();
             conf.setProperty(WorkbenchConnectToServerDialog.CONF_SERVER_URI, serverInput.getText());
             conf.setProperty(WorkbenchConnectToServerDialog.CONF_SERVER_USER, userInput.getText());
@@ -113,8 +114,19 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
         if (!(model instanceof PCMScenario)) {
             return;
         }
-        for (ProcessModel m : ((PCMScenario)model).getModelList()) {
-            selectedModelModel.addElement(m);
+        if (((PCMScenario)model).getModelList().isEmpty()) {
+            for (ProcessNode node : model.getNodesByClass(PCMFragmentNode.class)) {
+                for (int i = 0; i < modelRepositoryModel.getSize(); i++) {
+                    ProcessModel m = modelRepositoryModel.get(i);
+                    if (node.getText().equals(m.getProcessName())) {
+                        selectedModelModel.addElement(m);
+                    }
+                }
+            }
+        } else {
+            for (ProcessModel m : ((PCMScenario)model).getModelList()) {
+                selectedModelModel.addElement(m);
+            }
         }
     }
 
