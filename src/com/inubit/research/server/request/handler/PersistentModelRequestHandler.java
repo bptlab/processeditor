@@ -644,6 +644,9 @@ public class PersistentModelRequestHandler extends ModelRequestHandler {
             uriEl.setTextContent(prefix + "/models/" + id);
             Element folderEl = XMLHelper.addElement(doc, modelEl, "folderalias");
             folderEl.setTextContent(vmd.getFolder());
+            Element typeEl = XMLHelper.addElement(doc, modelEl, "type");
+            ServerModel model = modelManager.getPersistentModel(id, -1);
+            typeEl.setTextContent(model.getModel().getClass().toString().split(" ")[1]);
         }
 
         return doc;
