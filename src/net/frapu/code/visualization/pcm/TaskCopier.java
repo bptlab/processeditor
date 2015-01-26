@@ -224,6 +224,11 @@ public class TaskCopier {
             return processComboBox;
         }
 
+        /**
+         * Creates the "Accept"-Button to accept the changes (the choosen Task)
+         *
+         * @return
+         */
         private JButton acceptButton() {
             JButton accept = new JButton("Ok");
             accept.addActionListener(new ActionListener() {
@@ -251,6 +256,11 @@ public class TaskCopier {
             return accept;
         }
 
+        /**
+         * Adds a new Cancel button to cancel the dialog.
+         *
+         * @return the cancel Button
+         */
         private JButton cancelButton() {
             JButton cancel = new JButton("Cancel");
             cancel.addActionListener(new ActionListener() {

@@ -24,13 +24,24 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * This Exporter exports PCMFragments to the BPMN exchange Format.
+ * There for it uses the camunda-xml-Model and camunda-bpmn-model lib.
+ *
  * @version 07.11.2014.
  * @author Juliane Imme, Stephan Haarmann
+ * @Deprecated The Server uses another representation
  */
+@Deprecated
 public class PCMFragmentExporter implements Exporter {
     private BpmnModelInstance modelInstance;
     private Map<String, BpmnModelElementInstance> nodes = new HashMap<>();
 
+    /**
+     * Saves a given model to a given File
+     * @param f the file where the model should be saved
+     * @param m the model to be serialized
+     * @throws Exception
+     */
     @Override
     public void serialize(File f, ProcessModel m) throws Exception {
         f.createNewFile();
@@ -63,6 +74,13 @@ public class PCMFragmentExporter implements Exporter {
         Bpmn.writeModelToStream(fos, modelInstance);
     }
 
+    /**
+     * First Decides about the correct subtype of the Edge and then adds the edge to the Process. The Edge will
+     * correctly refer the source and target
+     *
+     * @param process The Process which contains the Edge
+     * @param e The Edge which have to be added to the Process
+     */
     private void createEdge(Process process, ProcessEdge e) {
         if (e instanceof SequenceFlow) {
             FlowNode source = ((FlowNode)nodes.get(e.getSource().getId()));
@@ -79,6 +97,12 @@ public class PCMFragmentExporter implements Exporter {
         }
     }
 
+    /**
+     * Creates a new node for a camunda bpmn model. It converts nodes of the ProcessEditor to nodes of the Camunda
+     * BPMN Model
+     * @param process
+     * @param n the (ProcessEditor)node which is the blueprint for the new (Camunda) bpmn model node
+     */
     private void createNode(Process process, ProcessNode n) {
         String nodeName = n.getName();
         if (null == nodeName || "".equals(nodeName)) {
@@ -115,6 +139,14 @@ public class PCMFragmentExporter implements Exporter {
         }
     }
 
+    /**
+     * Creates a new Sequence flow for the bpmn model.
+     *
+     * @param process the process which contains the sequence flow
+     * @param from the source of the sequence flow
+     * @param to the target of the sequence flow
+     * @return the created sequenceFlow
+     */
     private org.camunda.bpm.model.bpmn.instance.SequenceFlow createSequenceFlow(Process process, FlowNode from, FlowNode to) {
         String identifier = from.getId() + "-" + to.getId();
         org.camunda.bpm.model.bpmn.instance.SequenceFlow sequenceFlow = createElement(process, identifier, org.camunda.bpm.model.bpmn.instance.SequenceFlow.class);
@@ -126,6 +158,14 @@ public class PCMFragmentExporter implements Exporter {
         return sequenceFlow;
     }
 
+    /**
+     * a generic method to ereate a new element of an (Camunda) BPMN-Model. It is used by createEdge and createNode
+     * @param parentElement the new Element will be added to the parentElement
+     * @param id the id of the new Element
+     * @param elementClass The class of the element
+     * @param <T> The Genereric return Type (see elementClass)
+     * @return the just created element
+     */
     protected <T extends BpmnModelElementInstance> T createElement(BpmnModelElementInstance parentElement, String id, Class<T> elementClass) {
         T element = modelInstance.newInstance(elementClass);
         element.setAttributeValue("id", id, true);
@@ -133,6 +173,11 @@ public class PCMFragmentExporter implements Exporter {
         return element;
     }
 
+    /**
+     * This Exporter can only be used to export PCMFragments or highly restricted BPMN-Models
+     *
+     * @return a List containing only the PCMFragment.class
+     */
     @Override
     public Set<Class<? extends ProcessModel>> getSupportedModels() {
         Set<Class<? extends ProcessModel>> models = new HashSet<>();
@@ -140,11 +185,20 @@ public class PCMFragmentExporter implements Exporter {
         return models;
     }
 
+    /**
+     * The Name of the exporter for better human readability
+     * @return The Name to be shown in the export dialog
+     */
     @Override
     public String getDisplayName() {
         return "PCMFragment (BPMN)";
     }
 
+
+    /**
+     * The Supported FileTypes
+     * @return an StringArray which contains only ".bpmn" as a file ending
+     */
     @Override
     public String[] getFileTypes() {
         return new String[]{".bpmn"};

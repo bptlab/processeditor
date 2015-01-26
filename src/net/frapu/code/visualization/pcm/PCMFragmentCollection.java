@@ -8,18 +8,27 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A Cluster for a number of PCMFractalNodes. There should be only one PCMFragmentCollection node for each Scenario.
+ * A Cluster for a number of PCMFragmentNodes. There should be only one PCMFragmentCollection node for each Scenario.
  *
- * @author Stephan Haarmann
+ * @author Stephan Haarmann & Juliane Imme
  * @version 28.10.2014.
  */
 public class PCMFragmentCollection extends Cluster {
 
+    /**
+     * Creates a new PCMFragmentCollection with the default size (200px x 500px). If you change the default size,
+     * you might want to change the default size of PCMDataObjectNode as well.
+     */
     public PCMFragmentCollection() {
         super();
         setSize(200, 500);
     }
 
+    /**
+     * Draws the Node. It as a white fill color, a black border and rounded corners. The text will be placed above the
+     * node
+     * @param g the graphics Context
+     */
     @Override
     protected void paintInternal(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
@@ -34,6 +43,10 @@ public class PCMFragmentCollection extends Cluster {
                 getSize().width, getText(), PCMUtils.Orientation.TOP);
     }
 
+    /**
+     * Returns the outline shape. A rounded Rectangle
+     * @return outline shape
+     */
     @Override
     protected Shape getOutlineShape() {
         RoundRectangle2D outline = new RoundRectangle2D.Double();
@@ -43,13 +56,14 @@ public class PCMFragmentCollection extends Cluster {
         return outline;
     }
 
+    /**
+     * The PCMFragmentCollection should be neither target nor source of a ´n edge. Hence it is has no
+     * defaultConnectionPoints
+     * @return an Empty Set of Points
+     */
     @Override
     public Set<Point> getDefaultConnectionPoints() {
         Set<Point> connectionPoints = new HashSet<Point>();
-       /* connectionPoints.add(new Point(getPos().x, getPos().y - getSize().height));
-        connectionPoints.add(new Point(getPos().x, getPos().y + getSize().height));
-        connectionPoints.add(new Point(getPos().x - getSize().width, getPos().y));
-        connectionPoints.add(new Point(getPos().x + getSize().width, getPos().y));*/
         return connectionPoints;
     }
 }

@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.net.URI;
 
 /**
- * @author Stephan
+ * @author Stephan Haarmann & Juliane Imme
  * @version 03.12.2014
  */
 public class GetTasksFromServerActionListener implements ActionListener {

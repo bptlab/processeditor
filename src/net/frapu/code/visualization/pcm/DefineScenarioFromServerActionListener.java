@@ -14,29 +14,45 @@ import java.awt.event.ActionListener;
 import java.net.URI;
 
 /**
- * @author Stephan
+ * This class is an action listener for the plugin _Define Scenario From Server_.
+ * This Action listener opens a new window, which allows you to change the set of fragments, that are part of the
+ * scenario.
+ *
+ * @author Stephan Haarmann & Juliane Imme
  * @version 10/12/2014
  */
 public class DefineScenarioFromServerActionListener implements ActionListener {
+    /* UI Elements for the "choose fragments" Dialog */
     private JTextField serverInput;
     private JTextField userInput;
     private JPasswordField passwordInput;
     private JButton connectButton;
     private JFrame serverConnectionFrame;
-
-    private ProcessEditor editor;
     private JButton accept;
     private JButton cancel;
+    /* Configurations/Models for the ui-Elements */
     private JList modelList;
     private JList selectedModelList;
-    private DefaultListModel<ProcessModel> modelRepositoryModel;
-    private DefaultListModel<ProcessModel> selectedModelModel;
 
+    /* Holds the context */
+    private ProcessEditor editor;   // The current editor, which contains the Scenario
+    private DefaultListModel<ProcessModel> modelRepositoryModel; // All Fragments from the Repository
+    private DefaultListModel<ProcessModel> selectedModelModel; // All Fragments which are part of the scenario
+
+    /**
+     * Creates a new ActionListener with the given editor as ProcessEditor. This Editor should be responsible for the
+     * Scenario.
+     *
+     * @param editor
+     */
     public DefineScenarioFromServerActionListener(ProcessEditor editor) {
         super();
         this.editor = editor;
     }
 
+    /**
+     * Creates the JFrame (adding the Elemens, doing Layout ...)
+     */
     private JFrame createFrame() {
         JFrame frame = new JFrame("Create Scenario from Server Data");
         frame.setLayout(new BorderLayout());
@@ -50,6 +66,11 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
 
     }
 
+    /**
+     * Creates a Panel which contains Fields and buttons to connect with the server
+     *
+     * @return returns the serverPanel
+     */
     private Component getServerPanel() {
         initServerInputs();
         JPanel serverPanel = new JPanel();
@@ -64,6 +85,9 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
         return serverPanel;
     }
 
+    /**
+     * Initializes the Inputs (Default values & ActionListeners)
+     */
     private void initServerInputs() {
         serverInput = new JTextField("http://localhost:1205");
         userInput = new JTextField("root");
@@ -92,7 +116,7 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
 
             ModelDirectory directory = server.getDirectory();
             updateModelList(directory);
-            addExistingFragments(selectedModelModel);
+            addExistingFragments();
             Configuration conf = Configuration.getInstance();
             conf.setProperty(WorkbenchConnectToServerDialog.CONF_SERVER_URI, serverInput.getText());
             conf.setProperty(WorkbenchConnectToServerDialog.CONF_SERVER_USER, userInput.getText());
@@ -109,7 +133,11 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
         }
     }
 
-    private void addExistingFragments(DefaultListModel<ProcessModel> selectedModelModel) {
+    /**
+     * This Method will be called every time the dialog is opened. It asserts that Fragments which have been
+     * added to the scenario will not be removed automatically
+     */
+    private void addExistingFragments() {
         ProcessModel model = editor.getModel();
         if (!(model instanceof PCMScenario)) {
             return;
@@ -130,6 +158,10 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
         }
     }
 
+    /**
+     * Updates the ModelList: Adds all models of a given directory to the model List
+     * @param directory
+     */
     private void updateModelList(ModelDirectory directory) {
         if (directory != null) {
             java.util.List<ModelDirectoryEntry> l = directory.getEntries();
@@ -157,7 +189,11 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
         serverConnectionFrame = createFrame();
     }
 
-    public Component getSelectionPanel() {
+    /**
+     *      * @return selectionpanel - A Panel which contains two Lists (available and added Fragments) and two controls (add/remove)
+     * which allows you to add/remove fragments from the scenario
+     */
+    private Component getSelectionPanel() {
         JPanel selectionPanel = new JPanel();
         JScrollPane listPane = new JScrollPane();
         JScrollPane selectedPane = new JScrollPane();
@@ -168,8 +204,6 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
         selectionPanel.setLayout(new BorderLayout());
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new GridLayout(1, 2));
-        //listPanel.add(listPane);
-        //listPanel.add(selectedPane);
         listPanel.add(modelList);
         listPanel.add(selectedModelList);
         JPanel buttonPanel = new JPanel();
@@ -204,7 +238,10 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
         return selectionPanel;
     }
 
-    public Component getButtonPanel() {
+    /**
+     * @return buttonPanel - A JPanel containing two Buttons to Accept & Cancel all changes
+     */
+    private Component getButtonPanel() {
         initButton();
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2));
@@ -213,6 +250,9 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
         return buttonPanel;
     }
 
+    /**
+     * This Method initializes the Buttons of the ButtonPanel (adding ActionListeners, Labels)
+     */
     private void initButton() {
         accept = new JButton("Ok");
         accept.addActionListener(new ActionListener() {

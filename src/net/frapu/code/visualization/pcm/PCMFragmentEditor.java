@@ -19,23 +19,35 @@ import java.io.File;
  * {@link net.frapu.code.visualization.bpmn.Task}s from existing PCM Fragments.
  * Also the {@link com.inubit.research.layouter.freeSpace.FreeSpaceLayouter} is initialized.
  *
- * @author Stephan Haarmann
+ * @author Stephan Haarmann & Juliane Imme
  * @version 28.10.2014.
  */
 public class PCMFragmentEditor extends ProcessEditor {
 
     private static final long serialVersionUID = -6660643360605974595L;
 
+    /**
+     * Creates and initalizes a new PCMFragmentEditor for an new PCMFramgent.
+     */
     public PCMFragmentEditor() {
         super();
         init();
     }
 
+    /**
+     * Creates a new PCMFragmentEditor for a given Model
+     * @param model
+     */
     public PCMFragmentEditor(ProcessModel model) {
         super(model);
         init();
     }
 
+    /**
+     * Initializes the FragmentEditor. It adds Context-Menu Entries for the addCopyTaskFromOtherFragmentOnServer and
+     * the BPMNLayouter.
+     * For Offline Modeling you could use the CopyTaskFromOtherFragment plugin
+     */
     private void init() {
         //addCopyTaskFromOtherFragmentMenu();
         addCopyTaskFromOtherFragmentOnServerMenu();

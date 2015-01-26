@@ -18,7 +18,7 @@ import java.util.Map;
  * This class describes a PCM Scenario Model. It inherits from Process Model.
  * A Scenario is a collection of PCM Fragments.
  *
- * @author Stephan Haarmann
+ * @author Stephan Haarmann & Juliane Imme
  * @version 28.10.2014
  */
 public class PCMScenario extends ProcessModel {
@@ -30,6 +30,10 @@ public class PCMScenario extends ProcessModel {
     public static final String PROP_TERMINATION_DO = "Termination Data Object";
     private Map<String, List<String>> references;
 
+    /**
+     * Creates a new PCMScenario. A PCMFragmentCollection and PCMDataObjectCollection is added automatically.
+     * The Lists, fields and properties will be initialized.
+     */
     public PCMScenario() {
         super();
         processUtils = new PCMUtils();
@@ -46,6 +50,10 @@ public class PCMScenario extends ProcessModel {
         addNode(node);
     }
 
+    /**
+     * The description of the Model, it will be used to represent the Model in the "New" menu
+     * @return a String containing the Description
+     */
     @Override
     public String getDescription() {
         return "PCM Scenario Model";
@@ -91,12 +99,20 @@ public class PCMScenario extends ProcessModel {
         }
     }
 
+    /**
+     * No nodes should be added manually. Hence the getSupportedNodeClasses return an empty List.
+     * @return an empty List
+     */
     @Override
     public List<Class<? extends ProcessNode>> getSupportedNodeClasses() {
         List<Class<? extends ProcessNode>> nodes = new LinkedList<Class<? extends ProcessNode>>();
         return nodes;
     }
 
+    /**
+     * No edges can be added
+     * @return an empty List of ProcessEdges;
+     */
     @Override
     public List<Class<? extends ProcessEdge>> getSupportedEdgeClasses() {
         return new LinkedList<Class<? extends ProcessEdge>>();
@@ -113,6 +129,10 @@ public class PCMScenario extends ProcessModel {
         createDataList();
     }
 
+    /**
+     * This method updates the references. First they will be cleared task a new reference will be added.
+     * A Reference contains a Task and all Models which contain this task.
+     */
     private void createReferences() {
         references.clear();
         for(ProcessModel m : pcmFragments){
@@ -128,6 +148,9 @@ public class PCMScenario extends ProcessModel {
         }
     }
 
+    /**
+     * Creates the DataList. It checks every added pcmFragment for DataObjects and adds them to the list of Data Objects.
+     */
     public void createDataList() {
         for (ProcessModel pm : pcmFragments) {
             for (ProcessNode pn : pm.getNodesByClass(DataObject.class)) {
@@ -139,6 +162,10 @@ public class PCMScenario extends ProcessModel {
         createNodesForDataObjects();
     }
 
+    /**
+     * PCMDataObjectNodes will be added. It will be assumed that dataObjects have a unique name. Which means, if a dataObject
+     * "invoice" is used in two fragments or twice in one fragment it will be added only once
+     */
     private void createNodesForDataObjects() {
         PCMDataObjectCollection dataColl = (PCMDataObjectCollection)getNodesByClass(PCMDataObjectCollection.class).get(0);
         List<ProcessNode> dataNodes = getNodesByClass(PCMDataObjectNode.class);

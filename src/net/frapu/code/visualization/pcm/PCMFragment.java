@@ -58,8 +58,6 @@ public class PCMFragment extends ProcessModel {
         nodes.add(StartEvent.class);
         nodes.add(EndEvent.class);
         nodes.add(Gateway.class);
-        //nodes.add(ExclusiveGateway.class);
-        //nodes.add(ParallelGateway.class);
         return nodes;
     }
 

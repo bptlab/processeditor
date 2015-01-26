@@ -21,6 +21,12 @@ import java.util.List;
 public class PCMUtils extends ProcessUtils {
     List layouters = null;
 
+    /**
+     * Determines the default ProcessEdge. Association if one of source and target is a DataObject. Else a SequenceFlow
+     * @param source the source of the new edge
+     * @param target the target of the new edge
+     * @return the created Edge
+     */
     @Override
     public ProcessEdge createDefaultEdge(ProcessNode source, ProcessNode target) {
         if (source instanceof DataObject || target instanceof DataObject) {
@@ -47,6 +53,13 @@ public class PCMUtils extends ProcessUtils {
         return layouters;
     }
 
+    /**
+     * Creates a recommendation for the Model. A Start Event is only recomended at the start the EndEvent only if
+     * there is at least one element between the EndEvent and the StartEvent.
+     * @param model The ProcessModel
+     * @param node The ProcessNode used for recommandation
+     * @return
+     */
     @Override
     public List<Class<? extends ProcessNode>> getNextNodesRecommendation(ProcessModel model, ProcessNode node) {
         List<Class<? extends  ProcessNode>> recommendations = new LinkedList<Class<? extends ProcessNode>>();

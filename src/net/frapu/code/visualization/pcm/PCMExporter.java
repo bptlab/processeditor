@@ -23,10 +23,12 @@ import java.util.Set;
 
 /**
  * Creates a xml File from an existing PCM Scenario Model.
+ * This representation is not used any longer.
  *
  * @version 29.10.2014.
  * @author Juliane Imme, Stephan Haarmann
  */
+@Deprecated
 public class PCMExporter implements Exporter {
     private PCMScenario model;
 
