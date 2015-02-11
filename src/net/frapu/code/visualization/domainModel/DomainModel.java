@@ -48,7 +48,7 @@ public class DomainModel extends ProcessModel {
     public List<Class<? extends ProcessNode>> getSupportedNodeClasses() {
         List<Class<? extends ProcessNode>> result = new LinkedList<Class<? extends ProcessNode>>();
         result.add(DomainClass.class);
-        result.add(DomainClassReference.class);
+        //result.add(DomainClassReference.class);
         result.add(Comment.class);
         result.add(ColoredFrame.class);
         return result;
@@ -59,7 +59,7 @@ public class DomainModel extends ProcessModel {
         List<Class<? extends ProcessEdge>> result = new LinkedList<Class<? extends ProcessEdge>>();
         result.add(Association.class);
         result.add(Aggregation.class);
-        result.add(Inheritance.class);
+//        result.add(Inheritance.class);
         return result;
     }
     
