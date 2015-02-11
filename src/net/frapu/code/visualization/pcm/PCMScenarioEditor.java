@@ -35,6 +35,7 @@ public class PCMScenarioEditor extends ProcessEditor {
 
     /**
      * Creates a new editor and loads a specific Model
+     *
      * @param model the model to be loaded.
      */
     public PCMScenarioEditor(ProcessModel model) {
@@ -47,7 +48,6 @@ public class PCMScenarioEditor extends ProcessEditor {
      * This component contains options for choosing tasks from existing Fragments.
      * If you want to link tasks you have to use this ContextMenu
      */
-
     private void addCopyTaskFromOtherFragmentMenu() {
         JMenuItem menuItem = new JMenuItem("Add Fragments");
         //menuItem.addActionListener(new ChooseWorkspaceActionListener(this));
@@ -57,7 +57,21 @@ public class PCMScenarioEditor extends ProcessEditor {
 
     private void init() {
         addCopyTaskFromOtherFragmentMenu();
-    //    addExportMenu();
+        addReferDataClassMenu();
+        //    addExportMenu();
+    }
+
+    private void addReferDataClassMenu() {
+        JMenuItem menuItem = new JMenuItem("Refer Data Class");
+        final ProcessEditor editor = this;
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog dialog = new ChooseDataClassDialog(editor);
+                dialog.setVisible(true);
+            }
+        });
+        addCustomContextMenuItem(PCMDataObjectNode.class, menuItem);
     }
 
     @Deprecated
@@ -87,6 +101,7 @@ public class PCMScenarioEditor extends ProcessEditor {
 
         /**
          * Creates a new Action Listener for the Choose Workspace Action.
+         *
          * @param pcmScenarioEditor the ProcessEditor of the current PCMScenario
          */
         public ChooseWorkspaceActionListener(PCMScenarioEditor pcmScenarioEditor) {
@@ -107,7 +122,7 @@ public class PCMScenarioEditor extends ProcessEditor {
             workspaceChooser.setAcceptAllFileFilterUsed(false);
             int result = workspaceChooser.showOpenDialog(processEditor);
             if (JFileChooser.APPROVE_OPTION == result) {
-                ((PCMScenario)processEditor.getSelectedModel()).setWorkspace(workspaceChooser.getSelectedFile());
+                ((PCMScenario) processEditor.getSelectedModel()).setWorkspace(workspaceChooser.getSelectedFile());
             }
         }
     }

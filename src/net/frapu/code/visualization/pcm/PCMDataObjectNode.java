@@ -3,6 +3,7 @@ package net.frapu.code.visualization.pcm;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import net.frapu.code.visualization.ProcessNode;
+import net.frapu.code.visualization.editors.DefaultPropertyEditor;
 
 /**
  * This class represents the DataObjectNodes of a PCMScenario. Every PCMDataObject node refers to one DataObject inside
@@ -11,6 +12,13 @@ import net.frapu.code.visualization.ProcessNode;
  * @author Stephan Haarmann & Juliane Imme
  */
 public class PCMDataObjectNode extends ProcessNode {
+    public static final String PROP_CLASS = "Data class";
+
+    public PCMDataObjectNode() {
+        super();
+        setProperty(PROP_CLASS, "");
+        setPropertyEditor(PROP_CLASS, new DefaultPropertyEditor());
+    }
 
     /**
      * The visual representation is a transparent node, with a black label and without a border
