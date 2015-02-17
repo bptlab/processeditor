@@ -23,6 +23,7 @@ import net.frapu.code.visualization.bpmn.BPMNEditor;
 import net.frapu.code.visualization.bpmn.BPMNModel;
 import net.frapu.code.visualization.cmmn.CMMNModel;
 import net.frapu.code.visualization.domainModel.DomainModel;
+import net.frapu.code.visualization.domainModel.DomainModelEditor;
 import net.frapu.code.visualization.epk.EPKModel;
 import net.frapu.code.visualization.gantt.GanttModel;
 import net.frapu.code.visualization.lifecycle.LifecycleModel;
@@ -82,6 +83,7 @@ public class WorkbenchHelper {
         editorMap.put(PetriNetModel.class, PetriNetSimulationEditor.class);
         editorMap.put(OntologyModel.class, OntologyEditor.class);
         editorMap.put(StoryboardModel.class, StoryboardEditor.class);
+        editorMap.put(DomainModel.class, DomainModelEditor.class);
     }
 
     /**
