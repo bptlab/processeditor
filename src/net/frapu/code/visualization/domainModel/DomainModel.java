@@ -57,7 +57,7 @@ public class DomainModel extends ProcessModel {
     @Override
     public List<Class<? extends ProcessEdge>> getSupportedEdgeClasses() {
         List<Class<? extends ProcessEdge>> result = new LinkedList<Class<? extends ProcessEdge>>();
-        result.add(Association.class);
+//        result.add(Association.class);
         result.add(Aggregation.class);
 //        result.add(Inheritance.class);
         return result;
