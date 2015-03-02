@@ -42,7 +42,7 @@ public class DomainUtils extends ProcessUtils {
         System.out.println("Creating edge: " + source + "->" + target);
 
         // DomainClass --> EdgeDocker
-        if (source instanceof DomainClass && target instanceof EdgeDocker) {
+        /*if (source instanceof DomainClass && target instanceof EdgeDocker) {
 
             Association a = new Association(source, target);
             a.setProperty(Association.PROP_DIRECTION, Association.DIRECTION_NONE);
@@ -53,8 +53,8 @@ public class DomainUtils extends ProcessUtils {
         if (!(source instanceof DomainClass || source instanceof DomainClassReference)
                 || !(target instanceof DomainClass || target instanceof DomainClassReference)) {
             return null;
-        }
-
+        }*/
+        // We support only Aggregations
         Aggregation a = new Aggregation(source, target);
         return a;
     }
