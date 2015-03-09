@@ -2,8 +2,12 @@ package net.frapu.code.visualization.pcm;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.LinkedList;
+
 import net.frapu.code.visualization.ProcessNode;
-import net.frapu.code.visualization.editors.DefaultPropertyEditor;
+import net.frapu.code.visualization.domainModel.DomainClass;
+import net.frapu.code.visualization.editors.ReferenceChooserRestriction;
+import net.frapu.code.visualization.editors.ReferencePropertyEditor;
 
 /**
  * This class represents the DataObjectNodes of a PCMScenario. Every PCMDataObject node refers to one DataObject inside
@@ -17,7 +21,13 @@ public class PCMDataObjectNode extends ProcessNode {
     public PCMDataObjectNode() {
         super();
         setProperty(PROP_CLASS, "");
-        setPropertyEditor(PROP_CLASS, new DefaultPropertyEditor());
+        java.util.List<Class> nodeRestriction = new LinkedList<>();
+        nodeRestriction.add(DomainClass.class);
+        java.util.List<String> sterotypeRestrictions = new LinkedList<>();
+        sterotypeRestrictions.add("");
+        sterotypeRestrictions.add(DomainClass.STEREOTPYE_ROOT_INSTANCE);
+        setPropertyEditor(PROP_CLASS, new ReferencePropertyEditor(
+                new ReferenceChooserRestriction(sterotypeRestrictions, nodeRestriction)));
     }
 
     /**

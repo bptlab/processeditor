@@ -57,10 +57,11 @@ public class PCMScenarioEditor extends ProcessEditor {
 
     private void init() {
         addCopyTaskFromOtherFragmentMenu();
-        addReferDataClassMenu();
+        //addReferDataClassMenu();
         //    addExportMenu();
     }
 
+    @Deprecated
     private void addReferDataClassMenu() {
         JMenuItem menuItem = new JMenuItem("Refer Data Class");
         final ProcessEditor editor = this;

@@ -16,6 +16,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.net.URI;
 
+@Deprecated
 public class ChooseDataClassDialog extends JDialog {
     private ProcessEditor scenarioEditor = null;
     private JPanel contentPane;
