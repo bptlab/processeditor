@@ -23,6 +23,10 @@ import java.util.Map;
  */
 public class PCMScenario extends ProcessModel {
 
+    /**
+     * Defines the name of the propertie, which defines the corresponding domain Model.
+     */
+    public static final String DOMAIN_MODEL_URI_PROP = "domainModelURI";
     private File workspace;
     private List<ProcessModel> pcmFragments;
     private List<ProcessNode> dataObjects;
@@ -36,6 +40,7 @@ public class PCMScenario extends ProcessModel {
      */
     public PCMScenario() {
         super();
+        initProperties();
         processUtils = new PCMUtils();
         dataObjects = new LinkedList<ProcessNode>();
         ProcessNode node = new PCMFragmentCollection();
@@ -48,6 +53,14 @@ public class PCMScenario extends ProcessModel {
         node = new PCMDataObjectCollection();
         node.setPos(500,500);
         addNode(node);
+    }
+
+    /**
+     * This method initializes properties which are specific for the PCMScenario.
+     * For example the domainModelURI.
+     */
+    private void initProperties() {
+        setProperty(DOMAIN_MODEL_URI_PROP, "");
     }
 
     /**
