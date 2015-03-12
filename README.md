@@ -16,9 +16,15 @@ ProcessEditor Core Packages
 * com.inubit.research: Complex Process Workbench (Swing and WebModeler)
 * com.frapu.net: Simple Java Canvas for creating ProcessModels incl. BPMN and Petri nets
 
-Java Libaries:
+Java Libraries:
 ==============
-Please download separately and copy to lib folder
+You can install the libraries manually or automatically.
+You need an up to date installation of ant. To get all dependencies run the following command:
+
+    ant init-ivy deps
+
+To install the dependencies please do the following:
+download separately and copy to lib folder
 * log4j (https://logging.apache.org/log4j/1.2/download.html)
 * javax.mail (http://www.oracle.com/technetwork/java/javamail/index.html)
 * org.apache.commons.collections (http://commons.apache.org/proper/commons-collections/download_collections.cgi)
