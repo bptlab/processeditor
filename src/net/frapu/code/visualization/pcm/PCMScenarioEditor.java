@@ -2,17 +2,12 @@ package net.frapu.code.visualization.pcm;
 
 import net.frapu.code.visualization.ProcessEditor;
 import net.frapu.code.visualization.ProcessModel;
-import net.frapu.code.visualization.ProcessNode;
 import net.frapu.code.visualization.ProcessObject;
-import net.frapu.code.visualization.bpmn.StartEvent;
-import net.frapu.code.visualization.bpmn.Task;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.*;
 
 /**
  * An {@link net.frapu.code.visualization.ProcessEditor} for the PCM Scenario Model. It has the option to define
@@ -48,7 +43,7 @@ public class PCMScenarioEditor extends ProcessEditor {
      * This component contains options for choosing tasks from existing Fragments.
      * If you want to link tasks you have to use this ContextMenu
      */
-    private void addCopyTaskFromOtherFragmentMenu() {
+    private void addAddFragmentFromServerMenu() {
         JMenuItem menuItem = new JMenuItem("Add Fragments");
         //menuItem.addActionListener(new ChooseWorkspaceActionListener(this));
         menuItem.addActionListener(new DefineScenarioFromServerActionListener(this));
@@ -56,7 +51,7 @@ public class PCMScenarioEditor extends ProcessEditor {
     }
 
     private void init() {
-        addCopyTaskFromOtherFragmentMenu();
+        addAddFragmentFromServerMenu();
         //addReferDataClassMenu();
         //    addExportMenu();
     }

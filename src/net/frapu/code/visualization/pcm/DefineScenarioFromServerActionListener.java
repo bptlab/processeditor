@@ -190,22 +190,20 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
     }
 
     /**
-     *      * @return selectionpanel - A Panel which contains two Lists (available and added Fragments) and two controls (add/remove)
+     * @return selectionpanel - A Panel which contains two Lists (available and added Fragments) and two controls (add/remove)
      * which allows you to add/remove fragments from the scenario
      */
     private Component getSelectionPanel() {
         JPanel selectionPanel = new JPanel();
-        JScrollPane listPane = new JScrollPane();
-        JScrollPane selectedPane = new JScrollPane();
         selectedModelList = new JList();
         modelList = new JList();
-        selectedPane.add(selectedModelList);
-        listPane.add(modelList);
+        JScrollPane listPane = new JScrollPane(selectedModelList);
+        JScrollPane selectedPane = new JScrollPane(modelList);
         selectionPanel.setLayout(new BorderLayout());
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new GridLayout(1, 2));
-        listPanel.add(modelList);
-        listPanel.add(selectedModelList);
+        listPanel.add(listPane);
+        listPanel.add(selectedPane);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2));
         JButton add = new JButton("Add");
