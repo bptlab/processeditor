@@ -2,7 +2,7 @@
  Build XML file for ProcessEditor Workbench and Server.
  (c) 2014 Frank Puhlmann.
 -->
-<project name="processeditor" basedir="." default="clean-build-run-workbench">
+<project name="processeditor" basedir="." default="clean-build-run-workbench" xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <property name="src.dir" value="src"/>
     <property name="pics.dir" value="pics"/>
