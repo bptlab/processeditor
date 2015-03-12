@@ -149,91 +149,7 @@
 
     <target name="clean-build-run-server" depends="clean,run-server.jar"/>
 
-    <target name="maillib">
-	<exec executable="wget">
-		<arg value="http://www.java2s.com/Code/JarDownload/javax.mail/javax.mail-1.4.7.jar.zip"/>
-	</exec>
-	<exec executable="unzip">
-		<arg value="javax.mail-1.4.7.jar.zip"/>
-		<arg value="-d${lib.dir}"/>
-	</exec>
-	<delete file="javax.mail-1.4.7.jar.zip"/>
-    </target>
-
-    <target name="camundaxml">
-	<exec executable="wget">
-		<arg value="https://github.com/camunda/camunda-xml-model/archive/7.2.0-alpha5.zip"/>
-	</exec>
-	<exec executable="unzip">
-		<arg value="7.2.0-alpha5.zip"/>
-		<arg value="-d${lib.dir}"/>
-	</exec>
-	<exec executable="mvn">
-		<arg value="install"/>
-		<arg value="-Dmaven.test.skip=true"/>
-		<arg value="-f${lib.dir}/camunda-xml-model-7.2.0-alpha5/pom.xml"/>
-	</exec>
-	<move file="${lib.dir}/camunda-xml-model-7.2.0-alpha5/target/camunda-xml-model-7.2.0-alpha5.jar" tofile="${lib.dir}/camunda-xml-model-7.2.0-alpha5.jar"/>
-	<delete dir="${lib.dir}/camunda-xml-model-7.2.0-alpha5"/>
-	<delete file="7.2.0-alpha5.zip"/>
-    </target>
-
-    <target name="camundabpmn">
-	<exec executable="wget">
-		<arg value="https://github.com/camunda/camunda-bpmn-model/archive/7.2.0-alpha5.zip"/>
-	</exec>
-	<exec executable="unzip">
-		<arg value="7.2.0-alpha5.zip"/>
-		<arg value="-d${lib.dir}"/>
-	</exec>
-	<exec executable="mvn">
-		<arg value="install"/>
-		<arg value="-Dmaven.test.skip=true"/>
-		<arg value="-f${lib.dir}/camunda-bpmn-model-7.2.0-alpha5/pom.xml"/>
-	</exec>
-	<move file="${lib.dir}/camunda-bpmn-model-7.2.0-alpha5/target/camunda-bpmn-model-7.2.0-alpha5.jar" tofile="${lib.dir}/camunda-bpmn-model-7.2.0-alpha5.jar"/>
-	<delete dir="${lib.dir}/camunda-bpmn-model-7.2.0-alpha5"/>
-	<delete file="7.2.0-alpha5.zip"/>
-    </target>
-
-    <target name="collectionslib">
-	<exec executable="wget">
-		<arg value="http://apache.openmirror.de//commons/collections/binaries/commons-collections4-4.0-bin.zip"/>
-	</exec>
-	<exec executable="unzip">
-		<arg value="commons-collections4-4.0-bin.zip"/>
-		<arg value="commons-collections4-4.0/commons-collections4-4.0.jar"/>
-		<arg value="-d${lib.dir}"/>
-	</exec>
-	<move file="${lib.dir}/commons-collections4-4.0/commons-collections4-4.0.jar" tofile="${lib.dir}/commons-collections4-4.0.jar"/>
-	<delete dir="${lib.dir}/commons-collections4-4.0/"/>
-	<delete file="commons-collections4-4.0-bin.zip"/>
-    </target>
-
-    <target name="hamcrest">
-	<exec executable="wget">
-		<arg value="http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
-	</exec>
-	<move file="remotecontent?filepath=org%2Fhamcrest%2Fhamcrest-core%2F1.3%2Fhamcrest-core-1.3.jar" tofile="hamcrest-core-1.3.jar"/>
-	<move file="hamcrest-core-1.3.jar" tofile="${lib.dir}/hamcrest-core-1.3.jar"/>
-    </target>
-
-    <target name="forms_rt">
-        <exec executable="wget">
-            <arg value="http://central.maven.org/maven2/com/intellij/forms_rt/7.0.3/forms_rt-7.0.3.jar"></arg>
-        </exec>
-        <move file="forms_rt-7.0.3.jar" tofile="${lib.dir}/forms_rt-7.0.3.jar"/>
-    </target>
-
-    <target name="junit" depends="hamcrest">
-	<exec executable="wget">
-		<arg value="http://search.maven.org/remotecontent?filepath=junit/junit/4.10/junit-4.10.jar"/>
-	</exec>
-	<move file="remotecontent?filepath=junit%2Fjunit%2F4.10%2Fjunit-4.10.jar" tofile="junit-4.10.jar"/>
-	<move file="junit-4.10.jar" tofile="${lib.dir}/junit-4.10.jar"/>
-    </target>
-
-    <target name="deps" depends="maillib,collectionslib,camundaxml,camundabpmn,junit,forms_rt" description="--> retrieve dependencies with ivy">
+    <target name="deps" description="--> retrieve dependencies with ivy">
         <ivy:retrieve />
     </target>
 
@@ -253,11 +169,6 @@
 		<pathelement location="${classes.dir}"/>
 	    </classpath>
 	    <formatter type="plain" usefile="false"/>
-	    <!--<batchtest>
-                  <fileset dir="${test.dir}">
-		      <include name="**/*Test*.java" />
-                  </fileset>
-            </batchtest>-->
 	    <test name="net.frapu.code.visualization.pcm.PCMScenarioTest"/>
         </junit>
     </target>
