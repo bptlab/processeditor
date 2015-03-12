@@ -233,7 +233,9 @@
 	<move file="junit-4.10.jar" tofile="${lib.dir}/junit-4.10.jar"/>
     </target>
 
-    <target name="deps" depends="maillib,collectionslib,camundaxml,camundabpmn,junit,forms_rt"/>
+    <target name="deps" depends="maillib,collectionslib,camundaxml,camundabpmn,junit,forms_rt" description="--> retrieve dependencies with ivy">
+        <ivy:retrieve />
+    </target>
 
     <target name="compileTests" depends="compile">
         <javac source="1.7" target="1.7" srcdir="${test.dir}" destdir="${classes.dir}">
