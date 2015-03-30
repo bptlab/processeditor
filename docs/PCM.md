@@ -14,11 +14,11 @@ PCM Fragments are small Business Process models. They can be modeled using a sub
 
 * Tasks
 * Events
-** Blanko Start-Event
-** Blanko End-Event
+ * Blanko Start-Event
+ * Blanko End-Event
 * Gateways
-** Parallel Gateway
-** Exclusive Gateway
+ * Parallel Gateway
+ * Exclusive Gateway
 * Data Objects
 * Sequence Flow
 * Data Flow
@@ -63,6 +63,27 @@ Now there should be entries for all the fragments (inside green node) and for al
 2. Choose *Add Fragments*
 3. Select all the models you want to remove from the right list
 4. Click on *Remove* than click *Ok*
+
+### Select a Data Model
+
+You can select Domain Models published on a server as a data model for a scenario.
+
+1. Right click on the canvas
+2. Choose *Properties*
+3. Insert the url to the Domain Model in the property *DomainModelURI*
+
+### Select a Data Class for a Data Object
+
+Each data object can be associated to a data class inside a domain model.
+If the model should be executable you have to assert, that the classes are part of the domain model assigned to the scenario.
+
+1. Right click on a *Data Object Node*
+2. Choose *Properties*
+3. Click on the button next to *Data Class*
+4. Click on *Fetch*
+5. Select a Domain Model
+6. Select the Class to be refered
+7. Click on Ok
 
 ### Set a Termination Condition
 
