@@ -3,6 +3,7 @@ package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc;
 import net.frapu.code.visualization.ProcessEdge;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessNode;
+import net.frapu.code.visualization.ProcessUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,11 @@ import java.util.List;
  * can be extended by an OLC.
  */
 public class ObjectLifeCycle extends ProcessModel {
+
+    @Override
+    public ProcessUtils getUtils() {
+        return new OLCUtils();
+    }
 
     @Override
     public String getDescription() {

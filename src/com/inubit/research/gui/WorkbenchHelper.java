@@ -15,6 +15,7 @@ import com.inubit.research.ontologyEditor.OntologyEditor;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.ObjectLifeCycle;
 import net.frapu.code.simulation.petrinets.PetriNetSimulationEditor;
 import net.frapu.code.visualization.ProcessEditor;
 import net.frapu.code.visualization.ProcessModel;
@@ -29,10 +30,10 @@ import net.frapu.code.visualization.gantt.GanttModel;
 import net.frapu.code.visualization.lifecycle.LifecycleModel;
 import net.frapu.code.visualization.ontology.OntologyModel;
 import net.frapu.code.visualization.orgChart.OrgChartModel;
-import net.frapu.code.visualization.pcm.PCMFragment;
-import net.frapu.code.visualization.pcm.PCMFragmentEditor;
-import net.frapu.code.visualization.pcm.PCMScenario;
-import net.frapu.code.visualization.pcm.PCMScenarioEditor;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragmentEditor;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMScenario;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMScenarioEditor;
 import net.frapu.code.visualization.petrinets.PetriNetModel;
 import net.frapu.code.visualization.processmap.ProcessMapModel;
 import net.frapu.code.visualization.reporting.ReportingModel;
@@ -76,6 +77,7 @@ public class WorkbenchHelper {
         modelList.add(StoryboardModel.class);
         modelList.add(TWFModel.class);
         modelList.add(XFormsModel.class);
+        modelList.add(ObjectLifeCycle.class);
 
         editorMap.put(BPMNModel.class, BPMNEditor.class);
         editorMap.put(PCMFragment.class, PCMFragmentEditor.class);
@@ -84,6 +86,7 @@ public class WorkbenchHelper {
         editorMap.put(OntologyModel.class, OntologyEditor.class);
         editorMap.put(StoryboardModel.class, StoryboardEditor.class);
         editorMap.put(DomainModel.class, DomainModelEditor.class);
+        editorMap.put(ObjectLifeCycle.class, ProcessEditor.class);
     }
 
     /**

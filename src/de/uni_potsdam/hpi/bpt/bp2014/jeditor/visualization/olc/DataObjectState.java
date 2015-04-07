@@ -83,8 +83,8 @@ public class DataObjectState extends ProcessNode {
     }
 
     private Shape getFinalShape() {
-        RoundRectangle2D outline = new RoundRectangle2D.Float(getPos().x - (getSize().width / 2.2f),
-                getPos().y - (getSize().height / 2.2f), getSize().width, getSize().height, 15, 15);
+        RoundRectangle2D outline = new RoundRectangle2D.Float(getPos().x - (getSize().width / 2 * 0.9f),
+                getPos().y - (getSize().height / 2 * 0.9f), getSize().width * 0.9f, getSize().height * 0.9f, 15, 15);
         return outline;
     }
 }
