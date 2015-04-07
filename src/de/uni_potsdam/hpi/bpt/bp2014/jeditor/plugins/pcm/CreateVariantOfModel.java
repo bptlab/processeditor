@@ -4,14 +4,12 @@ import com.inubit.research.gui.Workbench;
 import com.inubit.research.gui.plugins.WorkbenchPlugin;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.SwingUtils;
-import net.frapu.code.visualization.pcm.PCMScenario;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMScenario;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @version 05.11.2014.

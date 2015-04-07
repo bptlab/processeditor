@@ -18,7 +18,6 @@ import net.frapu.code.converter.Exporter;
 import net.frapu.code.converter.ProcessEditorExporter;
 import net.frapu.code.converter.XPDLExportDialog;
 import net.frapu.code.converter.XPDLExporter;
-import net.frapu.code.visualization.pcm.PCMExporter;
 
 /**
  *

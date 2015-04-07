@@ -9,8 +9,8 @@
 package com.inubit.research.gui.plugins;
 
 import com.inubit.research.gui.plugins.choreography.interfaceGenerator.BehavioralInterfaceGeneratingPlugin;
-import com.inubit.research.gui.plugins.pcm.CreateVariantOfModel;
 import com.inubit.research.gui.plugins.validationPlugin.ValidationPlugin;
+
 import java.util.LinkedList;
 import java.util.List;
 

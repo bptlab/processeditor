@@ -23,8 +23,8 @@ import java.util.List;
 
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessModelPreview;
-import net.frapu.code.visualization.pcm.PCMExporter;
-import net.frapu.code.visualization.pcm.PCMFragmentExporter;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMExporter;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragmentExporter;
 import org.w3c.dom.Document;
 
 /**
