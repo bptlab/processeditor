@@ -1,4 +1,4 @@
-package net.frapu.code.visualization.pcm;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm;
 
 import com.inubit.research.client.*;
 import com.inubit.research.gui.WorkbenchConnectToServerDialog;

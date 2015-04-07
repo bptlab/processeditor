@@ -1,4 +1,4 @@
-package net.frapu.code.visualization.pcm;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm;
 
 import com.inubit.research.layouter.ProcessLayouter;
 import com.inubit.research.layouter.freeSpace.FreeSpaceLayouter;
@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * This class is the {@link net.frapu.code.visualization.ProcessUtils}class of the PCM Models
- * ({@link net.frapu.code.visualization.pcm.PCMFragment} and Scenario).
+ * ({@link PCMFragment} and Scenario).
  *
  * @author Juliane Imme, Stephan Haarmann
  * @version 28.10.2014.

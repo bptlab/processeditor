@@ -1,14 +1,12 @@
-package net.frapu.code.visualization.pcm;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm;
 
 import com.inubit.research.server.ProcessEditorServerUtils;
 import net.frapu.code.converter.Exporter;
-import net.frapu.code.converter.XPDLExporter;
 import net.frapu.code.visualization.ProcessEdge;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessNode;
 import net.frapu.code.visualization.bpmn.BPMNModel;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

@@ -1,7 +1,6 @@
-package net.frapu.code.visualization.pcm;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm;
 
 import net.frapu.code.visualization.ProcessNode;
-import net.frapu.code.visualization.ProcessUtils;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

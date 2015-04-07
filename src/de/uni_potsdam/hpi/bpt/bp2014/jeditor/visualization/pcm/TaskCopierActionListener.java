@@ -1,4 +1,4 @@
-package net.frapu.code.visualization.pcm;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -7,11 +7,11 @@ import java.io.File;
 
 /**
  * This ActionListener allows to define the workspace for an PCM Fragment and informs the
- * {@link net.frapu.code.visualization.pcm.TaskCopier}
+ * {@link TaskCopier}
  *
- * @see net.frapu.code.visualization.pcm.TaskCopier
- * @see net.frapu.code.visualization.pcm.PCMFragment
- * @see net.frapu.code.visualization.pcm.PCMFragmentEditor
+ * @see TaskCopier
+ * @see PCMFragment
+ * @see PCMFragmentEditor
  * @version 28.10.2014.
  * @author Stephan Haarmann & Juliane Imme
  */

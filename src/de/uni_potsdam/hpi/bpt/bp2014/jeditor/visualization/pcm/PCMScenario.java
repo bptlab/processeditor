@@ -1,4 +1,4 @@
-package net.frapu.code.visualization.pcm;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm;
 
 import net.frapu.code.converter.ConverterHelper;
 import net.frapu.code.visualization.ProcessEdge;
@@ -227,7 +227,7 @@ public class PCMScenario extends ProcessModel {
      *
      * @param fragment the new Model to be added
      */
-    public synchronized void addPCMFragment(PCMFragment fragment) {
+    public synchronized void addPCMFragment(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment fragment) {
         pcmFragments.add(fragment);
     }
 
@@ -238,18 +238,18 @@ public class PCMScenario extends ProcessModel {
      */
     public synchronized void createNodesForFragments() {
         PCMFragmentCollection fragColl = (PCMFragmentCollection)getNodesByClass(PCMFragmentCollection.class).get(0);
-        List<ProcessNode> fragmentNodes = getNodesByClass(PCMFragmentNode.class);
+        List<ProcessNode> fragmentNodes = getNodesByClass(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragmentNode.class);
         for (ProcessNode node : fragmentNodes) {
             removeNode(node);
         }
 
         int i = pcmFragments.size();
         for (ProcessModel model : pcmFragments) {
-            ProcessNode node = new PCMFragmentNode();
+            ProcessNode node = new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragmentNode();
             node.setText(model.getProcessName());
             node.setSize(100, 20);
             node.setPos(fragColl.getPos().x, fragColl.getPos().y - fragColl.getSize().height / 2 + (20 * i));
-            node.setProperty(PCMFragmentNode.PROP_FRAGMENT_MID, model.getId());
+            node.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragmentNode.PROP_FRAGMENT_MID, model.getId());
             fragColl.addProcessNode(node);
             addNode(node);
             i--;
@@ -275,7 +275,7 @@ public class PCMScenario extends ProcessModel {
             List<ProcessModel> pcmModels = new LinkedList<ProcessModel>();
             for (ProcessModel process : models) {
                 process.setProcessModelURI(modelFile.getAbsolutePath());
-                if (process instanceof PCMFragment) {
+                if (process instanceof de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment) {
                     pcmModels.add(process);
                 }
             }

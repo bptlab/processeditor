@@ -1,18 +1,12 @@
-package net.frapu.code.visualization.pcm;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm;
 
-import com.inubit.research.ISConverter.exporter.ISBPDExporter;
 import com.inubit.research.layouter.freeSpace.FreeSpaceLayouter;
 import net.frapu.code.visualization.ProcessEditor;
 import net.frapu.code.visualization.ProcessModel;
-import net.frapu.code.visualization.ProcessNode;
 import net.frapu.code.visualization.ProcessObject;
-import net.frapu.code.visualization.bpmn.BPMNModel;
 import net.frapu.code.visualization.layouter.LayoutMenuitemActionListener;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 
 /**
  * A a simple {@link net.frapu.code.visualization.ProcessEditor} which allows to reuse
@@ -63,7 +57,7 @@ public class PCMFragmentEditor extends ProcessEditor {
     private void addCopyTaskFromOtherFragmentMenu() {
         TaskCopier copier = new TaskCopier(this);
         JMenuItem menuItem = new JMenuItem("Copy and refer task");
-        menuItem.addActionListener(new TaskCopierActionListener(this, copier));
+        menuItem.addActionListener(new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.TaskCopierActionListener(this, copier));
         addCustomContextMenuItem(ProcessObject.class, menuItem);
     }
 
@@ -74,7 +68,7 @@ public class PCMFragmentEditor extends ProcessEditor {
      */
     private void addCopyTaskFromOtherFragmentOnServerMenu() {
         JMenuItem menuItem = new JMenuItem("Copy and refer task");
-        menuItem.addActionListener(new GetTasksFromServerActionListener(this));
+        menuItem.addActionListener(new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.GetTasksFromServerActionListener(this));
         addCustomContextMenuItem(ProcessObject.class, menuItem);
     }
 
