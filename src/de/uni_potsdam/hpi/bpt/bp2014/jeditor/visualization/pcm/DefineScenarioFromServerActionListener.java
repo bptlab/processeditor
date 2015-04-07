@@ -172,7 +172,7 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
                     try {
                         ModelDescription description = (ModelDescription)entry;
                         ProcessModel model =  description.getVersionDescription(description.getHeadVersion()).getProcessModel();
-                        if (model instanceof de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment) {
+                        if (model instanceof PCMFragment) {
                             modelRepositoryModel.addElement(model);
                         }
                     } catch (Exception e) {
@@ -259,7 +259,7 @@ public class DefineScenarioFromServerActionListener implements ActionListener {
                 PCMScenario scenario = (PCMScenario)editor.getModel();
                 scenario.reset();
                 for (int i = 0; i < selectedModelModel.getSize(); i++) {
-                    scenario.addPCMFragment((de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment)selectedModelModel.get(i));
+                    scenario.addPCMFragment((PCMFragment)selectedModelModel.get(i));
                 }
                 scenario.createNodesForFragments();
                 scenario.createDataList();
