@@ -4,6 +4,12 @@ jdk:
   - oraclejdk8
   - oraclejdk7
 
-before_install: ant init-ivy
+before_install:
+  - ant init-ivy
+  - cd BPMConverter
+  - mvn install
+  - cd ..
+  - mv BPMConverter/target/converter-1.0-SNAPSHOT.jar lib/
+
 
 install: ant deps
