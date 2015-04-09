@@ -34,6 +34,20 @@ download separately and copy to lib folder
 WebModeler requires ExtJS: Please download separately and copy ExtJs to www/js/ext (unzipped)
 * ExtJS 4 (for Web Modeler, http://www.sencha.com/products/extjs/download/ext-js-4.2.1/2281)
 
+### BPMConverter
+
+The [BPMConverter](https://github.com/BP2014W1/BPMConverter) is added as a git submodule.
+Once you have cloned the Processeditor Repository you have to initialize this module.
+You can do so by running the following command.
+
+  git submodule init
+
+If you want to update the module run the following command.
+
+  git submodule update
+
+You have also the possibility to build the *BPMNConverter* and to add it as library to the project.
+
 Manual Building (Idea, Netbeans, etc.)
 ======================================
 * Create a new Java 1.7 source project with the required libs as dependencies
