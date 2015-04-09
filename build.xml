@@ -18,7 +18,7 @@
 
     <property name="lib.dir" value="lib"/>
 
-    <property name="test.dir" value="test/net/frapu/code/visualization/pcm"/>
+    <property name="test.dir" value="test/de/uni_potsdam/hpi/bpt/bp2014/jeditor/visualization/pcm"/>
 
     <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
@@ -169,7 +169,7 @@
 		<pathelement location="${classes.dir}"/>
 	    </classpath>
 	    <formatter type="plain" usefile="false"/>
-	    <test name="PCMScenarioTest"/>
+	    <test name="de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMScenarioTest"/>
         </junit>
     </target>
 
