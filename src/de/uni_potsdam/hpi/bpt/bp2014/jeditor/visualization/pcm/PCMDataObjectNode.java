@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.editors.ModelReferencePropertyEditor;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.ObjectLifeCycle;
 import net.frapu.code.visualization.ProcessNode;
 import net.frapu.code.visualization.domainModel.DomainClass;
 import net.frapu.code.visualization.editors.ReferenceChooserRestriction;
@@ -33,6 +35,9 @@ public class PCMDataObjectNode extends ProcessNode {
         sterotypeRestrictions.add(DomainClass.STEREOTPYE_ROOT_INSTANCE);
         setPropertyEditor(PROP_CLASS, new ReferencePropertyEditor(
                 new ReferenceChooserRestriction(sterotypeRestrictions, nodeRestriction)));
+
+        setProperty(PROP_OLC, "");
+        setPropertyEditor(PROP_OLC, new ModelReferencePropertyEditor(ObjectLifeCycle.class));
     }
 
     /**
