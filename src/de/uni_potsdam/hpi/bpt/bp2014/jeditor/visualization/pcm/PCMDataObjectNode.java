@@ -17,9 +17,14 @@ import net.frapu.code.visualization.editors.ReferencePropertyEditor;
  */
 public class PCMDataObjectNode extends ProcessNode {
     public static final String PROP_CLASS = "Data class";
+    public static final String PROP_OLC = "Object Lfie Cycle";
 
     public PCMDataObjectNode() {
         super();
+        init();
+    }
+
+    private void init() {
         setProperty(PROP_CLASS, "");
         java.util.List<Class> nodeRestriction = new LinkedList<>();
         nodeRestriction.add(DomainClass.class);
