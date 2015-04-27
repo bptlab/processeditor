@@ -1,7 +1,6 @@
 package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.editors;
 
 import com.inubit.research.util.SwingUtils;
-import net.frapu.code.visualization.ProcessEdge;
 import net.frapu.code.visualization.editors.PropertyEditor;
 import net.frapu.code.visualization.editors.PropertyEditorType;
 
@@ -9,40 +8,40 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Stpehan on 08.04.2015.
+ * Created by Stpehan on 22.04.2015.
  */
-public class ReferenceEdgesPropertyEditor extends PropertyEditor {
+public class StringListPropertyEditor extends PropertyEditor {
 
-    private JButton referenceEditButton;
-    private List<String> edgeUrls;
-    private List<Class<? extends ProcessEdge>> acceptedTypes;
 
-    public ReferenceEdgesPropertyEditor(List<Class<? extends ProcessEdge>> acceptedTypes) {
+    private JButton editListButton;
+    private List<String> values;
+    private String separator;
+
+    public StringListPropertyEditor(String separator) {
         super();
-        this.acceptedTypes = new ArrayList<>(acceptedTypes);
+        this.separator = separator != null ? separator : ",";
         init();
     }
 
     private void init() {
-        referenceEditButton = new JButton("Edit references");
-        edgeUrls = new LinkedList<>();
-        referenceEditButton.addActionListener(new ActionListener() {
+        editListButton = new JButton("Edit list");
+        values = new LinkedList<>();
+        editListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ReferenceOverview view = new ReferenceOverview(acceptedTypes);
-                view.setEdgeList(edgeUrls);
+                StringListView view = new StringListView();
+                view.setStringList(values);
                 view.initializeButtons();
                 SwingUtils.center(view);
                 view.pack();
                 view.setVisible(true);
-                if (view.getEdgeList()!=null) {
-                    edgeUrls.clear();
-                    edgeUrls.addAll(view.getEdgeList());
+                if (view.getStringList() != null) {
+                    values.clear();
+                    values.addAll(view.getStringList());
                 }
             }
         });
@@ -50,10 +49,10 @@ public class ReferenceEdgesPropertyEditor extends PropertyEditor {
 
     @Override
     public Component getComponent() {
-        if (referenceEditButton == null) {
+        if (editListButton == null) {
             init();
         }
-        return referenceEditButton;
+        return editListButton;
     }
 
 
@@ -65,24 +64,28 @@ public class ReferenceEdgesPropertyEditor extends PropertyEditor {
     }
 
     @Override
-    public void setValue(String value) {
-        if (referenceEditButton == null) {
+    public void setValue(String valueList) {
+        if (editListButton == null) {
             init();
         }
-        edgeUrls.clear();
-        for (String edge : value.split(",")) {
-            edgeUrls.add(edge);
+        values.clear();
+        for (String value : valueList.split(separator)) {
+            values.add(value);
         }
     }
 
     @Override
     public String getValue() {
         StringBuilder sb = new StringBuilder();
-        for (String url : edgeUrls) {
+        for (String url : values) {
             sb.append(url);
-            sb.append(',');
+            sb.append(separator);
         }
-        return sb.toString();
+        if (sb.toString().isEmpty()) {
+            return "";
+        } else {
+            return sb.toString().substring(0, sb.length() - separator.length());
+        }
     }
 
     @Override
@@ -97,6 +100,7 @@ public class ReferenceEdgesPropertyEditor extends PropertyEditor {
 
     @Override
     public void free() {
-        referenceEditButton = null;
+        editListButton = null;
     }
+
 }

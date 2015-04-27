@@ -8,6 +8,7 @@
     <property name="pics.dir" value="pics"/>
     <property name="www.dir" value="www"/>
     <property name="resources.dir" value="resources"/>
+    <property name="submodule.src.dir" value="BPMConverter/src/main/"/>
 
     <property name="build.dir" value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
@@ -84,12 +85,15 @@
 
     <target name="compile" depends="deps">
         <mkdir dir="${classes.dir}"/>
-        <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+        <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"></javac>
     </target>
 	
 	<target name="compile-wo-deps">
         <mkdir dir="${classes.dir}"/>
-        <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+        <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath">
+            <src path="${src.dir}"></src>
+            <src path="${submodule.src.dir}"></src>
+        </javac>
     </target>
 
     <target name="jar-workbench" depends="compile-wo-deps">

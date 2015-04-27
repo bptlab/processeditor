@@ -1,8 +1,11 @@
 package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc;
 
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.editors.ReferenceEdgesPropertyEditor;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.editors.StringListPropertyEditor;
 import net.frapu.code.visualization.ProcessEdge;
 import net.frapu.code.visualization.ProcessNode;
+import net.frapu.code.visualization.editors.BooleanPropertyEditor;
+import net.frapu.code.visualization.editors.PropertyEditor;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,6 +18,10 @@ import java.util.ArrayList;
  */
 public class StateTransition extends ProcessEdge {
     public static final String PROP_SYNCHRONIZED = "synchronized_with";
+    public static final String PROP_IS_BATCH = "is batch activity";
+    public static final String PROP_CONNECTED = "connected transitions";
+    public static final String PROP_GROUPING_CHARACTERISTICS = "grouping characteristics";
+
     protected final static Polygon transitionArrow = OLCUtils.standardArrowFilled;
 
     public StateTransition(ProcessNode source, ProcessNode target) {
@@ -34,6 +41,12 @@ public class StateTransition extends ProcessEdge {
         setProperty(PROP_SYNCHRONIZED, "");
         setPropertyEditor(PROP_SYNCHRONIZED,
                 new ReferenceEdgesPropertyEditor(acceptedEdges));
+        setProperty(PROP_IS_BATCH, FALSE);
+        setPropertyEditor(PROP_IS_BATCH, new BooleanPropertyEditor());
+        setProperty(PROP_CONNECTED, "");
+        setPropertyEditor(PROP_CONNECTED, new ReferenceEdgesPropertyEditor(acceptedEdges));
+        setProperty(PROP_GROUPING_CHARACTERISTICS, "");
+        setPropertyEditor(PROP_GROUPING_CHARACTERISTICS, new StringListPropertyEditor(","));
     }
 
     @Override
@@ -48,7 +61,11 @@ public class StateTransition extends ProcessEdge {
 
     @Override
     public Stroke getLineStroke() {
-        return OLCUtils.defaultStroke;
+        if (getProperty(PROP_IS_BATCH).equals(FALSE)) {
+            return OLCUtils.defaultStroke;
+        } else {
+            return OLCUtils.boldStroke;
+        }
     }
 
     @Override

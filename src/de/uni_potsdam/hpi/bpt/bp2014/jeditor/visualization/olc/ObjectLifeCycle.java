@@ -61,8 +61,8 @@ public class ObjectLifeCycle extends ProcessModel {
     private JDialog getEditStateNameDialog(final ProcessEdge edge) {
         final JDialog dialog = new JDialog();
         dialog.setModal(true);
-        dialog.setSize(100, 60);
-        dialog.setResizable(false);
+        dialog.setSize(100, 100);
+        dialog.setResizable(true);
         dialog.setDefaultCloseOperation(dialog.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
