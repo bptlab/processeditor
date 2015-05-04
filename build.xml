@@ -85,7 +85,10 @@
 
     <target name="compile" depends="deps">
         <mkdir dir="${classes.dir}"/>
-        <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"></javac>
+        <javac source="1.7" target="1.7" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath">
+            <src path="${src.dir}"></src>
+            <src path="${submodule.src.dir}"></src>
+        </javac>
     </target>
 	
 	<target name="compile-wo-deps">
