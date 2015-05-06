@@ -68,10 +68,10 @@ public class PCMExporter implements Exporter {
     }
 
     private void writeTermination(OutputStreamWriter osw) throws IOException {
-        osw.write("<termination>\n");
-        osw.write("<dataObject name=\"" + model.getProperty(PCMScenario.PROP_TERMINATION_DO) + "\" state=\""
-                + model.getProperty(PCMScenario.PROP_TERMINATION_STATE) + "\"/>\n");
-        osw.write("</termination>\n");
+        //osw.write("<termination>\n");
+        //osw.write("<dataObject name=\"" + model.getProperty(PCMScenario.PROP_TERMINATION_DO) + "\" state=\""
+        //        + model.getProperty(PCMScenario.PROP_TERMINATION_STATE) + "\"/>\n");
+        //osw.write("</termination>\n");
     }
 
     private void writeReferences(OutputStreamWriter osw) throws IOException {
