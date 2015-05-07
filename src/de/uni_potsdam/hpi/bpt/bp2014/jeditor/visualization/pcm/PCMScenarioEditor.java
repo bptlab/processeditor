@@ -1,5 +1,6 @@
 package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm;
 
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.editors.TerminationEditor;
 import net.frapu.code.visualization.ProcessEditor;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessObject;
@@ -52,6 +53,7 @@ public class PCMScenarioEditor extends ProcessEditor {
 
     private void init() {
         addAddFragmentFromServerMenu();
+        addTerminationConditionMenu();
         //addReferDataClassMenu();
         //    addExportMenu();
     }
@@ -121,5 +123,23 @@ public class PCMScenarioEditor extends ProcessEditor {
                 ((PCMScenario) processEditor.getSelectedModel()).setWorkspace(workspaceChooser.getSelectedFile());
             }
         }
+    }
+
+    /**
+     *
+     */
+    private void addTerminationConditionMenu() {
+        JMenuItem tcMenu = new JMenuItem("Edit termination condition");
+        final ProcessEditor thisEditor = this;
+        tcMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog dialog = new TerminationEditor(thisEditor);
+                dialog.pack();
+                dialog.setSize(250, 250);
+                dialog.setVisible(true);
+            }
+        });
+        addCustomContextMenuItem(ProcessObject.class, tcMenu);
     }
 }
