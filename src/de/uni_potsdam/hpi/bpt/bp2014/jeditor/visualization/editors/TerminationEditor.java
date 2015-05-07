@@ -96,11 +96,6 @@ public class TerminationEditor extends JDialog {
     }
 
     private void initTerminationConditions() {
-        String bla = editor.getSelectedModel().getProperty(PCMScenario.PROP_TERMINATIONCONDITION);
-        System.out.println("EDITOR:"+editor.getName());
-        System.out.println("LASTSELECTEDNODE:"+editor.getLastSelectedNode());
-        System.out.println("PROPERTY:"+bla);
-        System.out.println("SPLIT:"+bla.split("; "));
         String tcs[] = editor.getSelectedModel().getProperty(PCMScenario.PROP_TERMINATIONCONDITION).split(";");
         for (String tc : tcs) {
             if (!tc.isEmpty()) {
