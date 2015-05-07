@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc;
 
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.IEdge;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState;

@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc;
 
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.IEdge;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.INode;
@@ -35,16 +35,16 @@ public class SynchronizedOLCAdapter extends SynchronizedObjectLifeCycle {
             }
         }
         for (StateTransition transition : transitions) {
-            if (transition instanceof StateTransitionAdapter) {
+            if (transition instanceof de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.StateTransitionAdapter) {
                 Set<StateTransition> synchronizedTransitions = new HashSet<>();
                 for (StateTransition possibleSynchronizedTransition : transitions) {
-                    if (possibleSynchronizedTransition instanceof StateTransitionAdapter &&
-                            ((StateTransitionAdapter) transition)
+                    if (possibleSynchronizedTransition instanceof de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.StateTransitionAdapter &&
+                            ((de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.StateTransitionAdapter) transition)
                                     .getSynchronizedEdgeURIs()
-                                    .contains(((StateTransitionAdapter) possibleSynchronizedTransition).getURI()) ||
-                            ((StateTransitionAdapter)possibleSynchronizedTransition)
+                                    .contains(((de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.StateTransitionAdapter) possibleSynchronizedTransition).getURI()) ||
+                            ((de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.StateTransitionAdapter)possibleSynchronizedTransition)
                                     .getSynchronizedEdgeURIs()
-                                    .contains(((StateTransitionAdapter) transition).getURI())) {
+                                    .contains(((de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.StateTransitionAdapter) transition).getURI())) {
                         synchronizedTransitions.add(possibleSynchronizedTransition);
                     }
                 }
