@@ -1,4 +1,4 @@
-package com.inubit.research.gui.plugins.pcm;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm;
 
 import com.inubit.research.gui.Workbench;
 import com.inubit.research.gui.plugins.WorkbenchPlugin;

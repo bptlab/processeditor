@@ -19,7 +19,7 @@
 
     <property name="lib.dir" value="lib"/>
 
-    <property name="test.dir" value="test/de/uni_potsdam/hpi/bpt/bp2014/jeditor/visualization/pcm"/>
+    <property name="test.dir" value="test/de/uni_potsdam/hpi/bpt/bp2014/jeditor/"/>
 
     <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
@@ -177,6 +177,7 @@
 	    </classpath>
 	    <formatter type="plain" usefile="false"/>
 	    <test name="de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMScenarioTest"/>
+        <test name="de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.acpm.ACPMAdapterTest"/>
         </junit>
     </target>
 

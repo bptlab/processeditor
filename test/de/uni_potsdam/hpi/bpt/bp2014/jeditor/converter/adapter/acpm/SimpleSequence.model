@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<model xmlns="http://frapu.net/xsd/ProcessEditor" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="314245090" name="" type="de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment" xsi:schemaLocation="http://frapu.net/xsd/ProcessEditor http://frapu.net/xsd/ProcessEditor.xsd">
+    <nodes>
+        <node>
+            <property name="shadow" value="0"/>
+            <property name="color_background" value="-1"/>
+            <property name="x" value="123"/>
+            <property name="width" value="30"/>
+            <property name="y" value="221"/>
+            <property name="text" value=""/>
+            <property name="stereotype" value=""/>
+            <property name="non_interupting" value="0"/>
+            <property name="#id" value="484322599"/>
+            <property name="#type" value="net.frapu.code.visualization.bpmn.StartEvent"/>
+            <property name="height" value="30"/>
+        </node>
+        <node>
+            <property name="shadow" value="0"/>
+            <property name="implementation" value=""/>
+            <property name="global" value="0"/>
+            <property name="loop_type" value="NONE"/>
+            <property name="color_background" value="-1"/>
+            <property name="x" value="246"/>
+            <property name="width" value="100"/>
+            <property name="y" value="221"/>
+            <property name="compensation" value="0"/>
+            <property name="text" value="Do Something"/>
+            <property name="stereotype" value=""/>
+            <property name="#id" value="521822962"/>
+            <property name="#type" value="net.frapu.code.visualization.bpmn.Task"/>
+            <property name="height" value="60"/>
+        </node>
+        <node>
+            <property name="shadow" value="0"/>
+            <property name="color_background" value="-1"/>
+            <property name="x" value="360"/>
+            <property name="width" value="30"/>
+            <property name="y" value="221"/>
+            <property name="text" value=""/>
+            <property name="stereotype" value=""/>
+            <property name="#id" value="2073180313"/>
+            <property name="#type" value="net.frapu.code.visualization.bpmn.EndEvent"/>
+            <property name="height" value="30"/>
+        </node>
+    </nodes>
+    <edges>
+        <edge>
+            <property name="color_arc" value="-16777216"/>
+            <property name="#sourceNode" value="484322599"/>
+            <property name="sequence_type" value="TYPE_STANDARD"/>
+            <property name="#targetNode" value="521822962"/>
+            <property name="#target_dockpoint" value=""/>
+            <property name="#label_offset" value="0.5"/>
+            <property name="label" value=""/>
+            <property name="#id" value="1222254783"/>
+            <property name="#type" value="net.frapu.code.visualization.bpmn.SequenceFlow"/>
+            <property name="#source_dockpoint" value=""/>
+            <property name="points" value=""/>
+        </edge>
+        <edge>
+            <property name="color_arc" value="-16777216"/>
+            <property name="#sourceNode" value="521822962"/>
+            <property name="sequence_type" value="TYPE_STANDARD"/>
+            <property name="#targetNode" value="2073180313"/>
+            <property name="#target_dockpoint" value=""/>
+            <property name="#label_offset" value="0.5"/>
+            <property name="label" value=""/>
+            <property name="#id" value="2060277458"/>
+            <property name="#type" value="net.frapu.code.visualization.bpmn.SequenceFlow"/>
+            <property name="#source_dockpoint" value=""/>
+            <property name="points" value=""/>
+        </edge>
+    </edges>
+    <properties>
+        <property name="author" value=""/>
+        <property name="name" value=""/>
+        <property name="#uri" value="&lt;PCM Fragment Model.model&gt;"/>
+        <property name="comment" value=""/>
+        <property name="#creationDate" value="9. Mai 2015 12:51:00 MESZ"/>
+    </properties>
+</model>

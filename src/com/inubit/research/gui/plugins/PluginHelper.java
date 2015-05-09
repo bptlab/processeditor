@@ -10,6 +10,7 @@ package com.inubit.research.gui.plugins;
 
 import com.inubit.research.gui.plugins.choreography.interfaceGenerator.BehavioralInterfaceGeneratingPlugin;
 import com.inubit.research.gui.plugins.validationPlugin.ValidationPlugin;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.GenerateOLCFromFragment;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class PluginHelper {
         result.add(ValidationPlugin.class);
         //result.add(ServerLoadTestPlugin.class);
         result.add(AnimationDemoPlugin.class);
-
+        result.add(GenerateOLCFromFragment.class);
         //result.add(yFilesLayoutPlugin.class);
     }
     

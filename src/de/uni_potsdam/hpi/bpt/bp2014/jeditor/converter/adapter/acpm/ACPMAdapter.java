@@ -37,23 +37,24 @@ public class ACPMAdapter extends ActivityCentricProcessModel {
         if (nodes.containsKey(raw)) {
             return nodes.get(raw);
         }
-        for (ProcessNode processNode : model.getNodes()) {
-            if (processNode instanceof Task) {
-                node = new ActivityAdapter((Task) processNode);
-            } else if (processNode instanceof EndEvent) {
-                node = new EventAdapter((net.frapu.code.visualization.bpmn.Event) processNode);
-                ((Event)node).setType(Event.Type.END);
-            } else if (processNode instanceof StartEvent) {
-                node = new EventAdapter((net.frapu.code.visualization.bpmn.Event) processNode);
-                ((Event)node).setType(Event.Type.START);
-            } else if (processNode instanceof ExclusiveGateway) {
-                node = new GatewayAdapter((net.frapu.code.visualization.bpmn.Gateway) processNode);
-                ((Gateway)node).setType(Gateway.Type.XOR);
-            } else if (processNode instanceof ParallelGateway) {
-                node = new GatewayAdapter((net.frapu.code.visualization.bpmn.Gateway) processNode);
-                ((Gateway)node).setType(Gateway.Type.AND);
-            }
+        if (raw instanceof Task) {
+            node = new ActivityAdapter((Task) raw);
+        } else if (raw instanceof EndEvent) {
+            node = new EventAdapter((net.frapu.code.visualization.bpmn.Event) raw);
+            ((Event)node).setType(Event.Type.END);
+            addFinalNode(node);
+        } else if (raw instanceof StartEvent) {
+            node = new EventAdapter((net.frapu.code.visualization.bpmn.Event) raw);
+            ((Event)node).setType(Event.Type.START);
+            setStartNode(node);
+        } else if (raw instanceof ExclusiveGateway) {
+            node = new GatewayAdapter((net.frapu.code.visualization.bpmn.Gateway) raw);
+            ((Gateway)node).setType(Gateway.Type.XOR);
+        } else if (raw instanceof ParallelGateway) {
+            node = new GatewayAdapter((net.frapu.code.visualization.bpmn.Gateway) raw);
+            ((Gateway)node).setType(Gateway.Type.AND);
         }
+        nodes.put(raw, node);
         return node;
     }
 
@@ -67,7 +68,7 @@ public class ACPMAdapter extends ActivityCentricProcessModel {
                 ControlFlow cf = new ControlFlowAdapter(source, target, processEdge);
                 edges.add(cf);
                 source.addOutgoingEdge(cf);
-                target.addOutgoingEdge(cf);
+                target.addIncomingEdge(cf);
             } else if (processEdge instanceof MessageFlow) {
                 INode source = wrapNode(processEdge.getSource());
                 INode target = wrapNode(processEdge.getTarget());
@@ -81,6 +82,9 @@ public class ACPMAdapter extends ActivityCentricProcessModel {
                 source.addOutgoingEdge(df);
                 target.addIncomingEdge(df);
             }
+        }
+        for (INode node : nodes.values()) {
+            super.addNode(node);
         }
     }
 }
