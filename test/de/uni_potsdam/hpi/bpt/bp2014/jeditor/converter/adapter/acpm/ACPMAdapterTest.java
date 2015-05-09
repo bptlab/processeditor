@@ -30,10 +30,10 @@ public class ACPMAdapterTest {
         assertTrue("The start node should be an Event", model.getStartNode() instanceof Event);
         assertEquals("The start node should be an StartEvent", Event.Type.START, ((Event) model.getStartNode()).getType());
         assertEquals("The start node should have only one successor", 1, model.getStartNode().getOutgoingEdges().size());
-        assertTrue("The second node should be an Activity", model.getStartNode().getOutgoingEdges().iterator().next() instanceof Activity);
+        assertTrue("The second node should be an Activity", model.getStartNode().getOutgoingEdges().iterator().next().getTarget() instanceof Activity);
         assertEquals("The Activity have only one successor", 1, model.getNodesOfClass(Activity.class).iterator().next().getOutgoingEdges().size());
         assertTrue("The successor of the Activity should be an Event", model.getNodesOfClass(Activity.class).iterator().next().getOutgoingEdges().iterator().next().getTarget() instanceof Event);
-        assertEquals("The successor of the Activity should be an Event", Event.Type.END, ((Event)model.getNodesOfClass(Activity.class).iterator().next().getOutgoingEdges().iterator().next().getTarget()).getType());
+        assertEquals("The successor of the Activity should be an Event", Event.Type.END, ((Event) model.getNodesOfClass(Activity.class).iterator().next().getOutgoingEdges().iterator().next().getTarget()).getType());
         System.out.println("");
     }
 
