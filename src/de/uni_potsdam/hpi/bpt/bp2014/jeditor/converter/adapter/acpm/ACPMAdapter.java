@@ -79,6 +79,7 @@ public class ACPMAdapter extends ActivityCentricProcessModel {
     private void initialize() {
         edges = new HashSet<>();
         nodes = new HashMap<>();
+        stateStore = new HashMap<>();
         for (ProcessEdge processEdge : model.getEdges()) {
             if (processEdge instanceof SequenceFlow) {
                 INode source = wrapNode(processEdge.getSource());
@@ -87,7 +88,7 @@ public class ACPMAdapter extends ActivityCentricProcessModel {
                 edges.add(cf);
                 source.addOutgoingEdge(cf);
                 target.addIncomingEdge(cf);
-            } else if (processEdge instanceof MessageFlow) {
+            } else if (processEdge instanceof Association) {
                 INode source = wrapNode(processEdge.getSource());
                 INode target = wrapNode(processEdge.getTarget());
                 DataFlow df;
