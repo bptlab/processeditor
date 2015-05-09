@@ -35,12 +35,12 @@ public class ObjectLifeCycle extends ProcessModel {
     }
     @Override
     public synchronized void addEdge(ProcessEdge edge) {
-        if (edge instanceof StateTransition) {
+        /*if (edge instanceof StateTransition) {
             String text = edge.getLabel();
             if (null == text || text.equals("")) {
                 getEditStateNameDialog(edge).setVisible(true);
             }
-        }
+        }*/
         super.addEdge(edge);
     }
 
