@@ -5,7 +5,7 @@ import com.inubit.research.gui.plugins.WorkbenchPlugin;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.IEdge;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.converter.activity_centric.ActivityCentricToSynchronizedOLC;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.ObjectLifeCycle;
-import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.SynchronizedObjectLifeCycle;
+import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.synchronize.SynchronizedObjectLifeCycle;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.acpm.ACPMAdapter;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition;
