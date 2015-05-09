@@ -5,6 +5,7 @@ import de.uni_potsdam.hpi.bpt.bp2014.conversion.INode;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.*;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.Event;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.Gateway;
+import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState;
 import net.frapu.code.visualization.ProcessEdge;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessNode;
@@ -23,8 +24,8 @@ public class ACPMAdapter extends ActivityCentricProcessModel {
 
     private ProcessModel model;
     private Map<ProcessNode, INode> nodes;
-    private INode finalNode;
     private Collection<IEdge> edges;
+    private Map<String, Map<String, DataObjectState>> stateStore;
 
     public ACPMAdapter(ProcessModel model) {
         super();
@@ -53,9 +54,26 @@ public class ACPMAdapter extends ActivityCentricProcessModel {
         } else if (raw instanceof ParallelGateway) {
             node = new GatewayAdapter((net.frapu.code.visualization.bpmn.Gateway) raw);
             ((Gateway)node).setType(Gateway.Type.AND);
+        } else if (raw instanceof DataObject) {
+            updateStateStore(raw);
+            node = new DataObjectAdapter(raw,
+                    stateStore.get(raw.getName()));
         }
         nodes.put(raw, node);
         return node;
+    }
+
+    private void updateStateStore(ProcessNode dataObject) {
+        if (!stateStore.containsKey(dataObject.getName())) {
+            stateStore.put(dataObject.getName(),
+                    new HashMap<String, DataObjectState>());
+        }
+        if (!stateStore.get(dataObject.getName())
+                .containsKey(dataObject.getProperty(DataObject.PROP_STATE))) {
+            stateStore.get(dataObject.getName())
+                    .put(dataObject.getProperty(DataObject.PROP_STATE),
+                            new DataObjectState(dataObject.getProperty(DataObject.PROP_STATE)));
+        }
     }
 
     private void initialize() {
@@ -76,7 +94,7 @@ public class ACPMAdapter extends ActivityCentricProcessModel {
                 if (source instanceof de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.Activity) {
                     df = new DataFlowAdapter((de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.Activity)source, (de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.DataObject)target, processEdge);
                 } else {
-                    df =new DataFlowAdapter((de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.DataObject)source, (de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.Activity)target, processEdge);
+                    df = new DataFlowAdapter((de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.DataObject)source, (de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.Activity)target, processEdge);
                 }
                 edges.add(df);
                 source.addOutgoingEdge(df);

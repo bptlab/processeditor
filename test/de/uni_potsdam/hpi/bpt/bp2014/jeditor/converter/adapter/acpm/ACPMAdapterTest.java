@@ -26,7 +26,7 @@ public class ACPMAdapterTest {
         ActivityCentricProcessModel model = new ACPMAdapter(models.get(0));
         assertEquals("The adapter should have exactly 3 nodes", 3, model.getNodes().size());
         assertEquals("The adapter should have exactly 1 Activity", 1, model.getNodesOfClass(Activity.class).size());
-        assertEquals("The adapter should have exactly 2 Events", 1, model.getNodesOfClass(Event.class).size());
+        assertEquals("The adapter should have exactly 2 Events", 2, model.getNodesOfClass(Event.class).size());
         assertTrue("The start node should be an Event", model.getStartNode() instanceof Event);
         assertEquals("The start node should be an StartEvent", Event.Type.START, ((Event) model.getStartNode()).getType());
         assertEquals("The start node should have only one successor", 1, model.getStartNode().getOutgoingEdges().size());
