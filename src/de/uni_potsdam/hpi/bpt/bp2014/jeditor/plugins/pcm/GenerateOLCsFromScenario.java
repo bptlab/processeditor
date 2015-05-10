@@ -146,7 +146,7 @@ public class GenerateOLCsFromScenario extends WorkbenchPlugin {
                         states.put(targetName, new DataObjectState(targetName));
                     }
                     if (!successors.containsKey(states.get(sourceName))) {
-                        successors.put(states.get(sourceName), new HashSet<>());
+                        successors.put(states.get(sourceName), new HashSet<StateTransition>());
                     }
                     if (!successorExists(successors.get(states.get(sourceName)), (StateTransition) transition)) {
                         StateTransition newTransition = new StateTransition(
