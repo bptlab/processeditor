@@ -42,10 +42,6 @@ public class GenerateOLCsFromScenario extends WorkbenchPlugin {
 
     public GenerateOLCsFromScenario(Workbench wb) {
         this.wb = wb;
-        fragments = new HashSet<>();
-        olcsPerDataClass = new HashMap<>();
-        olcs = new HashSet<>();
-        fragmentIDs = new HashSet<>();
     }
 
     public Component getMenuEntry() {
@@ -53,6 +49,10 @@ public class GenerateOLCsFromScenario extends WorkbenchPlugin {
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                fragments = new HashSet<>();
+                olcsPerDataClass = new HashMap<>();
+                olcs = new HashSet<>();
+                fragmentIDs = new HashSet<>();
                 ProcessModel model = wb.getSelectedModel();
                 if (!(model instanceof PCMScenario)) {
                     System.err.println("Model has to be a PCM Scenario");
