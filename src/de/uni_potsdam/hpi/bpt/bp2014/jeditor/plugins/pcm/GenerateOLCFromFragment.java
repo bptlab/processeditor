@@ -1,6 +1,7 @@
 package de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm;
 
 import com.inubit.research.gui.Workbench;
+import com.inubit.research.gui.WorkbenchConnectToServerDialog;
 import com.inubit.research.gui.plugins.WorkbenchPlugin;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.IEdge;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.INode;

@@ -97,7 +97,8 @@ public class WorkbenchConnectToServerDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon_64x64_inubit-Workbench.gif"))); // NOI18N
+        //jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon_64x64_inubit-Workbench.gif"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon_small.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
