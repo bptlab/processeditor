@@ -83,7 +83,7 @@ public class GenerateOLCFromFragment extends WorkbenchPlugin {
                             olc.addNode(target);
                         }
                     }
-                    wb.openNewModel(olc);
+                    wb.addModel(olc.getProcessName(), olc);
                 }
             }
         });
