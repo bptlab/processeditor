@@ -177,7 +177,7 @@ public class GeneratePCMFragmentFromMultipleOLC extends WorkbenchPlugin {
             listScrollPane.add(olcList);
             contentPanel.add(olcList, BorderLayout.CENTER);
             JButton convertButton = new JButton("Convert");
-            JDialog thisDialog = this;
+            final JDialog thisDialog = this;
             convertButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
