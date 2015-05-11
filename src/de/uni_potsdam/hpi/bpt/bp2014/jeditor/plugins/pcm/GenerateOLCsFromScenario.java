@@ -44,6 +44,7 @@ public class GenerateOLCsFromScenario extends WorkbenchPlugin {
         this.wb = wb;
     }
 
+    @Override
     public Component getMenuEntry() {
         JMenuItem menuItem = new JMenuItem("OLC from Scenario");
         menuItem.addActionListener(new ActionListener() {

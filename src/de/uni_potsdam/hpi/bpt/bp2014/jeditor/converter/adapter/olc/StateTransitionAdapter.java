@@ -28,26 +28,6 @@ public class StateTransitionAdapter extends StateTransition {
     }
 
     @Override
-    public INode getSource() {
-        return source;
-    }
-
-    @Override
-    public void setSource(INode source) {
-        this.source = source;
-    }
-
-    @Override
-    public INode getTarget() {
-        return target;
-    }
-
-    @Override
-    public void setTarget(INode target) {
-        this.target = target;
-    }
-
-    @Override
     public String getLabel() {
         return stateTransition.getLabel();
     }

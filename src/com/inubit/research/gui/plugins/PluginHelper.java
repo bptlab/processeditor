@@ -12,6 +12,7 @@ import com.inubit.research.gui.plugins.choreography.interfaceGenerator.Behaviora
 import com.inubit.research.gui.plugins.validationPlugin.ValidationPlugin;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.GenerateOLCFromFragment;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.GenerateOLCsFromScenario;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.GeneratePCMFragmentFromMultipleOLC;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,8 +37,10 @@ public class PluginHelper {
         result.add(ValidationPlugin.class);
         //result.add(ServerLoadTestPlugin.class);
         result.add(AnimationDemoPlugin.class);
+
         result.add(GenerateOLCFromFragment.class);
         result.add(GenerateOLCsFromScenario.class);
+        result.add(GeneratePCMFragmentFromMultipleOLC.class);
         //result.add(yFilesLayoutPlugin.class);
     }
     

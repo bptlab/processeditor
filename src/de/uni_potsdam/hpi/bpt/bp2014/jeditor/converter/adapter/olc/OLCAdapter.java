@@ -4,10 +4,15 @@ import de.uni_potsdam.hpi.bpt.bp2014.conversion.IModel;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.INode;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.ObjectLifeCycle;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition;
+import net.frapu.code.visualization.ProcessEdge;
 import net.frapu.code.visualization.ProcessNode;
+import net.frapu.code.visualization.bpmn.DataObject;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class can be used as an adapter.
@@ -19,67 +24,37 @@ import java.util.List;
  */
 public class OLCAdapter extends de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.ObjectLifeCycle {
     private ObjectLifeCycle olc;
-    private List<INode> nodes;
-    private List<INode> finalNodes;
 
     public OLCAdapter(ObjectLifeCycle olc) {
         super(olc.getProcessName());
         this.olc = olc;
-    }
 
-    @Override
-    public List<INode> getNodes() {
-        if (null == nodes) {
-            initializeNodes();
-        }
-        List<INode> result = new LinkedList<>(nodes);
-        result.addAll(super.getNodes());
-        return result;
+        initializeNodes();
     }
 
     private void initializeNodes() {
-        nodes = new LinkedList<>();
-        finalNodes = new LinkedList<>();
-        for (ProcessNode stateNode : olc.getNodesByClass(DataObjectState.class)) {
-            DataObjectStateAdapter node = new DataObjectStateAdapter((DataObjectState) stateNode);
-            nodes.add(node);
-            if (stateNode.getProperty(DataObjectState.PROP_IS_FINAL)
+        Map<ProcessNode, DataObjectStateAdapter> nodesAndTheirAdapters = new HashMap<>();
+        for (ProcessNode processNode : olc.getNodes()) {
+            nodesAndTheirAdapters.put(processNode,
+                    new DataObjectStateAdapter((DataObjectState) processNode));
+            addNode(nodesAndTheirAdapters.get(processNode));
+            if (processNode.getProperty(DataObjectState.PROP_IS_FINAL)
                     .equals(DataObjectState.TRUE)) {
-                finalNodes.add(node);
+                addFinalNode(nodesAndTheirAdapters.get(processNode));
+            }
+            if (processNode.getProperty(DataObjectState.PROP_IS_START)
+                    .equals(DataObjectState.TRUE)) {
+                setStartNode(nodesAndTheirAdapters.get(processNode));
             }
         }
-    }
-
-    @Override
-    public <T extends INode> List<T> getNodesOfClass(Class t) {
-        List<T> result = new LinkedList<>();
-        if (t.isAssignableFrom(de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState.class)) {
-                result.addAll((List<T>)getNodes());
+        for (ProcessEdge processEdge : olc.getEdges()) {
+            DataObjectStateAdapter source = nodesAndTheirAdapters.get(processEdge.getSource());
+            DataObjectStateAdapter target = nodesAndTheirAdapters.get(processEdge.getTarget());
+            StateTransitionAdapter adaptedEdge = new StateTransitionAdapter((StateTransition) processEdge);
+            adaptedEdge.setSource(source);
+            adaptedEdge.setTarget(target);
+            source.addOutgoingEdge(adaptedEdge);
+            target.addIncomingEdge(adaptedEdge);
         }
-        result.addAll((List<T>) super.getNodesOfClass(t));
-        return result;
-    }
-
-    @Override
-    public List<INode> getFinalStates() {
-        if (null == nodes) {
-            initializeNodes();
-        }
-        List<INode> result = new LinkedList<>();
-        result.addAll(finalNodes);
-        result.addAll(super.getFinalStates());
-        return result;
-    }
-
-    @Override
-    public <T extends INode> List<T> getFinalNodesOfClass(Class t) {
-        if (null == nodes) {
-            initializeNodes();
-        }
-        List<T> result = new LinkedList<>();
-        if (t.isAssignableFrom(de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState.class)) {
-            result.addAll((List<T>)finalNodes);
-        }
-        return result;
     }
 }

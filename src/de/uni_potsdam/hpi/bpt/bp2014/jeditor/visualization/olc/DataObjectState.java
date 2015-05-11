@@ -15,6 +15,7 @@ import java.awt.geom.RoundRectangle2D;
 public class DataObjectState extends ProcessNode {
 
     public static final String PROP_IS_FINAL = "is_final_state";
+    public static final String PROP_IS_START = "is start state";
 
     public DataObjectState() {
         super();
@@ -25,6 +26,8 @@ public class DataObjectState extends ProcessNode {
     private void initializeProperties() {
         setProperty(PROP_IS_FINAL, FALSE);
         setPropertyEditor(PROP_IS_FINAL, new BooleanPropertyEditor());
+        setProperty(PROP_IS_START, FALSE);
+        setPropertyEditor(PROP_IS_START, new BooleanPropertyEditor());
     }
 
     @Override
@@ -32,15 +35,21 @@ public class DataObjectState extends ProcessNode {
         Graphics2D g2 = (Graphics2D) g;
 
         Shape outline = getOutlineShape();
-        g2.setStroke(OLCUtils.defaultStroke);
+        if (getProperty(PROP_IS_FINAL).equals(TRUE) &&
+                getProperty(PROP_IS_START).equals(TRUE)) {
+            g2.setStroke(OLCUtils.boldDashedStroke);
+        } else if (getProperty(PROP_IS_START).equals(TRUE)) {
+            g2.setStroke(OLCUtils.dashedStroke);
+        } else if (getProperty(PROP_IS_FINAL).equals(TRUE)) {
+            g2.setStroke(OLCUtils.boldStroke);
+        } else {
+            g2.setStroke(OLCUtils.defaultStroke);
+        }
         g2.setPaint(getBackground());
 
         g2.fill(outline);
         g2.setPaint(Color.BLACK);
         g2.draw(outline);
-        if (getProperty(PROP_IS_FINAL).equals(TRUE)) {
-            g2.draw(getFinalShape());
-        }
 
         // Count text lines
         g2.setFont(OLCUtils.defaultFont);
@@ -79,12 +88,6 @@ public class DataObjectState extends ProcessNode {
     protected Shape getOutlineShape() {
         RoundRectangle2D outline = new RoundRectangle2D.Float(getPos().x - (getSize().width / 2),
                 getPos().y - (getSize().height / 2), getSize().width, getSize().height, 15, 15);
-        return outline;
-    }
-
-    private Shape getFinalShape() {
-        RoundRectangle2D outline = new RoundRectangle2D.Float(getPos().x - (getSize().width / 2 * 0.9f),
-                getPos().y - (getSize().height / 2 * 0.9f), getSize().width * 0.9f, getSize().height * 0.9f, 15, 15);
         return outline;
     }
 }
