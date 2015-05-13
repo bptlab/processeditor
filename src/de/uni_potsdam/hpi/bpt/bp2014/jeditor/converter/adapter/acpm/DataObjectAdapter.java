@@ -16,5 +16,6 @@ public class DataObjectAdapter extends DataObject {
     public DataObjectAdapter(ProcessNode raw, Map<String, DataObjectState> stateStorage) {
         super(raw.getName(),
                 stateStorage.get(raw.getProperty(net.frapu.code.visualization.bpmn.DataObject.PROP_STATE)));
+        dataObject = raw;
     }
 }
