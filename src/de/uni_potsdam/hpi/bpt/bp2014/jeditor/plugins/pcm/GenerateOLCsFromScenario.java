@@ -125,7 +125,7 @@ public class GenerateOLCsFromScenario extends WorkbenchPlugin {
         if (objectLifeCycle.getFinalStates().contains(transition.getSource())) {
             source.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
         }
-        edge.setTarget(source);
+        edge.setSource(source);
         edge.setTarget(target);
         edge.setLabel(((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.StateTransition)transition).getLabel());
         return edge;
@@ -136,8 +136,7 @@ public class GenerateOLCsFromScenario extends WorkbenchPlugin {
             processedNodes.put(node, new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState());
         }
         de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState newNode = processedNodes.get(node);
-        newNode.setProperty(ProcessNode.PROP_TEXT,
-                ((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState) node).getName());
+        newNode.setText(((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState) node).getName());
 
         markAsStartIfInit(newNode);
         return newNode;
