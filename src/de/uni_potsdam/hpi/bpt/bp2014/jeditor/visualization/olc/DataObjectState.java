@@ -1,11 +1,11 @@
 package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc;
 
 import net.frapu.code.visualization.ProcessNode;
-import net.frapu.code.visualization.bpmn.BPMNUtils;
 import net.frapu.code.visualization.editors.BooleanPropertyEditor;
 
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * This class represents a state of a data object.
@@ -20,7 +20,7 @@ public class DataObjectState extends ProcessNode {
     public DataObjectState() {
         super();
         initializeProperties();
-        setSize(100, 60);
+        setSize(60, 60);
     }
 
     private void initializeProperties() {
@@ -35,13 +35,8 @@ public class DataObjectState extends ProcessNode {
         Graphics2D g2 = (Graphics2D) g;
 
         Shape outline = getOutlineShape();
-        if (getProperty(PROP_IS_FINAL).equals(TRUE) &&
-                getProperty(PROP_IS_START).equals(TRUE)) {
-            g2.setStroke(OLCUtils.boldDashedStroke);
-        } else if (getProperty(PROP_IS_START).equals(TRUE)) {
-            g2.setStroke(OLCUtils.dashedStroke);
-        } else if (getProperty(PROP_IS_FINAL).equals(TRUE)) {
-            g2.setStroke(OLCUtils.boldStroke);
+        if (getProperty(PROP_IS_FINAL).equals(TRUE)) {
+            g2.setStroke(OLCUtils.doubleLinedStroke);
         } else {
             g2.setStroke(OLCUtils.defaultStroke);
         }
@@ -50,11 +45,18 @@ public class DataObjectState extends ProcessNode {
         g2.fill(outline);
         g2.setPaint(Color.BLACK);
         g2.draw(outline);
+        if (getProperty(PROP_IS_START).equals(TRUE)) {
+            g2.fill(new Ellipse2D.Double(
+                    getPos().x - (Math.cos(Math.toRadians(45.)) * (getSize().width / 2)) - 15,
+                    getPos().y - (Math.sin(Math.toRadians(45.)) * (getSize().width / 2)) - 15,
+                    15,
+                    15));
+        }
 
         // Count text lines
         g2.setFont(OLCUtils.defaultFont);
         g2.setPaint(Color.BLACK);
-        BPMNUtils.drawText(g2, getPos().x, getPos().y, getSize().width - 8, getText(), BPMNUtils.Orientation.CENTER);
+        OLCUtils.drawText(g2, getPos().x, getPos().y, getSize().width - 8, getText(), OLCUtils.Orientation.CENTER);
     }
 
     @Override
@@ -78,7 +80,7 @@ public class DataObjectState extends ProcessNode {
                 int width = Integer.parseInt(value);
                 if (width < 30) value = "40";
             } catch (Exception e) {
-                value = "100";
+                value = "60";
             }
         }
         super.setProperty(key, value);
@@ -86,8 +88,8 @@ public class DataObjectState extends ProcessNode {
 
     @Override
     protected Shape getOutlineShape() {
-        RoundRectangle2D outline = new RoundRectangle2D.Float(getPos().x - (getSize().width / 2),
-                getPos().y - (getSize().height / 2), getSize().width, getSize().height, 15, 15);
+        Ellipse2D outline = new Ellipse2D.Double(getPos().x - (getSize().width / 2),
+                getPos().y - (getSize().width / 2), getSize().width, getSize().width);
         return outline;
     }
 }
