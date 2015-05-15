@@ -75,46 +75,7 @@ public class GenerateOLCsFromScenario extends WorkbenchPlugin {
                     extractModelsFromDirectory(directory);
                     generateObjectLifeCycles();
                     for (ObjectLifeCycle objectLifeCycle : olcs) {
-                        ProcessModel olc = new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.ObjectLifeCycle();
-                        Map<INode, de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState> processedNodes = new HashMap<>();
-                        for (IEdge transition : objectLifeCycle.getEdgeOfType(StateTransition.class)) {
-                            de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition edge = new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition();
-                            if (!processedNodes.containsKey(transition.getSource())) {
-                                processedNodes.put(transition.getSource(), new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState());
-                            }
-                            de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState source = processedNodes.get(transition.getSource());
-                            source.setProperty(ProcessNode.PROP_TEXT,
-                                    ((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState) transition.getSource()).getName());
-                            edge.setSource(source);
-                            if (objectLifeCycle.getFinalStates().contains(transition.getSource())) {
-                                source.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
-                            }
-                            if (!processedNodes.containsKey(transition.getTarget())) {
-                                processedNodes.put(transition.getTarget(), new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState());
-                            }
-                            de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState target = processedNodes.get(transition.getTarget());
-                            target.setProperty(ProcessNode.PROP_TEXT,
-                                    ((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState) transition.getTarget()).getName());
-                            if (objectLifeCycle.getFinalStates().contains(transition.getTarget())) {
-                                target.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
-                            }
-                            if (((DataObjectState) transition.getTarget()).getName().equals("init")) {
-                                target.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_START, ProcessNode.TRUE);
-                            } else if (((DataObjectState) transition.getSource()).getName().equals("init")) {
-                                source.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_START, ProcessNode.TRUE);
-                            }
-                            edge.setTarget(target);
-                            edge.setLabel(((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.StateTransition)transition).getLabel());
-                            olc.addEdge(edge);
-                            if (!olc.getNodes().contains(source)) {
-                                olc.addNode(source);
-                            }
-                            if (!olc.getNodes().contains(target)) {
-                                olc.addNode(target);
-                            }
-                        }
-                        wb.openNewModel(olc);
-
+                        wb.openNewModel(createObjectLifeCycleModel(objectLifeCycle));
                     }
                 } catch (URISyntaxException e1) {
                     e1.printStackTrace();
@@ -134,6 +95,60 @@ public class GenerateOLCsFromScenario extends WorkbenchPlugin {
             }
         });
         return menuItem;
+    }
+
+    private ProcessModel createObjectLifeCycleModel(ObjectLifeCycle objectLifeCycle) {
+        ProcessModel olc = new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.ObjectLifeCycle();
+        Map<INode, de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState> processedNodes = new HashMap<>();
+        for (IEdge transition : objectLifeCycle.getEdgeOfType(StateTransition.class)) {
+            de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition edge =
+                    createEdgeFor(objectLifeCycle, transition, processedNodes);
+            olc.addEdge(edge);
+            if (!olc.getNodes().contains(edge.getSource())) {
+                olc.addNode(edge.getSource());
+            }
+            if (!olc.getNodes().contains(edge.getTarget())) {
+                olc.addNode(edge.getTarget());
+            }
+        }
+        return olc;
+    }
+
+    private de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition createEdgeFor(ObjectLifeCycle objectLifeCycle, IEdge transition, Map<INode, de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState> processedNodes) {
+        de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition edge =
+                new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition();
+        ProcessNode source = getNodeFor(processedNodes, transition.getSource());
+        ProcessNode target = getNodeFor(processedNodes, transition.getTarget());
+        if (objectLifeCycle.getFinalStates().contains(transition.getTarget())) {
+            target.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
+        }
+        if (objectLifeCycle.getFinalStates().contains(transition.getSource())) {
+            source.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
+        }
+        edge.setTarget(source);
+        edge.setTarget(target);
+        edge.setLabel(((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.StateTransition)transition).getLabel());
+        return edge;
+    }
+
+    private ProcessNode getNodeFor(Map<INode, de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState> processedNodes, INode node) {
+        if (!processedNodes.containsKey(node)) {
+            processedNodes.put(node, new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState());
+        }
+        de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState newNode = processedNodes.get(node);
+        newNode.setProperty(ProcessNode.PROP_TEXT,
+                ((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState) node).getName());
+
+        markAsStartIfInit(newNode);
+        return newNode;
+    }
+
+    private boolean markAsStartIfInit(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState state) {
+        if (state.getName().equals("init")) {
+            state.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_START, ProcessNode.TRUE);
+            return true;
+        }
+        return false;
     }
 
     private void extractModelsFromDirectory(ModelDirectory directory) throws Exception {
