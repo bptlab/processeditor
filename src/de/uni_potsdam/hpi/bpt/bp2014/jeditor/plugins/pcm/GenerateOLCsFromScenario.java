@@ -85,7 +85,7 @@ public class GenerateOLCsFromScenario extends WorkbenchPlugin {
                             }
                             de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState source = processedNodes.get(transition.getSource());
                             source.setProperty(ProcessNode.PROP_TEXT,
-                                    ((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState)transition.getSource()).getName());
+                                    ((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState) transition.getSource()).getName());
                             edge.setSource(source);
                             if (objectLifeCycle.getFinalStates().contains(transition.getSource())) {
                                 source.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
@@ -95,9 +95,14 @@ public class GenerateOLCsFromScenario extends WorkbenchPlugin {
                             }
                             de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState target = processedNodes.get(transition.getTarget());
                             target.setProperty(ProcessNode.PROP_TEXT,
-                                    ((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState)transition.getTarget()).getName());
+                                    ((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState) transition.getTarget()).getName());
                             if (objectLifeCycle.getFinalStates().contains(transition.getTarget())) {
                                 target.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
+                            }
+                            if (((DataObjectState) transition.getTarget()).getName().equals("init")) {
+                                target.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_START, ProcessNode.TRUE);
+                            } else if (((DataObjectState) transition.getSource()).getName().equals("init")) {
+                                source.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_START, ProcessNode.TRUE);
                             }
                             edge.setTarget(target);
                             edge.setLabel(((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.StateTransition)transition).getLabel());
