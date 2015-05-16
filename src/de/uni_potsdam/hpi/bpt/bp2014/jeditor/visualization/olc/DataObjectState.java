@@ -5,7 +5,6 @@ import net.frapu.code.visualization.editors.BooleanPropertyEditor;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 
 /**
  * This class represents a state of a data object.
@@ -78,7 +77,7 @@ public class DataObjectState extends ProcessNode {
         if (key.equals(PROP_WIDTH)) {
             try {
                 int width = Integer.parseInt(value);
-                if (width < 30) value = "40";
+                if (width < 30) value = "30";
             } catch (Exception e) {
                 value = "60";
             }
