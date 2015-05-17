@@ -79,24 +79,30 @@ public class GeneratePCMFragmentFromMultipleOLC extends GeneratorPlugin {
 
     @Override
     protected Collection<? extends ProcessModel> extractModelsFromDirectory(ModelDirectory directory) {
+        olcs.addAll(extractModelsFromSubDirectory(directory));
+        GeneratorChooseOLCsDialog chooseDialog = new GeneratorChooseOLCsDialog(true);
+        chooseDialog.pack();
+        chooseDialog.setVisible(true);
+        return selectedOLCs;
+    }
+
+    protected Collection<? extends ProcessModel> extractModelsFromSubDirectory(ModelDirectory directory) {
+        Collection<ObjectLifeCycle> models = new HashSet<>();
         for (ModelDirectoryEntry modelDirectoryEntry : directory.getEntries()) {
             if (modelDirectoryEntry instanceof ModelDirectory) {
-                extractModelsFromDirectory((ModelDirectory) modelDirectoryEntry);
+                extractModelsFromSubDirectory((ModelDirectory) modelDirectoryEntry);
             } else if (modelDirectoryEntry instanceof ModelDescription) {
                 try {
                     ProcessModel model = ((ModelDescription) modelDirectoryEntry).getHead().getProcessModel();
                     if (model instanceof ObjectLifeCycle) {
-                        olcs.add(model);
+                        models.add((ObjectLifeCycle) model);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-        GeneratorChooseOLCsDialog chooseDialog = new GeneratorChooseOLCsDialog(true);
-        chooseDialog.pack();
-        chooseDialog.setVisible(true);
-        return selectedOLCs;
+        return models;
     }
 
     @Override
