@@ -10,7 +10,7 @@ import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.Activity;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.*;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.DataObject;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.Gateway;
-import de.uni_potsdam.hpi.bpt.bp2014.conversion.converter.SynchronizedOLCToActivityCentric;
+import de.uni_potsdam.hpi.bpt.bp2014.conversion.converter.olc.SynchronizedOLCToActivityCentric;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.synchronize.SynchronizedObjectLifeCycle;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.SynchronizedOLCAdapter;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.ObjectLifeCycle;
