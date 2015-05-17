@@ -46,8 +46,8 @@ public class DataObjectState extends ProcessNode {
         g2.draw(outline);
         if (getProperty(PROP_IS_START).equals(TRUE)) {
             g2.fill(new Ellipse2D.Double(
-                    getPos().x - (Math.cos(Math.toRadians(45.)) * (getSize().width / 2)) - 15,
-                    getPos().y - (Math.sin(Math.toRadians(45.)) * (getSize().width / 2)) - 15,
+                    getPos().x - (Math.cos(Math.toRadians(45.)) * (getSize().width / 2)) - 10,
+                    getPos().y - (Math.sin(Math.toRadians(45.)) * (getSize().width / 2)) - 10,
                     15,
                     15));
         }

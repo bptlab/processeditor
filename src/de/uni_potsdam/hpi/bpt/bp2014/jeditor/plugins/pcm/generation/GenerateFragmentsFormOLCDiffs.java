@@ -35,11 +35,13 @@ public class GenerateFragmentsFormOLCDiffs extends GeneratePCMFragmentFromMultip
                 extractModelsFromSubDirectory((ModelDirectory) directoryEntry);
             } else if (directoryEntry instanceof ModelDescription) {
                 try {
-                    ProcessModel model = ((ModelDescription) directoryEntry).getHead().getProcessModel();
-                    ProcessModel predecessor = ((ModelDescription) directoryEntry).getPredecessors(
-                            ((ModelDescription)directoryEntry).getHead()).iterator().next().getProcessModel();
-                    if (model instanceof ObjectLifeCycle) {
-                        predecessors.put((ObjectLifeCycle)model, (ObjectLifeCycle)predecessor);
+                    if (!((ModelDescription) directoryEntry).getHead().getPredecessors().isEmpty()) {
+                        ProcessModel model = ((ModelDescription) directoryEntry).getHead().getProcessModel();
+                        ProcessModel predecessor = ((ModelDescription) directoryEntry).getPredecessors(
+                                ((ModelDescription) directoryEntry).getHead()).iterator().next().getProcessModel();
+                        if (model instanceof ObjectLifeCycle) {
+                            predecessors.put((ObjectLifeCycle) model, (ObjectLifeCycle) predecessor);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
