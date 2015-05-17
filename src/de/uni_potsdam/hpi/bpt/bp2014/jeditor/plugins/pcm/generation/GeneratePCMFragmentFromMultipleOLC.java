@@ -90,7 +90,8 @@ public class GeneratePCMFragmentFromMultipleOLC extends GeneratorPlugin {
         Collection<ObjectLifeCycle> models = new HashSet<>();
         for (ModelDirectoryEntry modelDirectoryEntry : directory.getEntries()) {
             if (modelDirectoryEntry instanceof ModelDirectory) {
-                extractModelsFromSubDirectory((ModelDirectory) modelDirectoryEntry);
+                models.addAll((Collection<? extends ObjectLifeCycle>)
+                        extractModelsFromSubDirectory((ModelDirectory) modelDirectoryEntry));
             } else if (modelDirectoryEntry instanceof ModelDescription) {
                 try {
                     ProcessModel model = ((ModelDescription) modelDirectoryEntry).getHead().getProcessModel();

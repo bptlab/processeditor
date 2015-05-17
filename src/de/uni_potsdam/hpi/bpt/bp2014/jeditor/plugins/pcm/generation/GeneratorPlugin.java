@@ -47,7 +47,6 @@ public abstract class GeneratorPlugin extends WorkbenchPlugin {
                                     conf.getProperty(WorkbenchConnectToServerDialog.CONF_SERVER_PASSWORD)));
                     ModelDirectory directory = server.getDirectory();
                     openModels(convertModels(generateModels(wrapModels(extractModelsFromDirectory(directory)))));
-                    extractModelsFromDirectory(directory);
                 } catch (URISyntaxException e1) {
                     e1.printStackTrace();
                 } catch (InvalidUserCredentialsException e1) {
