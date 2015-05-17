@@ -10,9 +10,9 @@ package com.inubit.research.gui.plugins;
 
 import com.inubit.research.gui.plugins.choreography.interfaceGenerator.BehavioralInterfaceGeneratingPlugin;
 import com.inubit.research.gui.plugins.validationPlugin.ValidationPlugin;
-import de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.GenerateOLCFromFragment;
-import de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.GenerateOLCsFromScenario;
-import de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.GeneratePCMFragmentFromMultipleOLC;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.generation.GenerateOLCFromFragment;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.generation.GenerateOLCsFromScenario;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.generation.GeneratePCMFragmentFromMultipleOLC;
 
 import java.util.LinkedList;
 import java.util.List;

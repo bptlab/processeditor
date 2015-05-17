@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.generation;
 
 import com.inubit.research.client.*;
 import com.inubit.research.gui.Workbench;
