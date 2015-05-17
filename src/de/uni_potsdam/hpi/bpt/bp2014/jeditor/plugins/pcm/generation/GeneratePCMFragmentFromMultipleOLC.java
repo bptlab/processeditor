@@ -1,10 +1,11 @@
 package de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.generation;
 
-import com.inubit.research.client.*;
+import com.inubit.research.client.ModelDescription;
+import com.inubit.research.client.ModelDirectory;
+import com.inubit.research.client.ModelDirectoryEntry;
 import com.inubit.research.gui.Workbench;
-import com.inubit.research.gui.WorkbenchConnectToServerDialog;
-import com.inubit.research.gui.plugins.WorkbenchPlugin;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.IEdge;
+import de.uni_potsdam.hpi.bpt.bp2014.conversion.IModel;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.INode;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.Activity;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.*;
@@ -15,106 +16,38 @@ import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.synchronize.SynchronizedObje
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.SynchronizedOLCAdapter;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.ObjectLifeCycle;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment;
-import net.frapu.code.visualization.Configuration;
 import net.frapu.code.visualization.ProcessEdge;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessNode;
 import net.frapu.code.visualization.bpmn.*;
 
 import javax.swing.*;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Stpehan on 11.05.2015.
  */
-public class GeneratePCMFragmentFromMultipleOLC extends WorkbenchPlugin {
-    protected final Workbench wb;
-    protected Collection<ObjectLifeCycle> olcs;
+public class GeneratePCMFragmentFromMultipleOLC extends GeneratorPlugin {
+    protected Collection<ProcessModel> olcs;
     protected Collection<ObjectLifeCycle> selectedOLCs;
     protected Map<INode, ProcessNode> nodesAndNodesConverted;
 
     public GeneratePCMFragmentFromMultipleOLC(Workbench wb) {
         super(wb);
-        this.wb = wb;
     }
 
     @Override
-    public Component getMenuEntry() {
-        JMenuItem menuItem = new JMenuItem("PCM Fragment from OLCs");
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                olcs = new HashSet<>();
-                WorkbenchConnectToServerDialog connectDialog = new WorkbenchConnectToServerDialog(wb, wb, false);
-                connectDialog.pack();
-                connectDialog.setVisible(true);
-                Configuration conf = Configuration.getInstance();
-                try {
-                    ModelServer server = new ModelServer(new URI(conf.getProperty(WorkbenchConnectToServerDialog.CONF_SERVER_URI)), "/",
-                            new UserCredentials(conf.getProperty(WorkbenchConnectToServerDialog.CONF_SERVER_URI),
-                                    conf.getProperty(WorkbenchConnectToServerDialog.CONF_SERVER_USER),
-                                    conf.getProperty(WorkbenchConnectToServerDialog.CONF_SERVER_PASSWORD)));
-                    ModelDirectory directory = server.getDirectory();
-                    extractModelsFromDirectory(directory);
-                    GeneratorChooseOLCsDialog chooseDialog = new GeneratorChooseOLCsDialog(true);
-                    chooseDialog.pack();
-                    chooseDialog.setVisible(true);
-                    SynchronizedObjectLifeCycle sOLC = new SynchronizedOLCAdapter(selectedOLCs);
-                    SynchronizedOLCToActivityCentric sOLC2ACPM = new SynchronizedOLCToActivityCentric();
-                    ActivityCentricProcessModel acpm = sOLC2ACPM.convert(sOLC);
-                    nodesAndNodesConverted = new HashMap<>();
-                    PCMFragment fragment = new PCMFragment();
-                    for (IEdge edge : acpm.getEdges()) {
-                        if (!nodesAndNodesConverted.containsKey(edge.getSource())) {
-                            ProcessNode processNode = createProcessNodeForINode(edge.getSource());
-                            fragment.addNode(processNode);
-                            nodesAndNodesConverted.put(edge.getSource(), processNode);
-                        }
-                        if (!nodesAndNodesConverted.containsKey(edge.getTarget())) {
-                            ProcessNode processNode = createProcessNodeForINode(edge.getTarget());
-                            fragment.addNode(processNode);
-                            nodesAndNodesConverted.put(edge.getTarget(), processNode);
-                        }
-                        if (edge instanceof ControlFlow) {
-                            ProcessEdge sequenceFlow = new SequenceFlow(nodesAndNodesConverted.get(edge.getSource()),
-                                    nodesAndNodesConverted.get(edge.getTarget()));
-                            fragment.addEdge(sequenceFlow);
-                        } else if (edge instanceof DataFlow) {
-                            ProcessEdge association = new Association(nodesAndNodesConverted.get(edge.getSource()),
-                                    nodesAndNodesConverted.get(edge.getTarget()));
-                            fragment.addEdge(association);
-                        }
-                    }
-                    wb.openNewModel(fragment);
-                } catch (URISyntaxException e1) {
-                    e1.printStackTrace();
-                } catch (InvalidUserCredentialsException e1) {
-                    e1.printStackTrace();
-                } catch (XMLHttpRequestException e1) {
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (XPathExpressionException e1) {
-                    e1.printStackTrace();
-                } catch (ParserConfigurationException e1) {
-                    e1.printStackTrace();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        return menuItem;
+    protected String getName() {
+        return "PCM Fragment from OLCs";
+    }
+
+    @Override
+    protected void initialize() {
+        olcs = new HashSet<>();
+        nodesAndNodesConverted = new HashMap<>();
     }
 
     private ProcessNode createProcessNodeForINode(INode inode) {
@@ -144,17 +77,75 @@ public class GeneratePCMFragmentFromMultipleOLC extends WorkbenchPlugin {
         return node;
     }
 
-    private void extractModelsFromDirectory(ModelDirectory directory) throws Exception {
+    @Override
+    protected Collection<? extends ProcessModel> extractModelsFromDirectory(ModelDirectory directory) {
         for (ModelDirectoryEntry modelDirectoryEntry : directory.getEntries()) {
             if (modelDirectoryEntry instanceof ModelDirectory) {
                 extractModelsFromDirectory((ModelDirectory) modelDirectoryEntry);
             } else if (modelDirectoryEntry instanceof ModelDescription) {
-                ProcessModel model = ((ModelDescription) modelDirectoryEntry).getHead().getProcessModel();
-                if (model instanceof ObjectLifeCycle) {
-                    olcs.add((ObjectLifeCycle) model);
+                try {
+                    ProcessModel model = ((ModelDescription) modelDirectoryEntry).getHead().getProcessModel();
+                    if (model instanceof ObjectLifeCycle) {
+                        olcs.add(model);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
+        GeneratorChooseOLCsDialog chooseDialog = new GeneratorChooseOLCsDialog(true);
+        chooseDialog.pack();
+        chooseDialog.setVisible(true);
+        return selectedOLCs;
+    }
+
+    @Override
+    protected Collection<? extends IModel> generateModels(Collection<? extends IModel> wrappedModels) {
+        SynchronizedObjectLifeCycle sOLC = (SynchronizedObjectLifeCycle) wrappedModels.iterator().next();
+        SynchronizedOLCToActivityCentric sOLC2ACPM = new SynchronizedOLCToActivityCentric();
+        ActivityCentricProcessModel acpm = sOLC2ACPM.convert(sOLC);
+        Collection<ActivityCentricProcessModel> generatedModels = new ArrayList<>(1);
+        generatedModels.add(acpm);
+        return generatedModels;
+    }
+
+    @Override
+    protected Collection<? extends IModel> wrapModels(Collection<? extends ProcessModel> models) {
+        SynchronizedObjectLifeCycle sOLC = new SynchronizedOLCAdapter(selectedOLCs);
+        Collection<SynchronizedObjectLifeCycle> sOLCs = new ArrayList<>(1);
+        sOLCs.add(sOLC);
+        return sOLCs;
+    }
+
+    @Override
+    protected Collection<? extends ProcessModel> convertModels(Collection<? extends IModel> generatedModels) {
+        Collection<PCMFragment> fragments = new HashSet<>();
+        for (IModel acpm : generatedModels) {
+            PCMFragment fragment = new PCMFragment();
+            for (IEdge edge : ((ActivityCentricProcessModel)acpm).getEdges()) {
+                if (!nodesAndNodesConverted.containsKey(edge.getSource())) {
+                    ProcessNode processNode = createProcessNodeForINode(edge.getSource());
+                    fragment.addNode(processNode);
+                    nodesAndNodesConverted.put(edge.getSource(), processNode);
+                }
+                if (!nodesAndNodesConverted.containsKey(edge.getTarget())) {
+                    ProcessNode processNode = createProcessNodeForINode(edge.getTarget());
+                    fragment.addNode(processNode);
+                    nodesAndNodesConverted.put(edge.getTarget(), processNode);
+                }
+                if (edge instanceof ControlFlow) {
+                    ProcessEdge sequenceFlow = new SequenceFlow(nodesAndNodesConverted.get(edge.getSource()),
+                            nodesAndNodesConverted.get(edge.getTarget()));
+                    fragment.addEdge(sequenceFlow);
+                } else if (edge instanceof DataFlow) {
+                    ProcessEdge association = new Association(nodesAndNodesConverted.get(edge.getSource()),
+                            nodesAndNodesConverted.get(edge.getTarget()));
+                    fragment.addEdge(association);
+                }
+            }
+            fragments.add(fragment);
+        }
+        return fragments;
     }
 
     private class GeneratorChooseOLCsDialog extends JDialog {
