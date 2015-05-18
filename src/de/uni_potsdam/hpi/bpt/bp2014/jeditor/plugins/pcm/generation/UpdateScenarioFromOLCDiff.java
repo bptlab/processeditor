@@ -15,6 +15,7 @@ import net.frapu.code.visualization.ProcessEdge;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessNode;
 import net.frapu.code.visualization.bpmn.Association;
+import net.frapu.code.visualization.bpmn.DataObject;
 import net.frapu.code.visualization.bpmn.Task;
 
 import java.util.*;
@@ -91,14 +92,12 @@ public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOL
                 for (ProcessNode node : fragment.getNodeByName(processNode.getName())) {
                     newFragments.remove(smallFragment);
                     for (ProcessEdge processEdge : smallFragment.getIncomingEdges(Association.class, processNode)) {
-                        Association newEdge = new Association(processEdge.getSource(), node);
+                        Association newEdge = new Association(getNodeForFrom(processEdge.getSource(), fragment), node);
                         fragment.addEdge(newEdge);
-                        fragment.addNode(processEdge.getSource());
                     }
                     for (ProcessEdge processEdge : smallFragment.getOutgoingEdges(Association.class, processNode)) {
-                        Association newEdge = new Association(node, processEdge.getTarget());
+                        Association newEdge = new Association(node, getNodeForFrom(processEdge.getTarget(), fragment));
                         fragment.addEdge(newEdge);
-                        fragment.addNode(processEdge.getTarget());
                     }
                 }
                 if (!newFragments.contains(smallFragment)) {
@@ -106,6 +105,16 @@ public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOL
                 }
             }
         }
+    }
+
+    private ProcessNode getNodeForFrom(ProcessNode node, PCMFragment fragment) {
+        for (ProcessNode processNode : fragment.getNodeByName(node.getName())) {
+            if (processNode.getProperty(DataObject.PROP_STATE).equals(node.getProperty(DataObject.PROP_STATE))) {
+                return processNode;
+            }
+        }
+        fragment.addNode(node);
+        return node;
     }
 
     @Override
