@@ -51,15 +51,15 @@ public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOL
                 extractModelsFromSubDirectory((ModelDirectory) directoryEntry);
             } else if (directoryEntry instanceof ModelDescription) {
                 try {
-                    if (!((ModelDescription) directoryEntry).getHead().getPredecessors().isEmpty()) {
-                        ProcessModel model = ((ModelDescription) directoryEntry).getHead().getProcessModel();
-                        if (model instanceof ObjectLifeCycle) {
+                    ProcessModel model = ((ModelDescription) directoryEntry).getHead().getProcessModel();
+                    if (model instanceof ObjectLifeCycle) {
+                        if (!((ModelDescription) directoryEntry).getHead().getPredecessors().isEmpty()) {
                             ProcessModel predecessor = ((ModelDescription) directoryEntry).getPredecessors(
                                     ((ModelDescription) directoryEntry).getHead()).iterator().next().getProcessModel();
                             predecessors.put((ObjectLifeCycle) model, (ObjectLifeCycle) predecessor);
-                        } else if (model instanceof PCMFragment && fragmentIds.contains(model.getId())) {
-                            fragments.add((PCMFragment) model);
                         }
+                    } else if (model instanceof PCMFragment && fragmentIds.contains(model.getId())) {
+                        fragments.add((PCMFragment) model);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -80,25 +80,32 @@ public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOL
         Collection<PCMFragment> smallFragments = (Collection<PCMFragment>) super.convertModels(generatedModels);
         Collection<PCMFragment> newFragments = new HashSet<>(smallFragments);
         for (ProcessModel smallFragment : smallFragments) {
-            for (ProcessNode processNode : smallFragment.getNodesByClass(Task.class)) {
-                for (PCMFragment fragment : fragments) {
-                    for (ProcessNode node : fragment.getNodeByName(processNode.getName())) {
-                        newFragments.remove(smallFragment);
-                        for (ProcessEdge processEdge : smallFragment.getIncomingEdges(Association.class, processNode)) {
-                            Association newEdge = new Association(processEdge.getSource(), node);
-                            fragment.addEdge(newEdge);
-                            fragment.addNode(processEdge.getSource());
-                        }
-                        for (ProcessEdge processEdge : smallFragment.getOutgoingEdges(Association.class, processNode)) {
-                            Association newEdge = new Association(node, processEdge.getTarget());
-                            fragment.addEdge(newEdge);
-                            fragment.addNode(processEdge.getSource());
-                        }
+            chooseFragmentForAndFrom(smallFragment, newFragments);
+        }
+        return newFragments;
+    }
+
+    private void chooseFragmentForAndFrom(ProcessModel smallFragment, Collection<PCMFragment> newFragments) {
+        for (ProcessNode processNode : smallFragment.getNodesByClass(Task.class)) {
+            for (PCMFragment fragment : fragments) {
+                for (ProcessNode node : fragment.getNodeByName(processNode.getName())) {
+                    newFragments.remove(smallFragment);
+                    for (ProcessEdge processEdge : smallFragment.getIncomingEdges(Association.class, processNode)) {
+                        Association newEdge = new Association(processEdge.getSource(), node);
+                        fragment.addEdge(newEdge);
+                        fragment.addNode(processEdge.getSource());
                     }
+                    for (ProcessEdge processEdge : smallFragment.getOutgoingEdges(Association.class, processNode)) {
+                        Association newEdge = new Association(node, processEdge.getTarget());
+                        fragment.addEdge(newEdge);
+                        fragment.addNode(processEdge.getTarget());
+                    }
+                }
+                if (!newFragments.contains(smallFragment)) {
+                    newFragments.add(fragment);
                 }
             }
         }
-        return newFragments;
     }
 
     @Override
