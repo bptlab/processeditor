@@ -94,7 +94,8 @@ public class GenerateOLCsFromScenario extends GeneratorPlugin {
         }
         for (ModelDirectoryEntry modelDirectoryEntry : directory.getEntries()) {
             if (modelDirectoryEntry instanceof ModelDirectory) {
-                extractModelsFromDirectory((ModelDirectory) modelDirectoryEntry);
+                fragments.addAll((Collection<? extends PCMFragment>)
+                        extractModelsFromDirectory((ModelDirectory) modelDirectoryEntry));
             } else if (modelDirectoryEntry instanceof ModelDescription) {
                 try {
                     ProcessModel model = ((ModelDescription) modelDirectoryEntry).getHead().getProcessModel();
