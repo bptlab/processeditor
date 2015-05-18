@@ -93,11 +93,15 @@ public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOL
                     newFragments.remove(smallFragment);
                     for (ProcessEdge processEdge : smallFragment.getIncomingEdges(Association.class, processNode)) {
                         Association newEdge = new Association(getNodeForFrom(processEdge.getSource(), fragment), node);
-                        fragment.addEdge(newEdge);
+                        if (!fragment.getPrecedingNodes(Association.class, node).contains(newEdge.getSource())) {
+                            fragment.addEdge(newEdge);
+                        }
                     }
                     for (ProcessEdge processEdge : smallFragment.getOutgoingEdges(Association.class, processNode)) {
                         Association newEdge = new Association(node, getNodeForFrom(processEdge.getTarget(), fragment));
-                        fragment.addEdge(newEdge);
+                        if (!fragment.getPrecedingNodes(Association.class, newEdge.getTarget()).contains(node)) {
+                            fragment.addEdge(newEdge);
+                        }
                     }
                 }
                 if (!newFragments.contains(smallFragment)) {
