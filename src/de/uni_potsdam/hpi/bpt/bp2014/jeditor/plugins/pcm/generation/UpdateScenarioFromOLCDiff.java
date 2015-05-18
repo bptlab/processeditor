@@ -15,11 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class GenerateFragmentsFormOLCDiffs extends GeneratePCMFragmentFromMultipleOLC {
+public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOLC {
     Map<ObjectLifeCycle, ObjectLifeCycle> predecessors;
     Map<OLCAdapter, OLCAdapter> wrappedPredecessors;
 
-    public GenerateFragmentsFormOLCDiffs(Workbench wb) {
+    public UpdateScenarioFromOLCDiff(Workbench wb) {
         super(wb);
     }
 
