@@ -40,11 +40,11 @@ The [BPMConverter](https://github.com/BP2014W1/BPMConverter) is added as a git s
 Once you have cloned the Processeditor Repository you have to initialize this module.
 You can do so by running the following command.
 
-  git submodule init
+    git submodule init
 
 If you want to update the module run the following command.
 
-  git submodule update
+    git submodule update
 
 You have also the possibility to build the *BPMNConverter* and to add it as library to the project.
 
