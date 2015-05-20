@@ -13,7 +13,7 @@ import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.DataObject;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.activity_centric.Gateway;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.converter.olc.SynchronizedOLCToActivityCentric;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.synchronize.SynchronizedObjectLifeCycle;
-import de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.SynchronizedOLCAdapter;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.synchronize.SynchronizedOLCAdapter;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.ObjectLifeCycle;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment;
 import net.frapu.code.visualization.ProcessEdge;

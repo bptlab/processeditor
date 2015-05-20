@@ -1,15 +1,16 @@
-package de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc;
+package de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.synchronize;
 
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.IEdge;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.INode;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.ObjectLifeCycle;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.StateTransition;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.synchronize.SynchronizedObjectLifeCycle;
+import de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.OLCAdapter;
 
 import java.util.*;
 
 /**
- * Created by Stpehan on 09.04.2015.
+ * This
  */
 public class SynchronizedOLCAdapter extends SynchronizedObjectLifeCycle {
     Set<ObjectLifeCycle> olcs;
