@@ -12,17 +12,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * @version 05.11.2014.
- * @author Juliane Imme, Stephan Haarmann
+ * This class is a workbench Plugin which allows us to create a variant of an existing model.
+ * The model has to be a pcm scenario.
+ * This plugin is not used any longer because it is easier to just save the model as a
+ * new file/ model on the server.
  */
 public class CreateVariantOfModel extends WorkbenchPlugin {
     private final Workbench wb;
 
+    /**
+     * Creates a new instance of the plugin.
+     * @param workbench
+     */
     public CreateVariantOfModel(Workbench workbench) {
         super(workbench);
         this.wb = workbench;
     }
 
+    /**
+     * Creates and returns the menu item triggering this plugin.
+     * @return The newly created menuItem.
+     */
     @Override
     public Component getMenuEntry() {
         JMenuItem menuItem = new JMenuItem("Create Variant");
@@ -88,6 +98,11 @@ public class CreateVariantOfModel extends WorkbenchPlugin {
             return processComboBox;
         }
 
+        /**
+         * Creates a Button to accept the selection.
+         * The Button will have the label "ok".
+         * @return THe newly created Button.
+         */
         private JButton acceptButton() {
             JButton accept = new JButton("Ok");
             accept.addActionListener(new ActionListener() {
@@ -103,6 +118,12 @@ public class CreateVariantOfModel extends WorkbenchPlugin {
             return accept;
         }
 
+
+        /**
+         * Creates a Button to discard the selection.
+         * The Button will have the create label "cancel".
+         * @return The newly created Button.
+         */
         private JButton cancelButton() {
             JButton cancel = new JButton("Cancel");
             cancel.addActionListener(new ActionListener() {
