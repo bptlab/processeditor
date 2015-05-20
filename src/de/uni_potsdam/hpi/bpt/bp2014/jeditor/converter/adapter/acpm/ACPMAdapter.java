@@ -18,21 +18,53 @@ import java.util.HashSet;
 import java.util.Map;
 
 /**
- * Created by Stpehan on 07.05.2015.
+ * This class is an adapter for {@link BPMNModel} and {@link de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment}.
+ * It adapts such a model to {@link ActivityCentricProcessModel}.
+ * If necessary it wraps elements like edges and nodes into adapters. The result of this wrapping
+ * will be cached.
  */
 public class ACPMAdapter extends ActivityCentricProcessModel {
-
+    /**
+     * This field holds the model which will be wrapped by this adapter.
+     */
     private ProcessModel model;
+    /**
+     * A Map of all nodes.
+     * The ProcessNodes will be mapped to the INodes, the ones wrapped in an adapter.
+     */
     private Map<ProcessNode, INode> nodes;
+    /**
+     * A Collection holding all wrapped edges of the process model.
+     */
     private Collection<IEdge> edges;
+    /**
+     * The states are safed inside this map.
+     * The first key is the name of the data object.
+     * The second key is the name of the state.
+     * This states must be reused inside one olc.
+     */
     private Map<String, Map<String, DataObjectState>> stateStore;
 
+    /**
+     * Creates a new Adapter for a given model.
+     * @param model The Model which will be wrapped.
+     *              Should be of type BPMNModel or PCMFragment
+     */
     public ACPMAdapter(ProcessModel model) {
         super();
         this.model = model;
         initialize();
     }
 
+    /**
+     * Wrapes a node specified by the parameter.
+     * Therefore it checks the type and creates a special
+     * wrapper.
+     * The result will be cached in order to create only one
+     * adapter per node.
+     * @param raw The node which should be wrapped.
+     * @return The adapter wrapping this node, either a cached one or a new one.
+     */
     private INode wrapNode(ProcessNode raw) {
         INode node = null;
         if (nodes.containsKey(raw)) {
@@ -63,6 +95,12 @@ public class ACPMAdapter extends ActivityCentricProcessModel {
         return node;
     }
 
+    /**
+     * Updates the state store for a given DataObject.
+     * Which means if no corresponding DataObjectStates Objects
+     * are store inside the {@link #stateStore} it will be added.
+     * @param dataObject The data object whichs state might be added.
+     */
     private void updateStateStore(ProcessNode dataObject) {
         if (!stateStore.containsKey(dataObject.getName())) {
             stateStore.put(dataObject.getName(),
@@ -76,6 +114,12 @@ public class ACPMAdapter extends ActivityCentricProcessModel {
         }
     }
 
+    /**
+     * Initializes the adapter.
+     * Which means all edges and their nodes will be wrapped
+     * in a specific adapter. The nodes and edges will be add to the specific list
+     * by calling the super functions.
+     */
     private void initialize() {
         edges = new HashSet<>();
         nodes = new HashMap<>();
