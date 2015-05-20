@@ -1,7 +1,6 @@
 package de.uni_potsdam.hpi.bpt.bp2014.jeditor.plugins.pcm.generation;
 
 import com.inubit.research.gui.Workbench;
-import com.inubit.research.gui.WorkbenchConnectToServerDialog;
 import com.inubit.research.gui.plugins.WorkbenchPlugin;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.IEdge;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.INode;
@@ -14,7 +13,6 @@ import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessNode;
-import net.frapu.code.visualization.processmap.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,7 +59,7 @@ public class GenerateOLCFromFragment extends WorkbenchPlugin {
                         source.setProperty(ProcessNode.PROP_TEXT,
                                 ((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState)transition.getSource()).getName());
                         edge.setSource(source);
-                        if (objectLifeCycle.getFinalStates().contains(transition.getSource())) {
+                        if (objectLifeCycle.getFinalNodes().contains(transition.getSource())) {
                             source.setProperty(DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
                         }
                         if (!processedNodes.containsKey(transition.getTarget())) {
@@ -70,7 +68,7 @@ public class GenerateOLCFromFragment extends WorkbenchPlugin {
                         DataObjectState target = processedNodes.get(transition.getTarget());
                         target.setProperty(ProcessNode.PROP_TEXT,
                                 ((de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState)transition.getTarget()).getName());
-                        if (objectLifeCycle.getFinalStates().contains(transition.getTarget())) {
+                        if (objectLifeCycle.getFinalNodes().contains(transition.getTarget())) {
                             target.setProperty(DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
                         }
                         edge.setTarget(target);

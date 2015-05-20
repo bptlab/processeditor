@@ -50,10 +50,10 @@ public class GenerateOLCsFromScenario extends GeneratorPlugin {
                 new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition();
         ProcessNode source = getNodeFor(processedNodes, transition.getSource());
         ProcessNode target = getNodeFor(processedNodes, transition.getTarget());
-        if (objectLifeCycle.getFinalStates().contains(transition.getTarget())) {
+        if (objectLifeCycle.getFinalNodes().contains(transition.getTarget())) {
             target.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
         }
-        if (objectLifeCycle.getFinalStates().contains(transition.getSource())) {
+        if (objectLifeCycle.getFinalNodes().contains(transition.getSource())) {
             source.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_FINAL, ProcessNode.TRUE);
         }
         edge.setSource(source);
