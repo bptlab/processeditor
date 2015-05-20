@@ -23,8 +23,17 @@ import java.util.Map;
  * into an {@link de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.ObjectLifeCycle}.
  */
 public class OLCAdapter extends de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.ObjectLifeCycle {
+    /**
+     * The ObjectLifeCycle object which will be wrapped
+     * by this adapter.
+     */
     private ObjectLifeCycle olc;
 
+    /**
+     * Creates a new adapter for a given ObjectLifeCycle.
+     * The nodes and edges will be wrapped automatically.
+     * @param olc The ObjectLifeCycle which will be wrapped.
+     */
     public OLCAdapter(ObjectLifeCycle olc) {
         super(olc.getProcessName());
         this.olc = olc;
@@ -32,6 +41,11 @@ public class OLCAdapter extends de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.Obj
         initializeNodes();
     }
 
+    /**
+     * This method initializes the Nodes and edges.
+     * It will wrap each DataObjectState node and each State Transition
+     * in order to create a model for the transformation operations.
+     */
     private void initializeNodes() {
         Map<ProcessNode, DataObjectStateAdapter> nodesAndTheirAdapters = new HashMap<>();
         for (ProcessNode processNode : olc.getNodes()) {
