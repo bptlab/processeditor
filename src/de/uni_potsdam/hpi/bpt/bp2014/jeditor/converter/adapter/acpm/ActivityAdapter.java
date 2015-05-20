@@ -8,13 +8,14 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by Stpehan on 07.05.2015.
+ * This class is an adapter for {@link Task}.
+ * It wil adapt them to the Activity.
+ * The edges have to be set from outside the
+ * adapter.
  */
 public class ActivityAdapter extends Activity {
 
     private Task task;
-    private Collection<ControlFlow> wrappedIncomingCF;
-    private Collection<ControlFlow> wrappedOutgoingCF;
 
     public ActivityAdapter(Task task) {
         super(task.getName());
