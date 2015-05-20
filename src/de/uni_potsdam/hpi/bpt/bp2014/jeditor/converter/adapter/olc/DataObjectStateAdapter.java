@@ -18,20 +18,18 @@ import java.util.List;
  */
 public class DataObjectStateAdapter extends de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.DataObjectState {
 
+    /**
+     * The Object which will be wrapped by this adapter.
+     */
     private DataObjectState dataObjectState;
 
+    /**
+     * Creates a new DataObjectState adapter.
+     * The name will be set based on the given DataObjectState.
+     * @param dataObjectState The DataObjectState which will be wrapped.
+     */
     public DataObjectStateAdapter(DataObjectState dataObjectState) {
         super(dataObjectState.getName());
         this.dataObjectState = dataObjectState;
-    }
-
-    @Override
-    public String getName() {
-        return dataObjectState.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        dataObjectState.setText(name);
     }
 }
