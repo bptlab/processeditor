@@ -24,12 +24,31 @@ import java.util.HashSet;
 import java.util.Map;
 
 /**
- * Created by Stpehan on 09.05.2015.
+ * This plugin allows us to generate multiple Object Life Cycles from
+ * one PCMScenario.
+ * The Scenario has to be opened in the Workbench. In addition all
+ * the fragments must be available on a Process Editor Server.
+ * The Plugin will connect to the server and fetch all the fragments
+ * in order to perform the transformation.
  */
 public class GenerateOLCsFromScenario extends GeneratorPlugin {
+    /**
+     * The workbench, it is necessary in order to determine
+     * the opened PCMScenario.
+     */
     private final Workbench wb;
+    /**
+     * A Collection holding the ids of all Fragments from the
+     * Scenario to be transformed.
+     */
     private Collection<String> fragmentIDs;
 
+    /**
+     * Creates a new instance of the Plugin.
+     * The workbench which will trigger the plugin and hold the
+     * source and the generated Models will be specified by the parameter.
+     * @param wb The Workbench which will be used to receive the PCMScenario.
+     */
     public GenerateOLCsFromScenario(Workbench wb) {
         super(wb);
         this.wb = wb;
@@ -45,6 +64,19 @@ public class GenerateOLCsFromScenario extends GeneratorPlugin {
         fragmentIDs = new HashSet<>();
     }
 
+    /**
+     * Creates an edge for a ObjectLife  for a given transitions.
+     * In order to receive the source and the target all the nodes
+     * created must be offered. If the source and target have not been
+     * used yet they will be created, else the cached version will
+     * be used.
+     * @param objectLifeCycle The Object life cycle which contains the edge.
+     *                        Necessary to determine final and start nodes.
+     * @param transition The transition which is the base for the new ProcessEdge.
+     * @param processedNodes The cache of nodes, which will be used to store
+     *                       every node once it has been created for reuse.
+     * @return The StateTransition which has just been created.
+     */
     private de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition createEdgeFor(ObjectLifeCycle objectLifeCycle, IEdge transition, Map<INode, de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState> processedNodes) {
         de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition edge =
                 new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.StateTransition();
@@ -62,6 +94,13 @@ public class GenerateOLCsFromScenario extends GeneratorPlugin {
         return edge;
     }
 
+    /**
+     * Gets a ProcessNode for a given INode from a cache.
+     * If it does not exist in the cache a new one will be created and the cache will be updated.
+     * @param processedNodes The cache of ProcessNodes.
+     * @param node The INode which must be transformed into a ProcessNode.
+     * @return Returns the newly created or cached ProcessNode.
+     */
     private ProcessNode getNodeFor(Map<INode, de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState> processedNodes, INode node) {
         if (!processedNodes.containsKey(node)) {
             processedNodes.put(node, new de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState());
@@ -73,6 +112,12 @@ public class GenerateOLCsFromScenario extends GeneratorPlugin {
         return newNode;
     }
 
+    /**
+     * If a note has the name "init" it is the start state.
+     * This method checks weather it is or not and then sets the property of that node.
+     * @param state The state which will be checked.
+     * @return Returns true, if that state is a start state else it returns false.
+     */
     private boolean markAsStartIfInit(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState state) {
         if (state.getName().equals("init")) {
             state.setProperty(de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.DataObjectState.PROP_IS_START, ProcessNode.TRUE);
@@ -81,6 +126,12 @@ public class GenerateOLCsFromScenario extends GeneratorPlugin {
         return false;
     }
 
+    /**
+     * Extracts all PCMFragments from the remote repository whichs id is
+     * a inside the fragmentIDs collection.
+     * @param directory The directory to check.
+     * @return The List of ProcessModels which has been extracted.
+     */
     @Override
     protected Collection<? extends ProcessModel> extractModelsFromDirectory(ModelDirectory directory) {
         ProcessModel scenario = wb.getSelectedModel();
