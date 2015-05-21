@@ -20,7 +20,7 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 
 /**
- * Created by Stpehan on 17.05.2015.
+ * This clas
  */
 public abstract class GeneratorPlugin extends WorkbenchPlugin {
     protected Workbench wb;

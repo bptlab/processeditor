@@ -22,11 +22,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Stpehan on 08.05.2015.
+ * This class allows us t o generate multiple {@link de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.ObjectLifeCycle}
+ * based on a single {@link PCMFragment}.
+ * It will automatically assume that the PCMFragment which will be transformed is the active
+ * model inside the workbench.
+ * An error will be thrown if the the model is not a PCMFragment.
+ * In addition their are some assumptions.
+ * For example must the fragment have exactly one start and end event
+ * and uncontrolled flow is not supported.
  */
 public class GenerateOLCFromFragment extends WorkbenchPlugin {
+    /**
+     * Saves the workbench, which triggered the plugin.
+     * It is a mandatory field because the PCMFragment will be determined by this object
+     * and the generated OLCs will be opened inside this workbench.
+     */
     private final Workbench wb;
 
+    /**
+     * Creates a new Object of the plugin and initializes
+     * the {@link #wb} workbench.
+     * @param wb The workbench triggering this plugin.
+     */
     public GenerateOLCFromFragment(Workbench wb) {
         super(wb);
         this.wb = wb;
@@ -36,6 +53,16 @@ public class GenerateOLCFromFragment extends WorkbenchPlugin {
     public Component getMenuEntry() {
         JMenuItem menuItem = new JMenuItem("Generate OLC");
         menuItem.addActionListener(new ActionListener() {
+            /**
+             * This function triggers the conversion.
+             * It will check if the current model is a PCMFragment
+             * than wrap it
+             * and run a converter to generate a synchronized OLC.
+             * Every OLC from this synchronized OLC will then be transformed
+             * into a model which can be opened by the Process Editor before it will
+             * be opened.
+             * @param e The event it will not be used.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Workbench" + wb);
