@@ -57,7 +57,7 @@ public class PCMFragmentCollection extends Cluster {
     }
 
     /**
-     * The PCMFragmentCollection should be neither target nor source of a ´n edge. Hence it is has no
+     * The PCMFragmentCollection should be neither target nor source of an edge. Hence it is has no
      * defaultConnectionPoints
      * @return an Empty Set of Points
      */

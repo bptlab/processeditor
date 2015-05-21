@@ -4,6 +4,20 @@ The Processeditor consists of two components, the server which allows you to cre
 If you want to integrate the Processeditor and the JEngine you need both components.
 You can deploy them using \href{https://ant.apache.org}{Ant}\footnote{\url{https://ant.apache.org}} and Ivy.
 
+\subsection{Cloning the Repository}
+
+The code of the Processeditor is hosted on Github\footnote{\url{http://github.com}}.
+We recommend to use git\footnote{\url{http://git-scm.com/}} to clone the repository.
+To clone the repository type the following command (Figure \ref{lis:clone}):
+
+\begin{figure}[h!]
+\begin{verbatim}
+	git clone --recursive https://github.com/BP2014W1/processeditor
+\end{verbatim}
+\caption{Command for cloning the repository using git}
+\label{lis:clone}
+\end{figure}
+
 \subsection{Workbench}
 
 The Workbench is a Rich Client for the Processeditor.
@@ -30,8 +44,9 @@ Inside the build/jar folder will be a processeditor.jar file. If you execute thi
 
 \subsection{Server}
 
-The server is another component of the Processeditor. It can be used as an online editing tool and as a model repository.
-If you want to deploy the server you first need to add the necessary dependencies. All Java dependencies can be added running Ivy (figure \ref{lis:ivy}).
+The server is another component of the Processeditor. It can be used as an online modeling tool and as a model repository.
+If you want to deploy the server you first need to add the necessary dependencies.
+All Java dependencies can be added running Ivy (figure \ref{lis:ivy}).
 
 \begin{figure}[h!]
 \begin{verbatim}
