@@ -20,11 +20,29 @@ import net.frapu.code.visualization.bpmn.Task;
 
 import java.util.*;
 
-
+/**
+ * This class extends the {@link GeneratePCMFragmentFromMultipleOLC} Plugin.
+ * This plugin will extract the two latest versions of multiple OLCs and use
+ * the differences to update the Scenario currently opend by the PE.
+ */
 public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOLC {
+    /**
+     * A Map which holds two versions of every object life cycle.
+     * The latest one is the key and the one before is the value.
+     */
     Map<ObjectLifeCycle, ObjectLifeCycle> predecessors;
+    /**
+     * A map holding the same information as {@link #predecessors}
+     * but key and value are adapted OLCs.
+     */
     Map<OLCAdapter, OLCAdapter> wrappedPredecessors;
+    /**
+     * The scenario that will be updated by this plugin.
+     */
     PCMScenario scenario;
+    /**
+     * The list of fragments that have to be opened/created/updated.
+     */
     private Collection<PCMFragment> fragments;
 
     public UpdateScenarioFromOLCDiff(Workbench wb) {
@@ -36,6 +54,15 @@ public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOL
         return "Update Scenario From OLC Versions";
     }
 
+    /**
+     * This method extract all Fragments of the scenario, and all Object Life Cycles, which
+     * have at least two versions.
+     * The Fragments will be saved in {@link #fragments}.
+     * The Versions will be saved in {@link #predecessors}
+     * @param directory The root directory of the Process editor server.
+     * @return The latest versions of the Object Life Cycles will be returned.
+     * These are the keys of {@link #predecessors}.
+     */
     @Override
     protected Collection<? extends ProcessModel> extractModelsFromSubDirectory(ModelDirectory directory) {
         if (!(wb.getSelectedModel() instanceof PCMScenario)) {
@@ -86,6 +113,18 @@ public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOL
         return newFragments;
     }
 
+    /**
+     * This method determines weather or not a generated Fragment is only an update for an existing
+     * one or a completely new.
+     * It will update the other fragments if possible else it will use the generated one.
+     * If the fragment (smallFragment) is an update it will be removed from the collection of newFragments
+     * and add the updated fragments.
+     * Be aware that this method writes all results to the newFragments collection.
+     * @param smallFragment The Fragment generated. If it contains only activities which already exists
+     *                      its contents will be added to the other fragments.
+     * @param newFragments The Collection of fragments which have been generated/updated.
+     *                     The result of this method will be written to that collection.
+     */
     private void chooseFragmentForAndFrom(ProcessModel smallFragment, Collection<PCMFragment> newFragments) {
         for (ProcessNode processNode : smallFragment.getNodesByClass(Task.class)) {
             for (PCMFragment fragment : fragments) {
@@ -111,6 +150,13 @@ public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOL
         }
     }
 
+    /**
+     * This method checks if a node already exists inside a fragment.
+     * And returns the existing one or adds the specified and returns it then.
+     * @param node The node which potentially should be added.
+     * @param fragment The fragment which should contain that node.
+     * @return The node added to fragment/ available to the fragment.
+     */
     private ProcessNode getNodeForFrom(ProcessNode node, PCMFragment fragment) {
         for (ProcessNode processNode : fragment.getNodeByName(node.getName())) {
             if (processNode.getProperty(DataObject.PROP_STATE).equals(node.getProperty(DataObject.PROP_STATE))) {
