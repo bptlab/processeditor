@@ -2,6 +2,7 @@ package de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm;
 
 import com.inubit.research.client.*;
 import com.inubit.research.gui.WorkbenchConnectToServerDialog;
+import com.inubit.research.gui.WorkbenchFetchModelDialog;
 import net.frapu.code.visualization.Configuration;
 import net.frapu.code.visualization.ProcessModel;
 import net.frapu.code.visualization.ProcessNode;
@@ -15,21 +16,65 @@ import java.awt.event.ActionListener;
 import java.net.URI;
 
 /**
+ * This Action Listener is an action listener which allows us
+ * to catch all {@link Task} from any {@link PCMFragment}.
+ * Such a fragment can then be copied and referred.
+ *
  * @author Stephan Haarmann & Juliane Imme
  * @version 03.12.2014
  */
 public class GetTasksFromServerActionListener implements ActionListener {
+    /**
+     * Text field for the server address.
+     */
     private JTextField serverInput;
+    /**
+     * Input field for the user name.
+     */
     private JTextField userInput;
+    /**
+     * Input field for the password.
+     */
     private JPasswordField passwordInput;
+    /**
+     * The editor which hold this instant,
+     * necessary to add the elements.
+     */
     private PCMFragmentEditor editor;
+    /**
+     * Field for the model selection.
+     */
     private JComboBox selectModelChooser;
+    /**
+     * Field for the task selection.
+     */
     private JComboBox selectTaskChooser;
+    /**
+     * A Button to accept the selection.
+     */
     private JButton accept;
+    /**
+     * A Button to cancel the action.
+     */
     private JButton cancel;
+    /**
+     * A Button to start the connect action.
+     * The dialog will try to connect to the server.
+     */
     private JButton connectButton;
+    /**
+     * A Frame to hold the elements all the swing
+     * elements.
+     */
     private JFrame serverConnectionFrame;
 
+    /**
+     * Creates a new instance of the Action Listener for a given
+     * PCMFragmentEditor.
+     * The field will be initialized with the default values.
+     *
+     * @param pcmFragmentEditor The process editor which will trigger this action.
+     */
     public GetTasksFromServerActionListener(PCMFragmentEditor pcmFragmentEditor) {
         editor = pcmFragmentEditor;
         serverInput = new JTextField("http://localhost:1205");
@@ -44,6 +89,12 @@ public class GetTasksFromServerActionListener implements ActionListener {
         });
     }
 
+    /**
+     * If the action is triggered The serverConnectionFrame
+     * will be initialized and displayed.
+     *
+     * @param e the event information will be ignored.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         serverConnectionFrame = new JFrame("Get Tasks from Server");
@@ -58,6 +109,12 @@ public class GetTasksFromServerActionListener implements ActionListener {
         connectToServerAction();
     }
 
+    /**
+     * Returns the content panel of the connect to server frame.
+     * The panel contains the elements needed to connect to the
+     * server.
+     * @return The panel with the server input elements.
+     */
     private Component getServerPanel() {
         JPanel serverPanel = new JPanel();
 
@@ -72,6 +129,14 @@ public class GetTasksFromServerActionListener implements ActionListener {
         return serverPanel;
     }
 
+    /**
+     * Creates a JPanel for the selectors.
+     * Contains the {@link #selectModelChooser}
+     * and the {@link #selectTaskChooser} this gives
+     * us the possibility to choose a task.
+     *
+     * @return The JPanel containing the JChooser.
+     */
     private Component getSelectionPanel() {
         JPanel selectionPanel = new JPanel();
         selectionPanel.setLayout(new GridLayout(2, 1));
@@ -101,13 +166,22 @@ public class GetTasksFromServerActionListener implements ActionListener {
         return selectTaskChooser;
     }
 
+    /**
+     * Creates a Panel contiaining the three buttons,
+     * {@link #connectButton}
+     * {@link #accept}
+     * {@link #cancel}
+     * Those buttons will be initialized.
+     *
+     * @return A JPanel containing the buttons.
+     */
     private Component getButtonPanel() {
         JPanel buttonPanel = new JPanel();
         accept = new JButton("Ok");
         accept.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ProcessNode node = (ProcessNode)selectTaskChooser.getSelectedItem();
+                ProcessNode node = (ProcessNode) selectTaskChooser.getSelectedItem();
                 if (node != null) {
                     editor.getModel().addNode(node);
                     serverConnectionFrame.dispose();
@@ -128,7 +202,7 @@ public class GetTasksFromServerActionListener implements ActionListener {
     }
 
     /**
-     * Copied from WorkbenchFetchModelDialog
+     * Copied from {@link WorkbenchFetchModelDialog}
      */
     private void connectToServerAction() {
         try {
@@ -153,6 +227,13 @@ public class GetTasksFromServerActionListener implements ActionListener {
         }
     }
 
+    /**
+     * Iterates over all elements inside a given directory.
+     * If the element describes a PCMFragment its head version will
+     * be added to the model list.
+     *
+     * @param directory The directory to be searched.
+     */
     private void updateModelList(ModelDirectory directory) {
         if (directory != null) {
             java.util.List<ModelDirectoryEntry> l = directory.getEntries();
