@@ -51,6 +51,9 @@ public class PCMScenarioEditor extends ProcessEditor {
         addCustomContextMenuItem(ProcessObject.class, menuItem);
     }
 
+    /**
+     * Adds the menu item for the plugins.
+     */
     private void init() {
         addAddFragmentFromServerMenu();
         addTerminationConditionMenu();
@@ -126,7 +129,9 @@ public class PCMScenarioEditor extends ProcessEditor {
     }
 
     /**
-     *
+     * Creates and adds a menu for the termination condition.
+     * Triggering this menu opens up a editor to add/remove conditions
+     * from the termination condition.
      */
     private void addTerminationConditionMenu() {
         JMenuItem tcMenu = new JMenuItem("Edit termination condition");
