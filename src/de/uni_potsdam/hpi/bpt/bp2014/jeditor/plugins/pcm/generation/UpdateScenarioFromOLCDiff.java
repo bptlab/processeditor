@@ -6,6 +6,7 @@ import com.inubit.research.client.ModelDirectoryEntry;
 import com.inubit.research.gui.Workbench;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.IModel;
 import de.uni_potsdam.hpi.bpt.bp2014.conversion.converter.olc.FragmentsFromOLCVersions;
+import de.uni_potsdam.hpi.bpt.bp2014.conversion.olc.synchronize.SynchronizedDiff;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.converter.adapter.olc.OLCAdapter;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.olc.ObjectLifeCycle;
 import de.uni_potsdam.hpi.bpt.bp2014.jeditor.visualization.pcm.PCMFragment;
@@ -100,7 +101,8 @@ public class UpdateScenarioFromOLCDiff extends GeneratePCMFragmentFromMultipleOL
     @Override
     protected Collection<? extends IModel> generateModels(Collection<? extends IModel> wrappedModels) {
         FragmentsFromOLCVersions ffOLCv = new FragmentsFromOLCVersions();
-        return ffOLCv.convert(wrappedPredecessors.keySet(), wrappedPredecessors.values());
+        return ffOLCv.convert(new SynchronizedDiff(wrappedPredecessors.keySet(), wrappedPredecessors.values()))
+                .getFragments();
     }
 
     @Override
