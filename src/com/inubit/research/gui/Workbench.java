@@ -1734,9 +1734,10 @@ private void ShowVersionsMenuItemActionPerformed(java.awt.event.ActionEvent evt)
                 canceled = versionExplorer.canceled;
             }
             if (publishModelDialog.getAnswer().publish && !canceled) {
+		int activeTab = getActiveTab();
                 processModelSaved(repository.LoadHeadModel().getProcessModel(), null);
                 processModelOpened(repository.LoadHeadModel().getProcessModel());
-                modelPane.remove(getActiveTab() - 1);
+                modelPane.remove(activeTab);
                 getSelectedModel().markAsDirty(false);
             }
 
